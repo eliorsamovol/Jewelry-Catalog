@@ -36,9 +36,9 @@ class Items : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        jewelryAdapter = JewelryAdapter(emptyList()) { item ->
+        jewelryAdapter = JewelryAdapter(emptyList(), { item ->
             deleteItem(item)
-        }
+        }, requireContext())
 
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)

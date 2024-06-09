@@ -44,5 +44,5 @@
         android:contentDescription="@string/delete"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:padding="8dp"/>
-    
+
 </LinearLayout>
