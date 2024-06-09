@@ -6,15 +6,18 @@ import android.content.Intent
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.net.Uri
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.RadioButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -49,6 +52,21 @@ class NewItem : Fragment() {
         }
     }
 
+    private val pickImageLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if(result.resultCode == Activity.RESULT_OK) {
+            val selectedImageUri: Uri? = result.data?.data
+            selectedImageUri?.let {
+                val inputStream = requireContext().contentResolver.openInputStream(it)
+                val imageBitmap = BitmapFactory.decodeStream(inputStream)
+                val resizedBitmap = resizeBitmap(imageBitmap, 800, 800)
+                binding.imageSelected.setImageBitmap(resizedBitmap)
+                capturedImage = resizedBitmap
+            }
+        }
+    }
+
     private fun resizeBitmap(image: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
         val width = image.width
         val height = image.height
@@ -71,6 +89,15 @@ class NewItem : Fragment() {
         }
     }
 
+    private val requestStoragePermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if(isGranted) {
+            openGallery()
+        } else {
+            Toast.makeText(requireContext(), "Storage permission is required", Toast.LENGTH_SHORT).show()
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -82,9 +109,8 @@ class NewItem : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        uploadPhotoButton = binding.btnTakePhoto
-        uploadPhotoButton.setOnClickListener {
-            checkCameraPermission()
+        binding.btnTakePhoto.setOnClickListener {
+            showImageSourceDialog()
         }
 
         binding.saveButton.setOnClickListener {
@@ -119,6 +145,19 @@ class NewItem : Fragment() {
         }
     }
 
+    private fun showImageSourceDialog() {
+        val options = arrayOf("Take a picture", "Choose from library")
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Select Image Source")
+            .setItems(options) { _, which ->
+                when (which) {
+                    0 -> checkCameraPermission()
+                    1 -> checkStoragePermission()
+                }
+            }
+            .show()
+    }
+
     private fun checkCameraPermission(){
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
             requestCameraPermission()
@@ -136,6 +175,23 @@ class NewItem : Fragment() {
         if(intent.resolveActivity(requireActivity().packageManager) != null){
             takePictureLauncher.launch(intent)
         }
+    }
+
+    private fun checkStoragePermission() {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestStoragePermission()
+        } else {
+            openGallery()
+        }
+    }
+
+    private fun requestStoragePermission() {
+        requestStoragePermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+    }
+
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        pickImageLauncher.launch(intent)
     }
 
     fun saveBitmapToFile(context: Context, bitmap: Bitmap): String? {
