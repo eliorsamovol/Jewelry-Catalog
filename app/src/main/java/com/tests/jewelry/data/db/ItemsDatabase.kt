@@ -9,7 +9,7 @@ import com.tests.jewelry.JewelryDao
 import com.tests.jewelry.JewelryEntities
 import androidx.room.TypeConverters
 
-@Database(entities = [JewelryEntities::class], version = 1, exportSchema = false)
+@Database(entities = [JewelryEntities::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class ItemsDatabase : RoomDatabase() {
     abstract fun jewelryItemDao(): JewelryDao
@@ -23,7 +23,7 @@ abstract class ItemsDatabase : RoomDatabase() {
             if(instance == null){
                 synchronized(ItemsDatabase::class.java) {
                     instance = Room.databaseBuilder(context.applicationContext,
-                        ItemsDatabase::class.java, "jewelry_database").allowMainThreadQueries().build()
+                        ItemsDatabase::class.java, "jewelry_database").fallbackToDestructiveMigration().build()
                 }
             }
             return instance

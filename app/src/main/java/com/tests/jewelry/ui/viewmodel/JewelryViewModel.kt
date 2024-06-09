@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.tests.jewelry.JewelryEntities
 import com.tests.jewelry.data.db.ItemsDatabase
 import com.tests.jewelry.data.repository.JewelryRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class JewelryViewModel(application: Application) : AndroidViewModel(application) {
@@ -31,8 +32,10 @@ class JewelryViewModel(application: Application) : AndroidViewModel(application)
         repository.getJewelryByType(type)
     }
 
-    fun addJewelry(jewelry: JewelryEntities) = viewModelScope.launch {
-        repository.addJewelry(jewelry)
+    fun addJewelry(jewelry: JewelryEntities){
+        viewModelScope.launch(Dispatchers.IO){
+            repository.addJewelry(jewelry)
+        }
     }
 
     fun deleteJewelry(jewelry: JewelryEntities) = viewModelScope.launch {
