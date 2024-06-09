@@ -1,5 +1,6 @@
 package com.tests.jewelry.ui.adapter
 
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +13,8 @@ class JewelryAdapter(private var itemList: List<JewelryEntities>) : RecyclerView
         fun bind(item: JewelryEntities) {
             binding.itemName.text = item.name
             binding.itemDescription.text = item.description
-            binding.itemImage.setImageResource(item.imageResId)
+            val bitmap = BitmapFactory.decodeByteArray(item.imageResId, 0, item.imageResId.size)
+            binding.itemImage.setImageBitmap(bitmap)
 
         }
     }

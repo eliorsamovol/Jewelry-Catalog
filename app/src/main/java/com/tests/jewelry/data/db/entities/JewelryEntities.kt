@@ -1,5 +1,6 @@
 package com.tests.jewelry
 
+import android.graphics.Bitmap
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -19,7 +20,7 @@ data class JewelryEntities(
     val price: Double,
 
     @ColumnInfo(name = "image_res_id")
-    val imageResId: Int,
+    val imageResId: ByteArray,
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0

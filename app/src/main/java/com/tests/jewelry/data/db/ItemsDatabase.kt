@@ -7,8 +7,10 @@ import android.telephony.ims.ImsMmTelManager
 import androidx.room.Room
 import com.tests.jewelry.JewelryDao
 import com.tests.jewelry.JewelryEntities
+import androidx.room.TypeConverters
 
 @Database(entities = [JewelryEntities::class], version = 1, exportSchema = false)
+@TypeConverters(Converters::class)
 abstract class ItemsDatabase : RoomDatabase() {
     abstract fun jewelryItemDao(): JewelryDao
 
