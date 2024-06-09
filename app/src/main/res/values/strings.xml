@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Jewelry Catalog</string>
+
+    <string name="data_analysis">Data Analysis</string>
+    <string name="new_item">Add New Item</string>
+    <string name="suppliers">Suppliers</string>
+
+    <string name="headline_main">voyage studio</string>
+    <string name="save_item">Save</string>
+    <string name="items_headline">Items</string>
+    <string name="show_by">Show by</string>
+    <string name="necklaces">necklaces</string>
+    <string name="rings">rings</string>
+    <string name="earrings">earrings</string>
+    <string name="bracelets">bracelets</string>
+    <string name="view_all">view all</string>
+
+    <string name="jewelry_name_box">Name</string>
+    <string name="jewelry_type_box">Type</string>
+    <string name="jewelry_description_box">Description</string>
+    <string name="jewelry_price_box">Price</string>
+    <string name="jewelry_photo_box">Photo</string>
+
+    <string name="necklace_radio_button">Necklace</string>
+    <string name="ring_radio_button">Ring</string>
+    <string name="earring_radio_button">Earring</string>
+    <string name="bracelet_radio_button">Bracelet</string>
+    <string name="choose_photo_from_gallery">Choose from gallery</string>
+
+    <string name="text_second_frame">Jewelery has\n the power to\n be the one\n little thing\n that makes you\n feel unique</string>
+
+    <string name="catalog">Catalog</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="take_photo">Take a photo</string>
+
+</resources>

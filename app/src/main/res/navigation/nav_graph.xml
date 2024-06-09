@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/catalogFragment">
+
+    <fragment
+        android:id="@+id/catalogFragment"
+        android:name="com.tests.jewelry.Catalog"
+        tools:layout="@layout/catalog">
+        <action
+            android:id="@+id/action_catalog_to_newItem"
+            app:destination="@+id/newItemFragment"/>
+        <action
+            android:id="@+id/action_catalog_to_items"
+            app:destination="@+id/itemsFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/newItemFragment"
+        android:name="com.tests.jewelry.NewItem"
+        tools:layout="@layout/new_item">
+        <action
+            android:id="@+id/action_newItem_to_catalog"
+            app:destination="@+id/catalogFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/itemsFragment"
+        android:name="com.tests.jewelry.Items"
+        tools:layout="@layout/items">
+    </fragment>
+</navigation>
