@@ -22,6 +22,8 @@ class Items : Fragment() {
 
     private val jewelryViewModel: JewelryViewModel by viewModels()
 
+    private lateinit var jewelryAdapter: JewelryAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,12 +36,21 @@ class Items : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = JewelryAdapter(emptyList())
-        binding.recyclerView.layoutManager = LinearLayoutManager(context)
-        binding.recyclerView.adapter = adapter
+        jewelryAdapter = JewelryAdapter(emptyList()) { item ->
+            deleteItem(item)
+        }
 
-        jewelryViewModel.items?.observe(viewLifecycleOwner, Observer { items -> items?.let { adapter.setItems(it) } })
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = jewelryAdapter
+        }
 
+        jewelryViewModel.items?.observe(viewLifecycleOwner) { items -> jewelryAdapter.setItems(items) }
+
+    }
+
+    private fun deleteItem(item: JewelryEntities){
+        jewelryViewModel.deleteJewelry(item)
     }
 
     override fun onDestroy() {

@@ -26,7 +26,9 @@ class JewelryRepository(application: Application) {
         jewelryDao?.addJewelry(jewelry)
     }
 
-    fun deleteJewelry() = jewelryDao?.deleteJewelry()
+    fun deleteJewelry(jewelry: JewelryEntities){
+        jewelryDao?.deleteJewelry(jewelry)
+    }
 
     fun deleteAll(){
         jewelryDao?.deleteAll()

@@ -38,8 +38,10 @@ class JewelryViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    fun deleteJewelry(jewelry: JewelryEntities) = viewModelScope.launch {
-        repository.deleteJewelry()
+    fun deleteJewelry(jewelry: JewelryEntities){
+        viewModelScope.launch(Dispatchers.IO){
+            repository.deleteJewelry(jewelry)
+        }
     }
 
     fun deleteAll() = viewModelScope.launch {

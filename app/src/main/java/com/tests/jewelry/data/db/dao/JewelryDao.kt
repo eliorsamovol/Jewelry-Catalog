@@ -15,7 +15,7 @@ interface JewelryDao {
     fun addJewelry(jewelry: JewelryEntities)
 
     @Delete
-    fun deleteJewelry(vararg jewelry: JewelryEntities)
+    fun deleteJewelry(jewelry: JewelryEntities)
 
     @Update
     fun updateJewelry(jewelry: JewelryEntities)
