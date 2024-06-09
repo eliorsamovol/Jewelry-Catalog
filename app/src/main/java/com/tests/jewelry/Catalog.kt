@@ -26,6 +26,12 @@ class Catalog : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = CatalogBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         arguments?.getString("title")?.let{
             Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
@@ -54,11 +60,6 @@ class Catalog : Fragment() {
         binding.bracelets.setOnClickListener {
             findNavController().navigate(R.id.action_catalog_to_items)
         }
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
     override fun onDestroyView() {
         super.onDestroyView()

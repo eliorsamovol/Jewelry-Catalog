@@ -13,7 +13,7 @@ class JewelryAdapter(private var itemList: List<JewelryEntities>) : RecyclerView
         fun bind(item: JewelryEntities) {
             binding.itemName.text = item.name
             binding.itemDescription.text = item.description
-            val bitmap = BitmapFactory.decodeByteArray(item.imageResId, 0, item.imageResId.size)
+            val bitmap = BitmapFactory.decodeFile(item.imageResId)
             binding.itemImage.setImageBitmap(bitmap)
 
         }

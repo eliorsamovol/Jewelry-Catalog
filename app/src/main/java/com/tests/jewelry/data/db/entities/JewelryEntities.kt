@@ -20,7 +20,7 @@ data class JewelryEntities(
     val price: Double,
 
     @ColumnInfo(name = "image_res_id")
-    val imageResId: ByteArray,
+    val imageResId: String,
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0

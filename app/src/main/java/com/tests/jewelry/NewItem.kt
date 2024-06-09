@@ -3,9 +3,11 @@ package com.tests.jewelry
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -22,6 +24,9 @@ import com.tests.jewelry.ui.viewmodel.JewelryViewModel
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 
 class NewItem : Fragment() {
@@ -91,21 +96,23 @@ class NewItem : Fragment() {
             val type = selectedRadioButton?.text.toString()
 
             if (name.isNotEmpty() && description.isNotEmpty() && price!=null && type.isNotEmpty()){
-                val imageByteArray = capturedImage?.let { bitmap ->
-                    val outputStream = ByteArrayOutputStream()
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-                    outputStream.toByteArray()
+                val imagePath = capturedImage?.let { bitmap ->
+                    saveBitmapToFile(requireContext(), bitmap)
                 }
-                val newItem=JewelryEntities(
+                if(imagePath != null) {
+                    val newItem=JewelryEntities(
                         name = name,
                         type = type,
                         description = description,
                         price = price,
-                        imageResId = imageByteArray!!
-                        )
-                jewelryViewModel.addJewelry(newItem)
-                Toast.makeText(context, "jewelry item added", Toast.LENGTH_LONG).show()
-                findNavController().navigate(R.id.action_newItem_to_catalog)
+                        imageResId = imagePath
+                    )
+                    jewelryViewModel.addJewelry(newItem)
+                    Toast.makeText(context, "jewelry item added", Toast.LENGTH_LONG).show()
+                    findNavController().navigate(R.id.action_newItem_to_catalog)
+                } else {
+                    Toast.makeText(context, "Please take a photo", Toast.LENGTH_SHORT).show()
+                }
             } else {
                 Toast.makeText(context, "please fill all", Toast.LENGTH_SHORT).show()
             }
@@ -128,6 +135,21 @@ class NewItem : Fragment() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if(intent.resolveActivity(requireActivity().packageManager) != null){
             takePictureLauncher.launch(intent)
+        }
+    }
+
+    fun saveBitmapToFile(context: Context, bitmap: Bitmap): String? {
+        val storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val file = File.createTempFile("JPEG_", ".jpg", storageDir)
+        return try {
+            val outputStream = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            outputStream.flush()
+            outputStream.close()
+            file.absolutePath
+        } catch (e: IOException) {
+            e.printStackTrace()
+            null
         }
     }
 
