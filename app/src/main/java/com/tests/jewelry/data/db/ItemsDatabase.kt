@@ -18,15 +18,16 @@ abstract class ItemsDatabase : RoomDatabase() {
         @Volatile
         private var instance: ItemsDatabase? = null
 
-        fun getDatabase(context: Context) : ItemsDatabase? {
-
-            if(instance == null){
-                synchronized(ItemsDatabase::class.java) {
-                    instance = Room.databaseBuilder(context.applicationContext,
-                        ItemsDatabase::class.java, "jewelry_database").fallbackToDestructiveMigration().build()
-                }
+        fun getDatabase(context: Context) : ItemsDatabase {
+            return instance ?: synchronized(this) {
+                val newInstance = Room.databaseBuilder(
+                    context.applicationContext,
+                    ItemsDatabase::class.java,
+                    "jewelry_database"
+                ).fallbackToDestructiveMigration().build()
+                instance = newInstance
+                newInstance
             }
-            return instance
         }
     }
 }

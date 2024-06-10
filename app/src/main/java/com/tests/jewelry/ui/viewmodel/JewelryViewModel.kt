@@ -28,8 +28,8 @@ class JewelryViewModel(application: Application) : AndroidViewModel(application)
         repository.getAllJewelry()
     }
 
-    fun getJewelryByType(type: String){
-        repository.getJewelryByType(type)
+    fun getJewelryByType(type: String): LiveData<List<JewelryEntities>> {
+       return repository.getJewelryByType(type)
     }
 
     fun addJewelry(jewelry: JewelryEntities){
@@ -42,6 +42,10 @@ class JewelryViewModel(application: Application) : AndroidViewModel(application)
         viewModelScope.launch(Dispatchers.IO){
             repository.deleteJewelry(jewelry)
         }
+    }
+
+    fun updateJewelry(jewelry: JewelryEntities) {
+        repository.updateJewelry(jewelry)
     }
 
     fun deleteAll() = viewModelScope.launch {

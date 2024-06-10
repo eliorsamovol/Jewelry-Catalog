@@ -5,15 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tests.jewelry.databinding.ItemsBinding
 import com.tests.jewelry.ui.adapter.JewelryAdapter
 import com.tests.jewelry.ui.viewmodel.JewelryViewModel
-import com.tests.jewelry.ui.viewmodel.NewItemViewModel
 
 class Items : Fragment() {
 
@@ -36,9 +32,10 @@ class Items : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        jewelryAdapter = JewelryAdapter(emptyList(), { item ->
-            deleteItem(item)
-        }, requireContext())
+        jewelryAdapter = JewelryAdapter(emptyList(),
+            onDeleteClick = { item -> deleteItem(item) },
+            onEditClick = { item -> editItem(item) },
+            context = requireContext())
 
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
@@ -51,6 +48,10 @@ class Items : Fragment() {
 
     private fun deleteItem(item: JewelryEntities){
         jewelryViewModel.deleteJewelry(item)
+    }
+
+    private fun editItem(item: JewelryEntities) {
+        jewelryViewModel.updateJewelry(item)
     }
 
     override fun onDestroy() {

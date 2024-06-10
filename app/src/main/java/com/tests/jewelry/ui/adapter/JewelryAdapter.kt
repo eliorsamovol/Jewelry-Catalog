@@ -11,6 +11,7 @@ import com.tests.jewelry.databinding.ItemJewelryBinding
 
 class JewelryAdapter(private var itemList: List<JewelryEntities>,
                      private val onDeleteClick: (JewelryEntities) -> Unit,
+                     private val onEditClick: (JewelryEntities) -> Unit,
                      private val context: Context
 ) : RecyclerView.Adapter<JewelryAdapter.JewelryViewHolder>() {
 
@@ -23,6 +24,7 @@ class JewelryAdapter(private var itemList: List<JewelryEntities>,
             binding.itemImage.setImageBitmap(bitmap)
 
             binding.deleteButton.setOnClickListener { showDeleteConfirmationDialog(item) }
+            binding.editButton.setOnClickListener { onEditClick(item) }
         }
 
         private fun showDeleteConfirmationDialog(item: JewelryEntities) {

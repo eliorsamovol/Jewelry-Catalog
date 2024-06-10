@@ -24,8 +24,9 @@ interface JewelryDao {
     fun getAllJewelry(): LiveData<List<JewelryEntities>>
 
     @Query("SELECT *  FROM jewelry_table WHERE type LIKE :type")
-    fun getJewelryByType(type: String): LiveData<JewelryEntities>
+    fun getJewelryByType(type: String): LiveData<List<JewelryEntities>>
 
     @Query("DELETE FROM jewelry_table")
     fun deleteAll()
+
 }
