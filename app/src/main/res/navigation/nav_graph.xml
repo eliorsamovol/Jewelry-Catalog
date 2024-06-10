@@ -30,5 +30,10 @@
         android:id="@+id/itemsFragment"
         android:name="com.tests.jewelry.Items"
         tools:layout="@layout/items">
+        <argument
+            android:name="itemType"
+            app:argType="string"
+            android:defaultValue="all"/>
     </fragment>
+
 </navigation>

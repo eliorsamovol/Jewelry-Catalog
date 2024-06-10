@@ -45,23 +45,28 @@ class Catalog : Fragment() {
         }
 
         binding.showAllButton.setOnClickListener {
-            findNavController().navigate(R.id.action_catalog_to_items)
+            val bundle = Bundle().apply { putString("itemType", "all") }
+            findNavController().navigate(R.id.action_catalog_to_items, bundle)
         }
 
         binding.necklaces.setOnClickListener {
-            findNavController().navigate(R.id.action_catalog_to_items)
+            val bundle = Bundle().apply { putString("itemType", "necklace") }
+            findNavController().navigate(R.id.action_catalog_to_items, bundle)
         }
 
         binding.rings.setOnClickListener {
-            findNavController().navigate(R.id.action_catalog_to_items)
+            val bundle = Bundle().apply { putString("itemType", "ring") }
+            findNavController().navigate(R.id.action_catalog_to_items, bundle)
         }
 
         binding.earrings.setOnClickListener {
-            findNavController().navigate(R.id.action_catalog_to_items)
+            val bundle = Bundle().apply { putString("itemType", "earring") }
+            findNavController().navigate(R.id.action_catalog_to_items, bundle)
         }
 
         binding.bracelets.setOnClickListener {
-            findNavController().navigate(R.id.action_catalog_to_items)
+            val bundle = Bundle().apply { putString("itemType", "bracelet") }
+            findNavController().navigate(R.id.action_catalog_to_items, bundle)
         }
     }
 

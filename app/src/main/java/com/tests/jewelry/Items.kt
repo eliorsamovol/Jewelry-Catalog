@@ -45,8 +45,28 @@ class Items : Fragment() {
             adapter = jewelryAdapter
         }
 
-        jewelryViewModel.items?.observe(viewLifecycleOwner) { items -> jewelryAdapter.setItems(items) }
+        val itemType = arguments?.getString("itemType") ?: "all"
 
+        if(itemType == "all"){
+            jewelryViewModel.items.observe(viewLifecycleOwner) { items ->
+                jewelryAdapter.setItems(items)
+            }
+        } else {
+            jewelryViewModel.getJewelryByType(itemType).observe(viewLifecycleOwner) { items ->
+                jewelryAdapter.setItems(items)
+            }
+        }
+
+        jewelryViewModel.items.observe(viewLifecycleOwner) { items ->
+            val filteredItems = when (itemType) {
+                "necklace" -> items.filter { it.type == "necklace" }
+                "ring" -> items.filter { it.type == "ring" }
+                "earring" -> items.filter { it.type == "earring" }
+                "bracelet" -> items.filter { it.type == "bracelet" }
+                else -> items
+            }
+            jewelryAdapter.setItems(filteredItems)
+        }
     }
 
     private fun deleteItem(item: JewelryEntities){
