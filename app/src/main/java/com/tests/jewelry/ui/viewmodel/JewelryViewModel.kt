@@ -24,10 +24,6 @@ class JewelryViewModel(application: Application) : AndroidViewModel(application)
         _chosenJewelry.value = jewelry
     }
 
-    fun getAllJewelry() {
-        repository.getAllJewelry()
-    }
-
     fun getJewelryByType(type: String): LiveData<List<JewelryEntities>> {
        return repository.getJewelryByType(type)
     }
@@ -45,10 +41,12 @@ class JewelryViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun updateJewelry(jewelry: JewelryEntities) {
-        repository.updateJewelry(jewelry)
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateJewelry(jewelry)
+        }
     }
 
-    fun deleteAll() = viewModelScope.launch {
+    fun deleteAll() = viewModelScope.launch(Dispatchers.IO) {
         repository.deleteAll()
     }
 }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tests.jewelry.databinding.ItemsBinding
 import com.tests.jewelry.ui.adapter.JewelryAdapter
@@ -43,26 +44,14 @@ class Items : Fragment() {
         }
 
         val itemType = arguments?.getString("itemType") ?: "all"
-
         if(itemType == "all"){
-            jewelryViewModel.items.observe(viewLifecycleOwner) { items ->
+            jewelryViewModel.items.observe(viewLifecycleOwner, Observer { items ->
                 jewelryAdapter.setItems(items)
-            }
+            })
         } else {
-            jewelryViewModel.getJewelryByType(itemType).observe(viewLifecycleOwner) { items ->
+            jewelryViewModel.getJewelryByType(itemType).observe(viewLifecycleOwner, Observer { items ->
                 jewelryAdapter.setItems(items)
-            }
-        }
-
-        jewelryViewModel.items.observe(viewLifecycleOwner) { items ->
-            val filteredItems = when (itemType) {
-                "necklace" -> items.filter { it.type == "necklace" }
-                "ring" -> items.filter { it.type == "ring" }
-                "earring" -> items.filter { it.type == "earring" }
-                "bracelet" -> items.filter { it.type == "bracelet" }
-                else -> items
-            }
-            jewelryAdapter.setItems(filteredItems)
+            })
         }
     }
 
