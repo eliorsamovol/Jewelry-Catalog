@@ -180,7 +180,7 @@
             android:id="@+id/saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/save_item"
+            android:text="@string/save_change_btn"
             android:fontFamily="@font/vogue"
             app:layout_constraintTop_toTopOf="@+id/imageSelected"
             app:layout_constraintStart_toStartOf="@id/imageSelected"
