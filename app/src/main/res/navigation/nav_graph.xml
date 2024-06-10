@@ -51,7 +51,7 @@
             android:name="jewelryItem"
             app:argType="com.tests.jewelry.JewelryEntities" />
         <action
-            android:id="@+id/action_editItem_to_Items"
+            android:id="@+id/action_itemsFragment_to_editItemFragment"
             app:destination="@+id/itemsFragment"/>
     </fragment>
 
