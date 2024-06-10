@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.tests.jewelry.databinding.ItemsBinding
 import com.tests.jewelry.ui.adapter.JewelryAdapter
 import com.tests.jewelry.ui.viewmodel.JewelryViewModel
+import androidx.navigation.fragment.findNavController
 
 class Items : Fragment() {
 
@@ -71,7 +72,8 @@ class Items : Fragment() {
     }
 
     private fun editItem(item: JewelryEntities) {
-        jewelryViewModel.updateJewelry(item)
+        val action = ItemsDirections.actionItemsFragmentToEditItemFragment(item)
+        findNavController().navigate(action)
     }
 
     override fun onDestroy() {

@@ -146,7 +146,7 @@ class EditItem : Fragment() {
                     )
                     jewelryViewModel.addJewelry(editedItem)
                     Toast.makeText(requireContext(), "Item updated", Toast.LENGTH_LONG).show()
-                    findNavController().navigate(R.id.action_editItem_to_Items)
+                    findNavController().navigate(R.id.action_itemsFragment_to_editItemFragment)
                 } else {
                     Toast.makeText(context, "Please take a photo", Toast.LENGTH_SHORT).show()
                 }

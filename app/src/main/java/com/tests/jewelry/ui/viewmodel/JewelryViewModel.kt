@@ -45,7 +45,9 @@ class JewelryViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun updateJewelry(jewelry: JewelryEntities) {
-        repository.updateJewelry(jewelry)
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateJewelry(jewelry)
+        }
     }
 
     fun deleteAll() = viewModelScope.launch {
