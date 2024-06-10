@@ -64,6 +64,7 @@ dependencies {
     kapt("androidx.room:room-compiler:$room_version")
     implementation("com.github.bumptech.glide:glide:4.13.2")
     annotationProcessor("com.github.bumptech.glide:compiler:4.13.2")
+    implementation("androidx.exifinterface:exifinterface:1.3.7")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

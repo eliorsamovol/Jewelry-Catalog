@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -25,6 +26,7 @@ import androidx.navigation.fragment.findNavController
 import com.tests.jewelry.databinding.NewItemBinding
 import com.tests.jewelry.ui.viewmodel.JewelryViewModel
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.exifinterface.media.ExifInterface
 import androidx.lifecycle.Observer
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -53,18 +55,39 @@ class NewItem : Fragment() {
     }
 
     private val pickImageLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if(result.resultCode == Activity.RESULT_OK) {
-            val selectedImageUri: Uri? = result.data?.data
-            selectedImageUri?.let {
-                val inputStream = requireContext().contentResolver.openInputStream(it)
+        ActivityResultContracts.GetContent()
+    ) { uri ->
+        uri?.let {
+            try {
+                val inputStream = requireContext().contentResolver.openInputStream(uri)
                 val imageBitmap = BitmapFactory.decodeStream(inputStream)
-                val resizedBitmap = resizeBitmap(imageBitmap, 800, 800)
+                val rotatedBitmap = handleImageOrientation(imageBitmap, uri)
+                val resizedBitmap = resizeBitmap(rotatedBitmap, 800, 800)
                 binding.imageSelected.setImageBitmap(resizedBitmap)
                 capturedImage = resizedBitmap
+            } catch (e: IOException) {
+                e.printStackTrace()
+                Toast.makeText(requireContext(), "Failed to load image", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun handleImageOrientation(bitmap: Bitmap, uri: Uri): Bitmap {
+        val inputStream = requireContext().contentResolver.openInputStream(uri)
+        val exif = inputStream?.let { ExifInterface(it) }
+        val orientation = exif?.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL) ?: ExifInterface.ORIENTATION_NORMAL
+
+        return when (orientation) {
+            ExifInterface.ORIENTATION_ROTATE_90 -> rotateBitmap(bitmap, 90f)
+            ExifInterface.ORIENTATION_ROTATE_180 -> rotateBitmap(bitmap, 180f)
+            ExifInterface.ORIENTATION_ROTATE_270 -> rotateBitmap(bitmap, 270f)
+            else -> bitmap
+        }
+    }
+
+    private fun rotateBitmap(bitmap: Bitmap, degrees: Float): Bitmap {
+        val matrix = Matrix().apply { postRotate(degrees) }
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
     }
 
     private fun resizeBitmap(image: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
@@ -191,7 +214,7 @@ class NewItem : Fragment() {
 
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        pickImageLauncher.launch(intent)
+        pickImageLauncher.launch("image/*")
     }
 
     fun saveBitmapToFile(context: Context, bitmap: Bitmap): String? {
