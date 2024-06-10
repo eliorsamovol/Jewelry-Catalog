@@ -13,9 +13,9 @@ import kotlinx.coroutines.launch
 
 class JewelryViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val repository = JewelryRepository(application)
+    private val repository: JewelryRepository = JewelryRepository(application)
 
-    val items : LiveData<List<JewelryEntities>>? = repository.getAllJewelry()
+    val items : LiveData<List<JewelryEntities>> = repository.getAllJewelry()
 
     private val _chosenJewelry = MutableLiveData<JewelryEntities>()
     val chosenJewelry : LiveData<JewelryEntities> get() = _chosenJewelry

@@ -11,7 +11,7 @@ class JewelryRepository(context: Context) {
 
     private val jewelryDao:JewelryDao = ItemsDatabase.getDatabase(context)!!.jewelryItemDao()
 
-    fun getAllJewelry() : LiveData<List<JewelryEntities>> {
+    fun getAllJewelry(): LiveData<List<JewelryEntities>> {
         return jewelryDao.getAllJewelry()
     }
 
