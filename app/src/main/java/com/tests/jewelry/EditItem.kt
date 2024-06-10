@@ -118,10 +118,11 @@ class EditItem : Fragment() {
             getString(R.string.bracelet_radio_button) -> binding.braceletButton.isChecked = true
         }
 
+        val bitmap = BitmapFactory.decodeFile(jewelryItem.imageResId)
+        binding.imageSelected.setImageBitmap(bitmap)
+
         binding.btnTakePhoto.setOnClickListener {
-            binding.btnTakePhoto.setOnClickListener {
-                showImageSourceDialog()
-            }
+            showImageSourceDialog()
         }
 
         binding.saveButton.setOnClickListener {
@@ -138,13 +139,14 @@ class EditItem : Fragment() {
                 }
                 if(imagePath != null) {
                     val editedItem=JewelryEntities(
+                        id = jewelryItem.id,
                         name = editName,
                         type = editType,
                         description = editDescription,
                         price = editPrice,
                         imageResId = imagePath
                     )
-                    jewelryViewModel.addJewelry(editedItem)
+                    jewelryViewModel.updateJewelry(editedItem)
                     Toast.makeText(requireContext(), "Item updated", Toast.LENGTH_LONG).show()
                     findNavController().navigate(R.id.action_itemsFragment_to_editItemFragment)
                 } else {
