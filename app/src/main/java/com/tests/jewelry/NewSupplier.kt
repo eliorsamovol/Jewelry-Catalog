@@ -1,0 +1,298 @@
+package com.tests.jewelry
+
+import android.Manifest
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.net.Uri
+import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
+import android.text.format.DateFormat
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.RadioButton
+import android.widget.SeekBar
+import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
+import androidx.exifinterface.media.ExifInterface
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.tests.jewelry.data.db.entities.SupplierEntities
+import com.tests.jewelry.databinding.NewSupplierBinding
+import com.tests.jewelry.ui.viewmodel.JewelryViewModel
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
+import android.app.DatePickerDialog
+class NewSupplier : Fragment() {
+
+    private var _binding: NewSupplierBinding? = null
+    private val binding get() = _binding!!
+    private val supplierViewModel: JewelryViewModel by viewModels()
+
+    private lateinit var uploadPhotoButton: Button
+    private var capturedImage: Bitmap? = null
+
+    private lateinit var priceSeekBar: SeekBar
+    private lateinit var priceValueTextView: TextView
+
+    private val takePictureLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val imageBitmap = result.data?.extras?.get("data") as Bitmap
+            val resizedBitmap = resizeBitmap(imageBitmap, 800, 800)
+            binding.imageSelected.setImageBitmap(imageBitmap)
+            capturedImage = imageBitmap
+        }
+    }
+
+    private val pickImageLauncher = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri ->
+        uri?.let {
+            try {
+                val inputStream = requireContext().contentResolver.openInputStream(uri)
+                val imageBitmap = BitmapFactory.decodeStream(inputStream)
+                val rotatedBitmap = handleImageOrientation(imageBitmap, uri)
+                val resizedBitmap = resizeBitmap(rotatedBitmap, 800, 800)
+                binding.imageSelected.setImageBitmap(resizedBitmap)
+                capturedImage = resizedBitmap
+            } catch (e: IOException) {
+                e.printStackTrace()
+                Toast.makeText(requireContext(), "Failed to load image", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun handleImageOrientation(bitmap: Bitmap, uri: Uri): Bitmap {
+        val inputStream = requireContext().contentResolver.openInputStream(uri)
+        val exif = inputStream?.let { ExifInterface(it) }
+        val orientation = exif?.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL) ?: ExifInterface.ORIENTATION_NORMAL
+
+        return when (orientation) {
+            ExifInterface.ORIENTATION_ROTATE_90 -> rotateBitmap(bitmap, 90f)
+            ExifInterface.ORIENTATION_ROTATE_180 -> rotateBitmap(bitmap, 180f)
+            ExifInterface.ORIENTATION_ROTATE_270 -> rotateBitmap(bitmap, 270f)
+            else -> bitmap
+        }
+    }
+
+    private fun rotateBitmap(bitmap: Bitmap, degrees: Float): Bitmap {
+        val matrix = Matrix().apply { postRotate(degrees) }
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+    }
+
+    private fun resizeBitmap(image: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
+        val width = image.width
+        val height = image.height
+
+        val bitmapRatio = width.toFloat() / height.toFloat()
+        val newWidth = if (bitmapRatio > 1) maxWidth else (maxHeight * bitmapRatio).toInt()
+        val newHeight = if (bitmapRatio > 1) (maxWidth / bitmapRatio).toInt() else maxHeight
+
+        return Bitmap.createScaledBitmap(image, newWidth, newHeight, true)
+    }
+
+    private val requestCameraPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if(isGranted) {
+            openCamera()
+        } else {
+            Toast.makeText(requireContext(), "Camera permission is required", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private val requestStoragePermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if(isGranted) {
+            openGallery()
+        } else {
+            Toast.makeText(requireContext(), "Storage permission is required", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = NewSupplierBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        priceSeekBar = binding.priceSeekBar
+        priceValueTextView = binding.priceValueTextView
+        priceSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                priceValueTextView.text = "$progress"
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        })
+
+        binding.dateButton.setOnClickListener {
+            showDatePickerDialog()
+        }
+
+        binding.dateEditText.apply {
+            isFocusable = false
+            isFocusableInTouchMode = false
+            isClickable = false
+        }
+
+        binding.btnTakePhoto.setOnClickListener {
+            showImageSourceDialog()
+        }
+
+        binding.saveButton.setOnClickListener {
+            val name = binding.nameEditText.text.toString()
+            val address = binding.addressEditText.text.toString()
+            val phone = binding.phoneEditText.text.toString()
+            val date = binding.dateEditText.text.toString()
+            val price = binding.priceSeekBar.progress.toString().toDoubleOrNull()
+            val selectedRadioButtonId = binding.typeRadioGroup.checkedRadioButtonId
+            val selectedRadioButton = binding.typeRadioGroup.findViewById<RadioButton>(selectedRadioButtonId)
+            val type = selectedRadioButton?.text.toString()
+
+            if (name.isNotEmpty() && address.isNotEmpty() && phone.isNotEmpty() && date.isNotEmpty() && price!=null && type.isNotEmpty()){
+                val parsedDate = parseDate(date)
+                val imagePath = capturedImage?.let { bitmap ->
+                    saveBitmapToFile(requireContext(), bitmap)
+                }
+                if(imagePath != null) {
+                    val newItem=SupplierEntities(
+                        name = name,
+                        address = address,
+                        phone = phone,
+                        type = type,
+                        date = parsedDate,
+                        purchasePrice = price,
+                        reception = imagePath
+                    )
+                    supplierViewModel.addSupplier(newItem)
+                    Toast.makeText(context, "supplier purchase added", Toast.LENGTH_LONG).show()
+                    findNavController().navigate(R.id.action_newSupplier_to_supplier)
+                } else {
+                    Toast.makeText(context, "Please take a photo", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(context, "please fill all", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun showDatePickerDialog() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            requireContext(),
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val selectedDay = "$selectedDay-${selectedMonth + 1}-$selectedYear"
+                binding.dateEditText.setText(selectedDay)
+            },
+            year,
+            month,
+            day
+        )
+        datePickerDialog.show()
+    }
+    private fun showImageSourceDialog() {
+        val options = arrayOf("Take a picture", "Choose from library")
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Select Image Source")
+            .setItems(options) { _, which ->
+                when (which) {
+                    0 -> checkCameraPermission()
+                    1 -> checkStoragePermission()
+                }
+            }
+            .show()
+    }
+
+    private fun checkCameraPermission(){
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+            requestCameraPermission()
+        } else {
+            openCamera()
+        }
+    }
+
+    private fun requestCameraPermission(){
+        requestCameraPermissionLauncher.launch(Manifest.permission.CAMERA)
+    }
+
+    private fun openCamera(){
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if(intent.resolveActivity(requireActivity().packageManager) != null){
+            takePictureLauncher.launch(intent)
+        }
+    }
+
+    private fun checkStoragePermission() {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestStoragePermission()
+        } else {
+            openGallery()
+        }
+    }
+
+    private fun requestStoragePermission() {
+        requestStoragePermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+    }
+
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        pickImageLauncher.launch("image/*")
+    }
+
+    fun saveBitmapToFile(context: Context, bitmap: Bitmap): String? {
+        val storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val file = File.createTempFile("JPEG_", ".jpg", storageDir)
+        return try {
+            val outputStream = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            outputStream.flush()
+            outputStream.close()
+            file.absolutePath
+        } catch (e: IOException) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    private fun parseDate(dateStr: String): Date {
+        val date = SimpleDateFormat("dd-MM-yyyy")
+        return date.parse(dateStr) ?: Date()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}

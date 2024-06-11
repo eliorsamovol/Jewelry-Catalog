@@ -44,6 +44,10 @@ class Catalog : Fragment() {
             findNavController().navigate(R.id.action_catalog_to_newItem)
         }
 
+        binding.supplier.setOnClickListener {
+            findNavController().navigate(R.id.action_catalog_to_supplier)
+        }
+
         binding.showAllButton.setOnClickListener {
             val bundle = Bundle().apply { putString("itemType", "all") }
             findNavController().navigate(R.id.action_catalog_to_items, bundle)

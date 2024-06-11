@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_catalog_to_items"
             app:destination="@+id/itemsFragment"/>
+        <action
+            android:id="@+id/action_catalog_to_supplier"
+            app:destination="@+id/supplierFragment"/>
     </fragment>
 
     <fragment
@@ -24,6 +27,15 @@
         <action
             android:id="@+id/action_newItem_to_catalog"
             app:destination="@+id/catalogFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/newSupplierFragment"
+        android:name="com.tests.jewelry.NewSupplier"
+        tools:layout="@layout/new_supplier">
+        <action
+            android:id="@+id/action_newSupplier_to_supplier"
+            app:destination="@id/supplierFragment"/>
     </fragment>
 
     <fragment
@@ -41,6 +53,18 @@
             android:name="jewelryItem"
             app:argType="com.tests.jewelry.JewelryEntities"
             app:nullable="true"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/supplierFragment"
+        android:name="com.tests.jewelry.Supplier"
+        tools:layout="@layout/suppliers">
+        <action
+            android:id="@+id/action_supplier_to_catalog"
+            app:destination="@+id/catalogFragment"/>
+        <action
+            android:id="@+id/action_supplier_to_newSupplier"
+            app:destination="@+id/newSupplierFragment"/>
     </fragment>
 
     <fragment

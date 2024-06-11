@@ -2,7 +2,8 @@
     <string name="app_name">Jewelry Catalog</string>
 
     <string name="data_analysis">Data Analysis</string>
-    <string name="new_item">Add New Item</string>
+    <string name="new_item">New Item</string>
+    <string name="new_supplier">New Supplier</string>
     <string name="suppliers">Suppliers</string>
 
     <string name="headline_main">voyage studio</string>
@@ -14,6 +15,15 @@
     <string name="earrings">earrings</string>
     <string name="bracelets">bracelets</string>
     <string name="view_all">view all</string>
+
+    <string name="supplier_address_box">Address</string>
+    <string name="supplier_phone_box">Phone</string>
+    <string name="supplier_purchase_date_box">Purchase Date</string>
+
+    <string name="tool_shop_radio_button">Tool shop</string>
+    <string name="jewelry_foundry_radio_button">Jewelry foundry</string>
+    <string name="raw_material_radio_button">Raw material</string>
+    <string name="misc_radio_button">Misc</string>
 
     <string name="jewelry_name_box">Name</string>
     <string name="jewelry_type_box">Type</string>
@@ -36,7 +46,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="take_photo">Take a photo</string>
+    <string name="take_photo">Upload photo</string>
+    <string name="upload_reception">Upload reception</string>
 
     <string name="delete">Delete</string>
 </resources>
