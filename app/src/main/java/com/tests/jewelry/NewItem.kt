@@ -32,6 +32,8 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import android.widget.SeekBar
+import android.widget.TextView
 
 
 class NewItem : Fragment() {
@@ -42,6 +44,9 @@ class NewItem : Fragment() {
 
     private lateinit var uploadPhotoButton: Button
     private var capturedImage: Bitmap? = null
+
+    private lateinit var priceSeekBar: SeekBar
+    private lateinit var priceValueTextView: TextView
 
     private val takePictureLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -131,6 +136,18 @@ class NewItem : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        priceSeekBar = binding.priceSeekBar
+        priceValueTextView = binding.priceValueTextView
+        priceSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                priceValueTextView.text = "$progress"
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        })
 
         binding.btnTakePhoto.setOnClickListener {
             showImageSourceDialog()
