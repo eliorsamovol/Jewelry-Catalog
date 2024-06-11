@@ -36,6 +36,7 @@ class EditItem : Fragment() {
     private val jewelryViewModel: JewelryViewModel by viewModels()
     private val args: EditItemArgs by navArgs()
     private var capturedImage: Bitmap? = null
+    private var isPhotoChanged: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,6 +55,7 @@ class EditItem : Fragment() {
             val resizedBitmap = resizeBitmap(imageBitmap, 800, 800)
             binding.imageSelected.setImageBitmap(imageBitmap)
             capturedImage = imageBitmap
+            isPhotoChanged = true
         }
     }
 
@@ -68,6 +70,7 @@ class EditItem : Fragment() {
                 val resizedBitmap = resizeBitmap(imageBitmap, 800, 800)
                 binding.imageSelected.setImageBitmap(resizedBitmap)
                 capturedImage = resizedBitmap
+                isPhotoChanged = true
             }
         }
     }
@@ -110,6 +113,7 @@ class EditItem : Fragment() {
         binding.nameEditText.setText(jewelryItem.name)
         binding.descriptionEditText.setText(jewelryItem.description)
         binding.priceSeekBar.progress = jewelryItem.price.toInt()
+        binding.weightEditText.setText(jewelryItem.weight.toString())
 
         when (jewelryItem.type) {
             getString(R.string.necklace_radio_button) -> binding.necklaceButton.isChecked = true
@@ -129,31 +133,48 @@ class EditItem : Fragment() {
             val editName = binding.nameEditText.text.toString()
             val editDescription = binding.descriptionEditText.text.toString()
             val editPrice = binding.priceSeekBar.progress.toString().toDoubleOrNull()
+            val editWeight = binding.weightEditText.text.toString().toDoubleOrNull()
             val selectedRadioButtonId = binding.typeRdioGroup.checkedRadioButtonId
             val selectedRadioButton = binding.typeRdioGroup.findViewById<RadioButton>(selectedRadioButtonId)
             val editType = selectedRadioButton?.text.toString()
 
-            if (editName.isNotEmpty() && editDescription.isNotEmpty() && editPrice!=null && editType.isNotEmpty()){
-                val imagePath = capturedImage?.let { bitmap ->
-                    saveBitmapToFile(requireContext(), bitmap)
-                }
-                if(imagePath != null) {
+            if (editName.isNotEmpty() && editDescription.isNotEmpty() && editPrice!=null && editWeight!=null && editType.isNotEmpty()){
+                if(isPhotoChanged) { // Check if photo is changed
+                    val imagePath = capturedImage?.let { bitmap ->
+                        saveBitmapToFile(requireContext(), bitmap)
+                    }
+                    if(imagePath != null) {
+                        val editedItem=JewelryEntities(
+                            id = jewelryItem.id,
+                            name = editName,
+                            type = editType,
+                            description = editDescription,
+                            price = editPrice,
+                            weight = editWeight,
+                            imageResId = imagePath
+                        )
+                        jewelryViewModel.updateJewelry(editedItem)
+                        Toast.makeText(requireContext(), "Item updated", Toast.LENGTH_LONG).show()
+                        findNavController().navigate(R.id.action_itemsFragment_to_editItemFragment)
+                    } else {
+                        Toast.makeText(context, "Please take a photo", Toast.LENGTH_SHORT).show()
+                    }
+                } else { // Photo is not changed
                     val editedItem=JewelryEntities(
                         id = jewelryItem.id,
                         name = editName,
                         type = editType,
                         description = editDescription,
                         price = editPrice,
-                        imageResId = imagePath
+                        weight = editWeight,
+                        imageResId = jewelryItem.imageResId // Keep the same image path
                     )
                     jewelryViewModel.updateJewelry(editedItem)
                     Toast.makeText(requireContext(), "Item updated", Toast.LENGTH_LONG).show()
                     findNavController().navigate(R.id.action_itemsFragment_to_editItemFragment)
-                } else {
-                    Toast.makeText(context, "Please take a photo", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(context, "please fill all", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
             }
         }
     }

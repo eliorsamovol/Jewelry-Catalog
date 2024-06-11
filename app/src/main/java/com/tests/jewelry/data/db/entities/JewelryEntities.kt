@@ -21,6 +21,9 @@ data class JewelryEntities(
     @ColumnInfo(name= "price")
     val price: Double,
 
+    @ColumnInfo(name = "weight")
+    val weight: Double,
+
     @ColumnInfo(name = "image_res_id")
     val imageResId: String,
 
@@ -32,6 +35,7 @@ data class JewelryEntities(
         parcel.readString() ?: "",
         parcel.readString() ?: "",
         parcel.readDouble(),
+        parcel.readDouble(),
         parcel.readString() ?: "",
         parcel.readInt()
     )
@@ -41,6 +45,7 @@ data class JewelryEntities(
         parcel.writeString(type)
         parcel.writeString(description)
         parcel.writeDouble(price)
+        parcel.writeDouble(weight)
         parcel.writeString(imageResId)
         parcel.writeInt(id)
     }

@@ -105,7 +105,31 @@
         android:max="1000"
         android:min="0"/>
 
+    <TextView
+        android:id="@+id/weightTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Jewelry_weight_box"
+        app:layout_constraintTop_toBottomOf="@id/priceSeekBar"
+        app:layout_constraintStart_toStartOf="@id/priceSeekBar"
+        app:layout_constraintEnd_toEndOf="@id/priceSeekBar"
+        android:fontFamily="@font/toolbarfont"
+        android:textColor="@color/black"
+        android:layout_marginTop="35dp"/>
 
+    <EditText
+        android:id="@+id/weightEditText"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        app:layout_constraintTop_toBottomOf="@id/weightTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:padding="5dp"/>
 
     <TextView
         android:id="@+id/jewelryType"
@@ -114,9 +138,9 @@
         android:text="@string/jewelry_type_box"
         android:fontFamily="@font/toolbarfont"
         android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@+id/priceSeekBar"
-        app:layout_constraintStart_toStartOf="@+id/priceSeekBar"
-        app:layout_constraintEnd_toEndOf="@id/priceSeekBar"
+        app:layout_constraintTop_toBottomOf="@+id/weightEditText"
+        app:layout_constraintStart_toStartOf="@+id/weightEditText"
+        app:layout_constraintEnd_toEndOf="@id/weightEditText"
         android:layout_marginTop="35dp"/>
 
 
@@ -165,25 +189,22 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="@string/take_photo"
-        app:layout_constraintTop_toBottomOf="@id/jewelryType"
-        app:layout_constraintStart_toStartOf="@id/jewelryType"
-        app:layout_constraintEnd_toEndOf="@id/jewelryType"
-        android:background="@drawable/button_frame"
+        app:layout_constraintTop_toBottomOf="@id/typeRdioGroup"
+        app:layout_constraintEnd_toStartOf="@id/jewelryType"
         android:onClick="takePhoto"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="50dp"
         android:fontFamily="@font/vogue"
         android:textColor="@color/black"
-        android:backgroundTint="@null"/>
+        android:background="@color/transparent"/>
 
     <ImageView
         android:id="@+id/imageSelected"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:scaleType="centerCrop"
-        app:layout_constraintTop_toBottomOf="@id/btnTakePhoto"
-        app:layout_constraintStart_toStartOf="@id/btnTakePhoto"
-        app:layout_constraintEnd_toEndOf="@id/btnTakePhoto"
-        android:layout_marginTop="15dp"/>
+        app:layout_constraintTop_toBottomOf="@id/typeRdioGroup"
+        app:layout_constraintStart_toEndOf="@id/jewelryType"
+        android:layout_marginTop="30dp"/>
 
     <Button
         android:id="@+id/saveButton"
@@ -192,10 +213,10 @@
         android:text="@string/save_item"
         android:fontFamily="@font/vogue"
         android:textSize="20dp"
-        app:layout_constraintTop_toTopOf="@+id/imageSelected"
-        app:layout_constraintStart_toStartOf="@id/imageSelected"
-        app:layout_constraintEnd_toEndOf="@id/imageSelected"
-        android:layout_marginTop="110dp"
+        app:layout_constraintTop_toBottomOf="@id/btnTakePhoto"
+        app:layout_constraintEnd_toEndOf="@id/btnTakePhoto"
+        app:layout_constraintStart_toStartOf="@id/btnTakePhoto"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:textColor="@color/black"
         android:background="@color/transparent"/>

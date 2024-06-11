@@ -34,6 +34,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.core.widget.doAfterTextChanged
 
 
 class NewItem : Fragment() {
@@ -149,6 +150,16 @@ class NewItem : Fragment() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
+        binding.weightEditText.doAfterTextChanged {
+            val input = it.toString()
+            val isValidInput = input.isNotEmpty() && input.toDoubleOrNull() != null
+            if (!isValidInput){
+                binding.weightTextView.error = "Invalid input"
+            } else {
+                binding.weightEditText.error = null
+            }
+        }
+
         binding.btnTakePhoto.setOnClickListener {
             showImageSourceDialog()
         }
@@ -157,11 +168,12 @@ class NewItem : Fragment() {
             val name = binding.nameEditText.text.toString()
             val description = binding.descriptionEditText.text.toString()
             val price = binding.priceSeekBar.progress.toString().toDoubleOrNull()
+            val weight = binding.weightEditText.text.toString().toDoubleOrNull()
             val selectedRadioButtonId = binding.typeRdioGroup.checkedRadioButtonId
             val selectedRadioButton = binding.typeRdioGroup.findViewById<RadioButton>(selectedRadioButtonId)
             val type = selectedRadioButton?.text.toString()
 
-            if (name.isNotEmpty() && description.isNotEmpty() && price!=null && type.isNotEmpty()){
+            if (name.isNotEmpty() && description.isNotEmpty() && price!=null && weight != null && type.isNotEmpty()){
                 val imagePath = capturedImage?.let { bitmap ->
                     saveBitmapToFile(requireContext(), bitmap)
                 }
@@ -171,6 +183,7 @@ class NewItem : Fragment() {
                         type = type,
                         description = description,
                         price = price,
+                        weight = weight,
                         imageResId = imagePath
                     )
                     jewelryViewModel.addJewelry(newItem)

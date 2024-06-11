@@ -19,6 +19,7 @@
     <string name="jewelry_type_box">Type</string>
     <string name="jewelry_description_box">Description</string>
     <string name="jewelry_price_box">Price</string>
+    <string name="Jewelry_weight_box">Weight</string>
     <string name="jewelry_photo_box">Photo</string>
 
     <string name="necklace_radio_button">Necklace</string>
