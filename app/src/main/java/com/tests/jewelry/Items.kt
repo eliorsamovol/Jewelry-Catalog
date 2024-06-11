@@ -12,6 +12,9 @@ import com.tests.jewelry.databinding.ItemsBinding
 import com.tests.jewelry.ui.adapter.JewelryAdapter
 import com.tests.jewelry.ui.viewmodel.JewelryViewModel
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import android.content.res.Resources
 
 class Items : Fragment() {
 
@@ -21,6 +24,7 @@ class Items : Fragment() {
     private val jewelryViewModel: JewelryViewModel by viewModels()
 
     private lateinit var jewelryAdapter: JewelryAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,13 +38,14 @@ class Items : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         jewelryAdapter = JewelryAdapter(emptyList(),
             onDeleteClick = { item -> deleteItem(item) },
             onEditClick = { item -> editItem(item) },
             context = requireContext())
 
         binding.recyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = GridLayoutManager(context, calculateSpanCount())
             adapter = jewelryAdapter
         }
 
@@ -56,6 +61,12 @@ class Items : Fragment() {
         }
     }
 
+    private fun calculateSpanCount(): Int{
+        val displayMetrics = Resources.getSystem().displayMetrics
+        val dpWidth = displayMetrics.widthPixels / displayMetrics.density
+        val itemWidth = 160
+        return (dpWidth / itemWidth).toInt().coerceAtLeast(1)
+    }
     private fun deleteItem(item: JewelryEntities){
         jewelryViewModel.deleteJewelry(item)
     }

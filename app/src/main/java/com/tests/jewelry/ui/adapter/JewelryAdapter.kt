@@ -18,7 +18,7 @@ class JewelryAdapter(private var itemList: List<JewelryEntities>,
     inner class JewelryViewHolder(private val binding: ItemJewelryBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: JewelryEntities) {
             binding.itemName.text = item.name
-            binding.itemDescription.text = item.description
+            binding.itemPrice.text = "${item.price} \u20AA"
 
             val bitmap = BitmapFactory.decodeFile(item.imageResId)
             binding.itemImage.setImageBitmap(bitmap)
