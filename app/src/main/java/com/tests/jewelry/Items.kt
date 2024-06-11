@@ -25,6 +25,7 @@ class Items : Fragment() {
 
     private lateinit var jewelryAdapter: JewelryAdapter
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,6 +37,7 @@ class Items : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         jewelryAdapter = JewelryAdapter(emptyList(),
             onDeleteClick = { item -> deleteItem(item) },

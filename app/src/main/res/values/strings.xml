@@ -7,7 +7,7 @@
 
     <string name="headline_main">voyage studio</string>
     <string name="save_item">Save</string>
-    <string name="items_headline">Items</string>
+    <string name="items_headline">Jewelries</string>
     <string name="show_by">Show by</string>
     <string name="necklaces">necklaces</string>
     <string name="rings">rings</string>
@@ -27,6 +27,8 @@
     <string name="earring_radio_button">Earring</string>
     <string name="bracelet_radio_button">Bracelet</string>
     <string name="choose_photo_from_gallery">Choose from gallery</string>
+
+    <string name="items_sort_by">Sort by:</string>
 
     <string name="text_second_frame">Jewelery has\n the power to\n be the one\n little thing\n that makes you\n feel unique</string>
 
