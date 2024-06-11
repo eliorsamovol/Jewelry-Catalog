@@ -5,14 +5,15 @@ import androidx.room.RoomDatabase
 import android.content.Context
 import android.telephony.ims.ImsMmTelManager
 import androidx.room.Room
-import com.tests.jewelry.JewelryDao
-import com.tests.jewelry.JewelryEntities
+import com.tests.jewelry.*
 import androidx.room.TypeConverters
+import com.tests.jewelry.data.db.entities.SupplierEntities
 
-@Database(entities = [JewelryEntities::class], version = 3, exportSchema = false)
+@Database(entities = [JewelryEntities::class, SupplierEntities::class], version = 4, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class ItemsDatabase : RoomDatabase() {
     abstract fun jewelryItemDao(): JewelryDao
+    abstract fun supplierDao(): SupplierDao
 
     companion object {
         @Volatile
