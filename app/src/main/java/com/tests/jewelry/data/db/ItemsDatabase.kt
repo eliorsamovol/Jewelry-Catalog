@@ -9,7 +9,7 @@ import com.tests.jewelry.*
 import androidx.room.TypeConverters
 import com.tests.jewelry.data.db.entities.SupplierEntities
 
-@Database(entities = [JewelryEntities::class, SupplierEntities::class], version = 5, exportSchema = false)
+@Database(entities = [JewelryEntities::class, SupplierEntities::class], version = 6, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class ItemsDatabase : RoomDatabase() {
     abstract fun jewelryItemDao(): JewelryDao

@@ -27,6 +27,9 @@ data class JewelryEntities(
     @ColumnInfo(name = "image_res_id")
     val imageResId: String,
 
+    @ColumnInfo(name = "sold_items")
+    var soldItems: Int = 0,
+
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
 ) : Parcelable {
@@ -37,6 +40,7 @@ data class JewelryEntities(
         parcel.readDouble(),
         parcel.readDouble(),
         parcel.readString() ?: "",
+        parcel.readInt(),
         parcel.readInt()
     )
 
@@ -47,6 +51,7 @@ data class JewelryEntities(
         parcel.writeDouble(price)
         parcel.writeDouble(weight)
         parcel.writeString(imageResId)
+        parcel.writeInt(soldItems)
         parcel.writeInt(id)
     }
 

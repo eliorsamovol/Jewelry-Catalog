@@ -9,6 +9,9 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tests.jewelry.*
 import com.tests.jewelry.data.db.entities.SupplierEntities
 import com.tests.jewelry.databinding.ItemSupplierBinding
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class SupplierAdapter(private var itemList: List<SupplierEntities>,
                       private val onDeleteClick: (SupplierEntities) -> Unit,
@@ -18,7 +21,7 @@ class SupplierAdapter(private var itemList: List<SupplierEntities>,
     inner class SupplierViewHolder(private val binding: ItemSupplierBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: SupplierEntities) {
             binding.itemName.text = item.name
-            binding.itemType.text = item.type
+            binding.itemDate.text = parseDate(item.date)
 
             val bitmap = BitmapFactory.decodeFile(item.reception)
             binding.itemImage.setImageBitmap(bitmap)
@@ -53,5 +56,10 @@ class SupplierAdapter(private var itemList: List<SupplierEntities>,
     fun setItems(items : List<SupplierEntities>) {
         this.itemList = items
         notifyDataSetChanged()
+    }
+
+    private fun parseDate(date: Date): String {
+        val dateStr = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return dateStr.format(date)
     }
 }

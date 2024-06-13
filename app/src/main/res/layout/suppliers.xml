@@ -36,9 +36,9 @@
         android:src="@drawable/add_icon"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:padding="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"/>
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toTopOf="@+id/items_headline"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
