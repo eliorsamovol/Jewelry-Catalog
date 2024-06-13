@@ -40,8 +40,12 @@ class Catalog : Fragment() {
 
         loadImages()
 
-        binding.newItem.setOnClickListener {
-            findNavController().navigate(R.id.action_catalog_to_newItem)
+        binding.jewelries.setOnClickListener {
+            findNavController().navigate(R.id.action_catalog_to_items)
+        }
+
+        binding.supplier.setOnClickListener {
+            findNavController().navigate(R.id.action_catalog_to_supplier)
         }
 
         binding.showAllButton.setOnClickListener {

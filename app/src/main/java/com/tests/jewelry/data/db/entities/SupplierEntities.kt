@@ -28,5 +28,5 @@ data class SupplierEntities(
     val reception: String,
 
     @ColumnInfo(name = "purchase_price")
-    val purchasePrice: Float
+    val purchasePrice: Double
 )
