@@ -16,6 +16,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.RadioButton
+import android.widget.SeekBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -37,6 +39,8 @@ class EditItem : Fragment() {
     private val args: EditItemArgs by navArgs()
     private var capturedImage: Bitmap? = null
     private var isPhotoChanged: Boolean = false
+    private lateinit var priceSeekBar: SeekBar
+    private lateinit var priceValueTextView: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -107,6 +111,18 @@ class EditItem : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        priceSeekBar = binding.priceSeekBar
+        priceValueTextView = binding.jewelryPrice
+        priceSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                priceValueTextView.text = "Price $progress"
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        })
 
         val jewelryItem = args.jewelryItem
 

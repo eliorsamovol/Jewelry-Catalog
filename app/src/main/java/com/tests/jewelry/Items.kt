@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.content.res.Resources
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import com.tests.jewelry.ItemsDirections
 
 class Items : Fragment(), AdapterView.OnItemSelectedListener {
 
@@ -47,6 +48,7 @@ class Items : Fragment(), AdapterView.OnItemSelectedListener {
             emptyList(),
             onDeleteClick = { item -> deleteItem(item) },
             onEditClick = { item -> editItem(item) },
+            onItemClick =  { item -> itemDetails(item) },
             context = requireContext()
         )
 
@@ -66,6 +68,7 @@ class Items : Fragment(), AdapterView.OnItemSelectedListener {
         binding.sortSpinner.adapter = adapter
 
         binding.sortSpinner.onItemSelectedListener = this
+
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -116,6 +119,11 @@ class Items : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun editItem(item: JewelryEntities) {
         val action = ItemsDirections.actionItemsFragmentToEditItemFragment(item)
+        findNavController().navigate(action)
+    }
+
+    private fun itemDetails(item: JewelryEntities) {
+        val action = ItemsDirections.actionItemsFragmentToItemDetailsFragment(item)
         findNavController().navigate(action)
     }
 

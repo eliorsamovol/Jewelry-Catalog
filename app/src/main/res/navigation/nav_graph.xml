@@ -56,6 +56,9 @@
         <action
             android:id="@+id/action_itemsFragment_to_newItemFragment"
             app:destination="@+id/newItemFragment"/>
+        <action
+            android:id="@+id/action_itemsFragment_to_itemDetailsFragment"
+            app:destination="@+id/itemDetailsFragment"/>
     </fragment>
 
     <fragment
@@ -82,4 +85,12 @@
             app:destination="@+id/itemsFragment"/>
     </fragment>
 
+    <fragment
+        android:id="@+id/itemDetailsFragment"
+        android:name="com.tests.jewelry.ItemDetails"
+        tools:layout="@layout/item_details">
+        <argument
+            android:name="selectedItem"
+            app:argType="com.tests.jewelry.JewelryEntities"/>
+    </fragment>
 </navigation>

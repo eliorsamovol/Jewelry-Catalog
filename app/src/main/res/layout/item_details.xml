@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <TextView
+        android:id="@+id/mainHeadline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/jewelry_details"
+        android:fontFamily="@font/vogue"
+        android:textSize="22dp"
+        android:layout_marginTop="20dp"/>
+
+    <ImageView
+        android:id="@+id/jewelryImage"
+        android:layout_width="200dp"
+        android:layout_height="240dp"
+        app:layout_constraintTop_toBottomOf="@id/mainHeadline"
+        app:layout_constraintStart_toStartOf="@id/mainHeadline"
+        app:layout_constraintEnd_toEndOf="@id/mainHeadline"
+        android:layout_marginTop="35dp"/>
+
+    <TextView
+        android:id="@+id/jewelryName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/jewelry_name_box"
+        android:fontFamily="@font/toolbarfont"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@+id/jewelryImage"
+        app:layout_constraintStart_toStartOf="@+id/jewelryImage"
+        android:layout_marginTop="35dp" />
+
+    <TextView
+        android:id="@+id/jewelryDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/jewelry_description_box"
+        android:fontFamily="@font/toolbarfont"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@+id/jewelryName"
+        app:layout_constraintStart_toStartOf="@+id/jewelryName"
+        android:layout_marginTop="35dp"/>
+
+    <TextView
+        android:id="@+id/jewelryPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/jewelry_price_box"
+        android:fontFamily="@font/toolbarfont"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@+id/jewelryDescription"
+        app:layout_constraintStart_toStartOf="@+id/jewelryDescription"
+        android:layout_marginTop="35dp"/>
+
+    <TextView
+        android:id="@+id/weightTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Jewelry_weight_box"
+        app:layout_constraintTop_toBottomOf="@id/jewelryPrice"
+        app:layout_constraintStart_toStartOf="@id/jewelryPrice"
+        android:fontFamily="@font/toolbarfont"
+        android:textColor="@color/black"
+        android:layout_marginTop="35dp"/>
+
+    <TextView
+    android:id="@+id/jewelryType"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/jewelry_type_box"
+    android:fontFamily="@font/toolbarfont"
+    android:textColor="@color/black"
+    app:layout_constraintTop_toBottomOf="@+id/weightTextView"
+    app:layout_constraintStart_toStartOf="@+id/weightTextView"
+    android:layout_marginTop="35dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

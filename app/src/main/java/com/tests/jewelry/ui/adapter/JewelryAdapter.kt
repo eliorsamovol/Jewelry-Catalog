@@ -12,6 +12,7 @@ import com.tests.jewelry.databinding.ItemJewelryBinding
 class JewelryAdapter(private var itemList: List<JewelryEntities>,
                      private val onDeleteClick: (JewelryEntities) -> Unit,
                      private val onEditClick: (JewelryEntities) -> Unit,
+                     private val onItemClick: (JewelryEntities) -> Unit,
                      private val context: Context
 ) : RecyclerView.Adapter<JewelryAdapter.JewelryViewHolder>() {
 
@@ -46,7 +47,9 @@ class JewelryAdapter(private var itemList: List<JewelryEntities>,
     }
 
     override fun onBindViewHolder(holder: JewelryViewHolder, position: Int) {
-        holder.bind(itemList[position])
+        val item = itemList[position]
+        holder.bind(item)
+        holder.itemView.setOnClickListener { onItemClick(item) }
     }
 
     override fun getItemCount() = itemList.size

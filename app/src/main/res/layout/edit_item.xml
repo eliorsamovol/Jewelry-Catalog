@@ -97,7 +97,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginTop="5dp"
             android:padding="5dp"
-            android:max="500"
+            android:max="1000"
             android:min="0"/>
 
         <TextView

@@ -1,5 +1,6 @@
 package com.tests.jewelry
 
+import android.content.res.Resources
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tests.jewelry.data.db.entities.SupplierEntities
 import com.tests.jewelry.databinding.SuppliersBinding
@@ -40,7 +42,7 @@ class Supplier : Fragment() {
             context = requireContext())
 
         binding.recyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = GridLayoutManager(context, calculateSpanCount())
             adapter = supplierAdapter
         }
 
@@ -52,6 +54,13 @@ class Supplier : Fragment() {
             supplierAdapter.setItems(supplier)
         }
 
+    }
+
+    private fun calculateSpanCount(): Int{
+        val displayMetrics = Resources.getSystem().displayMetrics
+        val dpWidth = displayMetrics.widthPixels / displayMetrics.density
+        val itemWidth = 160
+        return (dpWidth / itemWidth).toInt().coerceAtLeast(1)
     }
 
     private fun deleteItem(item: SupplierEntities){

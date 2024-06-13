@@ -45,6 +45,9 @@
     <string name="edit_item_headline">Edit Item</string>
     <string name="save_change_btn">Save Changes</string>
 
+    <string name="jewelry_details">Jewelry Details</string>
+    <string name="jewelry_img">Jewlery Image</string>
+
     <string-array name="sort_options">
         <item>Default</item>
         <item>Price: Low to High</item>
