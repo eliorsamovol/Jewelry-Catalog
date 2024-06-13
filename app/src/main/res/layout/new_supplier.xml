@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/newItemFragment"
+        android:id="@+id/newSupplierFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".NewSupplier">
@@ -227,28 +227,25 @@
 
         <Button
             android:id="@+id/btnTakePhoto"
-            android:layout_width="120dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:text="@string/upload_reception"
-            app:layout_constraintTop_toBottomOf="@id/supplierType"
-            app:layout_constraintStart_toStartOf="@id/supplierType"
-            app:layout_constraintEnd_toEndOf="@id/supplierType"
-            android:background="@drawable/button_frame"
+            app:layout_constraintTop_toBottomOf="@id/typeRadioGroup"
+            app:layout_constraintEnd_toStartOf="@id/supplierType"
+            android:background="@color/transparent"
             android:onClick="takePhoto"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="50dp"
             android:fontFamily="@font/vogue"
-            android:textColor="@color/black"
-            android:backgroundTint="@null"/>
+            android:textColor="@color/black"/>
 
         <ImageView
             android:id="@+id/imageSelected"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:scaleType="centerCrop"
-            app:layout_constraintTop_toBottomOf="@id/btnTakePhoto"
-            app:layout_constraintStart_toStartOf="@id/btnTakePhoto"
-            app:layout_constraintEnd_toEndOf="@id/btnTakePhoto"
-            android:layout_marginTop="15dp"/>
+            app:layout_constraintTop_toBottomOf="@id/typeRadioGroup"
+            app:layout_constraintStart_toEndOf="@id/supplierType"
+            android:layout_marginTop="30dp"/>
 
         <Button
             android:id="@+id/saveButton"
@@ -257,10 +254,10 @@
             android:text="@string/save_item"
             android:fontFamily="@font/vogue"
             android:textSize="20dp"
-            app:layout_constraintTop_toTopOf="@+id/imageSelected"
-            app:layout_constraintStart_toStartOf="@id/imageSelected"
-            app:layout_constraintEnd_toEndOf="@id/imageSelected"
-            android:layout_marginTop="110dp"
+            app:layout_constraintTop_toBottomOf="@+id/btnTakePhoto"
+            app:layout_constraintStart_toStartOf="@id/btnTakePhoto"
+            app:layout_constraintEnd_toEndOf="@id/btnTakePhoto"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:textColor="@color/black"
             android:background="@color/transparent"/>

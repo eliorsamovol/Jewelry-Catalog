@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/newItemFragment"
+    android:id="@+id/supplierFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Supplier">
@@ -13,8 +13,11 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/items_headline"/>
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:text="@string/suppliers"
+        android:fontFamily="@font/vogue"
+        android:textSize="28dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -30,8 +33,7 @@
         android:id="@+id/addSupplierButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/trash_icon"
-        android:contentDescription="@string/delete"
+        android:src="@drawable/add_icon"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"

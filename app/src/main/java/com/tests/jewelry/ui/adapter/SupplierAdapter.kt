@@ -18,7 +18,7 @@ class SupplierAdapter(private var itemList: List<SupplierEntities>,
     inner class SupplierViewHolder(private val binding: ItemSupplierBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: SupplierEntities) {
             binding.itemName.text = item.name
-            binding.itemDescription.text = item.type
+            binding.itemType.text = item.type
 
             val bitmap = BitmapFactory.decodeFile(item.reception)
             binding.itemImage.setImageBitmap(bitmap)
