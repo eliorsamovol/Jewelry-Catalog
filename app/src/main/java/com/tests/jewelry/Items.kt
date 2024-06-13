@@ -15,8 +15,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.content.res.Resources
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 
-class Items : Fragment() {
+class Items : Fragment(), AdapterView.OnItemSelectedListener {
 
     private var _binding: ItemsBinding? = null
     private val binding get() = _binding!!
@@ -24,6 +26,8 @@ class Items : Fragment() {
     private val jewelryViewModel: JewelryViewModel by viewModels()
 
     private lateinit var jewelryAdapter: JewelryAdapter
+
+    private var itemType: String = "all"
 
 
     override fun onCreateView(
@@ -39,17 +43,44 @@ class Items : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        jewelryAdapter = JewelryAdapter(emptyList(),
+        jewelryAdapter = JewelryAdapter(
+            emptyList(),
             onDeleteClick = { item -> deleteItem(item) },
             onEditClick = { item -> editItem(item) },
-            context = requireContext())
+            context = requireContext()
+        )
 
         binding.recyclerView.apply {
             layoutManager = GridLayoutManager(context, calculateSpanCount())
             adapter = jewelryAdapter
         }
 
-        val itemType = arguments?.getString("itemType") ?: "all"
+        arguments?.getString("itemType")?.let { type ->
+            itemType = type
+            observeItems(itemType)
+        }
+
+        val sortOptions = resources.getStringArray(R.array.sort_options)
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, sortOptions)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.sortSpinner.adapter = adapter
+
+        binding.sortSpinner.onItemSelectedListener = this
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        when (position) {
+            0 -> observeItems(itemType) // Default order
+            1 -> observeItemsSortedByPrice(true) // Sort by price ascending
+            2 -> observeItemsSortedByPrice(false) // Sort by price descending
+        }
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        // Do nothing here if nothing is selected
+    }
+
+    private fun observeItems(itemType: String){
         if(itemType == "all"){
             jewelryViewModel.items.observe(viewLifecycleOwner, Observer { items ->
                 jewelryAdapter.setItems(items)
@@ -58,6 +89,18 @@ class Items : Fragment() {
             jewelryViewModel.getJewelryByType(itemType).observe(viewLifecycleOwner, Observer { items ->
                 jewelryAdapter.setItems(items)
             })
+        }
+    }
+
+    private fun observeItemsSortedByPrice(ascending: Boolean) {
+        if (ascending) {
+            jewelryViewModel.getItemsSortedByPriceAsc().observe(viewLifecycleOwner) { items ->
+                jewelryAdapter.setItems(items)
+            }
+        } else {
+            jewelryViewModel.getItemsSortedByPriceDesc().observe(viewLifecycleOwner) { items ->
+                jewelryAdapter.setItems(items)
+            }
         }
     }
 

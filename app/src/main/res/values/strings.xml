@@ -35,6 +35,12 @@
     <string name="edit_item_headline">Edit Item</string>
     <string name="save_change_btn">Save Changes</string>
 
+    <string-array name="sort_options">
+        <item>Default</item>
+        <item>Price: Low to High</item>
+        <item>Price: High to Low</item>
+    </string-array>
+
     <string name="catalog">Catalog</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

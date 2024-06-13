@@ -29,4 +29,14 @@ interface JewelryDao {
     @Query("DELETE FROM jewelry_table")
     fun deleteAll()
 
+    @Query("SELECT * FROM jewelry_table ORDER BY price ASC")
+    fun getItemsSortedByPriceAsc(): LiveData<List<JewelryEntities>>
+
+    @Query("SELECT * FROM jewelry_table ORDER BY price DESC")
+    fun getItemsSortedByPriceDesc(): LiveData<List<JewelryEntities>>
+
+    @Query("SELECT * FROM jewelry_table ORDER BY creation_time ASC")
+    fun getItemsByCreationOrder(): LiveData<List<JewelryEntities>>
+
+
 }

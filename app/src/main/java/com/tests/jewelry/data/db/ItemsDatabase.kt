@@ -8,8 +8,10 @@ import androidx.room.Room
 import com.tests.jewelry.*
 import androidx.room.TypeConverters
 import com.tests.jewelry.data.db.entities.SupplierEntities
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [JewelryEntities::class, SupplierEntities::class], version = 4, exportSchema = false)
+@Database(entities = [JewelryEntities::class, SupplierEntities::class], version = 5, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class ItemsDatabase : RoomDatabase() {
     abstract fun jewelryItemDao(): JewelryDao
@@ -25,9 +27,16 @@ abstract class ItemsDatabase : RoomDatabase() {
                     context.applicationContext,
                     ItemsDatabase::class.java,
                     "jewelry_database"
-                ).fallbackToDestructiveMigration().build()
+                ).addMigrations(MIGRATION_4_5)
+                .fallbackToDestructiveMigration().build()
                 instance = newInstance
                 newInstance
+            }
+        }
+
+        private val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE jewelry_table ADD COLUMN creation_time INTEGER NOT NULL DEFAULT 0")
             }
         }
     }

@@ -25,6 +25,7 @@ class JewelryViewModel(application: Application) : AndroidViewModel(application)
     private val _chosenSupplier = MutableLiveData<SupplierEntities>()
     val chosenSupplier : LiveData<SupplierEntities> get() = _chosenSupplier
 
+
     fun setJewelry(jewelry:JewelryEntities){
         _chosenJewelry.value = jewelry
     }
@@ -80,4 +81,17 @@ class JewelryViewModel(application: Application) : AndroidViewModel(application)
     fun deleteAll() = viewModelScope.launch(Dispatchers.IO) {
         repository.deleteAll()
     }
+
+    fun getItemsSortedByPriceAsc(): LiveData<List<JewelryEntities>> {
+        return repository.getItemsSortedByPriceAsc()
+    }
+
+    fun getItemsSortedByPriceDesc(): LiveData<List<JewelryEntities>> {
+        return repository.getItemsSortedByPriceDesc()
+    }
+
+    fun getItemsByCreationOrder(): LiveData<List<JewelryEntities>> {
+        return repository.getItemByCreationOrder()
+    }
+
 }

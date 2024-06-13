@@ -34,4 +34,16 @@ class JewelryRepository(context: Context) {
     fun deleteAll(){
         jewelryDao.deleteAll()
     }
+
+    fun getItemsSortedByPriceAsc(): LiveData<List<JewelryEntities>> {
+        return jewelryDao.getItemsSortedByPriceAsc()
+    }
+
+    fun getItemsSortedByPriceDesc(): LiveData<List<JewelryEntities>> {
+        return jewelryDao.getItemsSortedByPriceDesc()
+    }
+
+    fun getItemByCreationOrder(): LiveData<List<JewelryEntities>> {
+        return jewelryDao.getItemsByCreationOrder()
+    }
 }
