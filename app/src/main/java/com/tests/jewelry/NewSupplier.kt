@@ -287,7 +287,7 @@ class NewSupplier : Fragment() {
     }
 
     private fun parseDate(dateStr: String): Date {
-        val date = SimpleDateFormat("dd-MM-yyyy")
+        val date = SimpleDateFormat("dd/MM/yyyy")
         return date.parse(dateStr) ?: Date()
     }
 

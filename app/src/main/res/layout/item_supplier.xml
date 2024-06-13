@@ -36,10 +36,10 @@
                 android:fontFamily="@font/vogue" />
 
             <TextView
-                android:id="@+id/itemType"
+                android:id="@+id/itemDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Type"
+                android:text="Date"
                 android:fontFamily="@font/toolbarfont"
                 android:textSize="15sp" />
 

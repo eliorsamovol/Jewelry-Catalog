@@ -67,11 +67,6 @@ class Supplier : Fragment() {
         supplierViewModel.deleteSupplier(item)
     }
 
-//    private fun editItem(item: SupplierEntities) {
-//        val action = ItemsDirections.actionItemsFragmentToEditItemFragment(item)
-//        findNavController().navigate(action)
-//    }
-
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

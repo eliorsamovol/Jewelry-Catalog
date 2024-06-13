@@ -93,6 +93,11 @@ class Items : Fragment(), AdapterView.OnItemSelectedListener {
                 jewelryAdapter.setItems(items)
             })
         }
+
+        val addJewelryBtn = binding.addJewelryButton
+        addJewelryBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_itemsFragment_to_newItemFragment)
+        }
     }
 
     private fun observeItemsSortedByPrice(ascending: Boolean) {

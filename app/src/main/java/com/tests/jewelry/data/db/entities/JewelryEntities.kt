@@ -30,6 +30,9 @@ data class JewelryEntities(
     @ColumnInfo(name = "creation_time")
     val creationTime: Long = System.currentTimeMillis(),
 
+    @ColumnInfo(name = "sold_items")
+    var soldItems: Int = 0,
+
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
 ) : Parcelable {
@@ -41,6 +44,7 @@ data class JewelryEntities(
         parcel.readDouble(),
         parcel.readString() ?: "",
         parcel.readLong(),
+        parcel.readInt(),
         parcel.readInt()
     )
 
@@ -52,6 +56,7 @@ data class JewelryEntities(
         parcel.writeDouble(weight)
         parcel.writeString(imageResId)
         parcel.writeLong(creationTime)
+        parcel.writeInt(soldItems)
         parcel.writeInt(id)
     }
 
