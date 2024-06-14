@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("kotlin-kapt")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -11,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.tests.jewelry"
-        minSdk = 21
+        minSdk = 19
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -33,6 +34,7 @@ android {
     buildFeatures{
         viewBinding = true
         dataBinding = true
+        buildConfig = true
     }
 
     compileOptions {
@@ -42,6 +44,22 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    secrets {
+        // Optionally specify a different file name containing your secrets.
+        // The plugin defaults to "local.properties"
+        propertiesFileName = "secrets.properties"
+
+        // A properties file containing default secret values. This file can be
+        // checked in version control.
+        defaultPropertiesFileName = "local.defaults.properties"
+
+        // Configure which keys should be ignored by the plugin by providing regular expressions.
+        // "sdk.dir" is ignored by default.
+        ignoreList.add("keyToIgnore") // Ignore the key "keyToIgnore"
+        ignoreList.add("sdk.*")       // Ignore all keys matching the regexp "sdk.*"
+    }
+
 }
 
 val room_version="2.6.1"
@@ -66,7 +84,8 @@ dependencies {
     annotationProcessor("com.github.bumptech.glide:compiler:4.13.2")
     implementation("androidx.exifinterface:exifinterface:1.3.7")
     implementation("com.google.android.gms:play-services-maps:18.0.2")
-    implementation("com.google.android.gms:play-services-location:21.3.0")
+    implementation("com.google.android.gms:play-services-location:20.0.0")
+    implementation("com.google.android.libraries.places:places:2.5.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

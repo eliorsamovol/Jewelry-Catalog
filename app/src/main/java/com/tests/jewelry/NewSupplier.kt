@@ -39,7 +39,24 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
 import android.app.DatePickerDialog
-class NewSupplier : Fragment() {
+import android.location.Geocoder
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
+import android.widget.ImageButton
+import com.google.android.gms.maps.*
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+import com.google.android.gms.common.api.Status
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.AutocompleteActivity
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+
+class NewSupplier : Fragment(), OnMapReadyCallback {
 
     private var _binding: NewSupplierBinding? = null
     private val binding get() = _binding!!
@@ -50,6 +67,9 @@ class NewSupplier : Fragment() {
 
     private lateinit var priceSeekBar: SeekBar
     private lateinit var priceValueTextView: TextView
+
+    private lateinit var mapView: MapView
+    private var googleMap: GoogleMap? = null
 
     private val takePictureLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -129,12 +149,28 @@ class NewSupplier : Fragment() {
         }
     }
 
+    private val requestLocationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permission ->
+        if(permission[Manifest.permission.ACCESS_FINE_LOCATION] == true ||
+            permission[Manifest.permission.ACCESS_COARSE_LOCATION] == true) {
+            enableMyLocation()
+        } else {
+            Toast.makeText(requireContext(), "Location permission is required", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = NewSupplierBinding.inflate(inflater, container, false)
+
+        if(!Places.isInitialized()){
+            Places.initialize(requireContext(), BuildConfig.MAPS_API_KEY, Locale.getDefault())
+        }
+
         return binding.root
     }
 
@@ -143,6 +179,8 @@ class NewSupplier : Fragment() {
 
         priceSeekBar = binding.priceSeekBar
         priceValueTextView = binding.priceValueTextView
+        mapView = binding.mapView
+
         priceSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 priceValueTextView.text = "$progress"
@@ -153,7 +191,7 @@ class NewSupplier : Fragment() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
-        binding.dateButton.setOnClickListener {
+        binding.dateEditText.setOnClickListener {
             showDatePickerDialog()
         }
 
@@ -201,6 +239,25 @@ class NewSupplier : Fragment() {
             } else {
                 Toast.makeText(context, "please fill all", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        mapView.onCreate(savedInstanceState)
+        mapView.getMapAsync(this)
+
+        mapView.setOnTouchListener (object : View.OnTouchListener {
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                v?.performClick()
+                binding.newSupplierFragment.requestDisallowInterceptTouchEvent(true)
+                return false
+            }
+        })
+
+        checkLocationPermission()
+
+        binding.addressEditText.setOnClickListener {
+            val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS)
+            val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields).build(requireContext())
+            startAutocomplete.launch(intent)
         }
     }
 
@@ -271,7 +328,7 @@ class NewSupplier : Fragment() {
         pickImageLauncher.launch("image/*")
     }
 
-    fun saveBitmapToFile(context: Context, bitmap: Bitmap): String? {
+    private fun saveBitmapToFile(context: Context, bitmap: Bitmap): String? {
         val storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         val file = File.createTempFile("JPEG_", ".jpg", storageDir)
         return try {
@@ -287,12 +344,94 @@ class NewSupplier : Fragment() {
     }
 
     private fun parseDate(dateStr: String): Date {
-        val date = SimpleDateFormat("dd/MM/yyyy")
+        val date = SimpleDateFormat("dd-MM-yyyy")
         return date.parse(dateStr) ?: Date()
+    }
+
+    private fun checkLocationPermission() {
+        if(ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestLocationPermissionLauncher.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION))
+        } else {
+            enableMyLocation()
+        }
+    }
+
+    private fun enableMyLocation() {
+        if(ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            googleMap?.isMyLocationEnabled = true
+        }
+    }
+
+    override fun onMapReady(map: GoogleMap) {
+        googleMap = map
+
+        val initialLocation = LatLng(32.17605083308438, 34.83765488676843)
+        googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(initialLocation, 15f))
+
+        googleMap?.uiSettings?.isZoomControlsEnabled = true
+        googleMap?.uiSettings?.isZoomGesturesEnabled = true
+        googleMap?.uiSettings?.isScrollGesturesEnabled = true
+
+        googleMap?.setOnMapClickListener { latLng ->
+            googleMap?.clear()
+            googleMap?.addMarker(MarkerOptions().position(latLng).title("Selected Location"))
+            val geocoder = Geocoder(requireContext(), Locale.getDefault())
+            val addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
+            if(addresses!!.isNotEmpty()){
+                val address = addresses[0].getAddressLine(0)
+                binding.addressEditText.setText(address)
+            }
+        }
+    }
+
+    private val startAutocomplete = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if(result.resultCode == Activity.RESULT_OK) {
+            val place = Autocomplete.getPlaceFromIntent(result.data!!)
+            binding.addressEditText.setText(place.address)
+            googleMap?.clear()
+            googleMap?.addMarker(MarkerOptions().position(place.latLng!!).title("Selected location"))
+            googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(place.latLng, 15f))
+
+            hideKeyboard()
+        } else if(result.resultCode == AutocompleteActivity.RESULT_ERROR) {
+            val status: Status = Autocomplete.getStatusFromIntent(result.data!!)
+            Toast.makeText(requireContext(), "Error: ${status.statusMessage}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun hideKeyboard(){
+        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(binding.addressEditText.windowToken, 0)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.onPause()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView.onLowMemory()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
+    }
+
+
 }

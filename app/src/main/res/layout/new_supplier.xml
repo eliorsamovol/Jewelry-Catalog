@@ -60,12 +60,33 @@
             app:layout_constraintEnd_toEndOf="@id/nameEditText"
             android:layout_marginTop="15dp"/>
 
+        <FrameLayout
+            android:id="@+id/mapContainer"
+            android:layout_width="300dp"
+            android:layout_height="150dp"
+            app:layout_constraintTop_toBottomOf="@+id/addressEditText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/supplierPhone"
+            android:layout_marginTop="16dp">
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/mapView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"/>
+
+        </FrameLayout>
+
         <EditText
             android:id="@+id/addressEditText"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:inputType="text"
+            android:inputType="none"
+            android:focusable="false"
+            android:clickable="true"
             app:layout_constraintTop_toBottomOf="@id/supplierAddress"
+            app:layout_constraintBottom_toTopOf="@+id/mapContainer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="16dp"
@@ -80,9 +101,9 @@
             android:text="@string/supplier_phone_box"
             android:fontFamily="@font/toolbarfont"
             android:textColor="@color/black"
-            app:layout_constraintTop_toBottomOf="@+id/addressEditText"
-            app:layout_constraintStart_toStartOf="@+id/addressEditText"
-            app:layout_constraintEnd_toEndOf="@id/addressEditText"
+            app:layout_constraintTop_toBottomOf="@+id/mapContainer"
+            app:layout_constraintStart_toStartOf="@+id/mapContainer"
+            app:layout_constraintEnd_toEndOf="@id/mapContainer"
             android:layout_marginTop="15dp"/>
 
         <EditText
@@ -114,6 +135,7 @@
             android:id="@+id/dateEditText"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:clickable="true"
             android:inputType="date"
             app:layout_constraintTop_toBottomOf="@id/supplierPurchaseDate"
             app:layout_constraintStart_toStartOf="parent"
@@ -123,15 +145,6 @@
             android:gravity="center"
             android:padding="5dp"/>
 
-        <ImageButton
-            android:id="@+id/dateButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:layout_constraintTop_toBottomOf="@id/supplierPurchaseDate"
-            app:layout_constraintStart_toEndOf="@id/dateEditText"
-            android:src="@drawable/calender_icon"
-            android:background="@null"/>
-
         <TextView
             android:id="@+id/supplierPrice"
             android:layout_width="wrap_content"
@@ -139,7 +152,7 @@
             android:text="@string/jewelry_price_box"
             android:fontFamily="@font/toolbarfont"
             android:textColor="@color/black"
-            app:layout_constraintTop_toBottomOf="@+id/dateButton"
+            app:layout_constraintTop_toBottomOf="@+id/dateEditText"
             app:layout_constraintStart_toStartOf="@+id/supplierPurchaseDate"
             app:layout_constraintEnd_toEndOf="@id/supplierPurchaseDate"
             android:layout_marginTop="35dp"/>
@@ -149,7 +162,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
-            app:layout_constraintTop_toBottomOf="@id/dateButton"
+            app:layout_constraintTop_toBottomOf="@id/dateEditText"
             app:layout_constraintStart_toEndOf="@+id/supplierPrice"
             android:layout_marginTop="35dp"
             android:layout_marginLeft="20dp"/>
