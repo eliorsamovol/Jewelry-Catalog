@@ -1,6 +1,10 @@
 package com.tests.jewelry
 
+import android.content.BroadcastReceiver
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.res.Resources
+import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,10 +14,17 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import com.tests.jewelry.data.db.entities.SupplierEntities
 import com.tests.jewelry.databinding.SuppliersBinding
 import com.tests.jewelry.ui.adapter.SupplierAdapter
 import com.tests.jewelry.ui.viewmodel.JewelryViewModel
+import java.util.concurrent.TimeUnit
 
 
 class Supplier : Fragment() {
@@ -33,6 +44,7 @@ class Supplier : Fragment() {
         _binding = SuppliersBinding.inflate(inflater, container, false)
         return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -71,4 +83,5 @@ class Supplier : Fragment() {
         super.onDestroy()
         _binding = null
     }
+
 }
