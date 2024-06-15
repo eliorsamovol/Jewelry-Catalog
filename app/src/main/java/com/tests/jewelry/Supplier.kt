@@ -14,6 +14,7 @@ import com.tests.jewelry.data.db.entities.SupplierEntities
 import com.tests.jewelry.databinding.SuppliersBinding
 import com.tests.jewelry.ui.adapter.SupplierAdapter
 import com.tests.jewelry.ui.viewmodel.JewelryViewModel
+import com.tests.jewelry.ItemsDirections
 
 
 class Supplier : Fragment() {
@@ -39,6 +40,7 @@ class Supplier : Fragment() {
 
         supplierAdapter = SupplierAdapter(emptyList(),
             onDeleteClick = { item -> deleteItem(item) },
+            onItemClick =  { item -> itemDetails(item) },
             context = requireContext())
 
         binding.recyclerView.apply {
@@ -65,6 +67,11 @@ class Supplier : Fragment() {
 
     private fun deleteItem(item: SupplierEntities){
         supplierViewModel.deleteSupplier(item)
+    }
+
+    private fun itemDetails(item: SupplierEntities) {
+        val action = SupplierDirections.actionSuppliersFragmentToSupplierDetailsFragment(item)
+        findNavController().navigate(action)
     }
 
     override fun onDestroy() {

@@ -2,6 +2,7 @@
 plugins {
     alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.jetbrainsKotlinAndroid) apply false
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin") version "1.3.0" apply false
 }
 
 buildscript{
