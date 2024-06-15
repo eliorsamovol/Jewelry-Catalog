@@ -47,6 +47,13 @@
 
     <string name="jewelry_details">Jewelry Details</string>
     <string name="jewelry_img">Jewlery Image</string>
+    
+    <string name="suppliers_details_headline">Supplier Details</string>
+    <string name="suppliers_address_details">Address</string>
+    <string name="supplier_phone_details">Phone</string>
+    <string name="supplier_date_details">Date of purchase</string>
+    <string name="supplier_sum_details">Purchase Amount</string>
+    <string name="supplier_type_details">Type</string>
 
     <string-array name="sort_options">
         <item>Default</item>

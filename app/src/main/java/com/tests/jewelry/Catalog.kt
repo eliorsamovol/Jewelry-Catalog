@@ -16,6 +16,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.navigation.NavController
 import android.text.SpannableString
+import android.text.Spanned
 import android.text.style.UnderlineSpan
 
 class Catalog : Fragment() {
@@ -50,11 +51,6 @@ class Catalog : Fragment() {
             findNavController().navigate(R.id.action_catalog_to_supplier)
         }
 
-        binding.showAllButton.setOnClickListener {
-            val bundle = Bundle().apply { putString("itemType", "all") }
-            findNavController().navigate(R.id.action_catalog_to_items, bundle)
-        }
-
         binding.necklaces.setOnClickListener {
             val bundle = Bundle().apply { putString("itemType", "necklace") }
             findNavController().navigate(R.id.action_catalog_to_items, bundle)
@@ -75,10 +71,17 @@ class Catalog : Fragment() {
             findNavController().navigate(R.id.action_catalog_to_items, bundle)
         }
 
-        val text = getString(R.string.view_all)
-        val spannableString = SpannableString(text)
-        spannableString.setSpan(UnderlineSpan(), 0, text.length,0)
-        binding.showAllButton.text = spannableString
+        val button = binding.jewelries
+        val str = getString(R.string.items_headline)
+        val spanstr = SpannableString(str)
+        spanstr.setSpan(UnderlineSpan(), 0, str.length, 0)
+        button.text = spanstr
+
+        val suppliersBtn = binding.supplier
+        val supplierStr = getString(R.string.suppliers)
+        val spanStrSuppliers = SpannableString(supplierStr)
+        spanStrSuppliers.setSpan(UnderlineSpan(), 0, supplierStr.length, 0)
+        suppliersBtn.text = spanStrSuppliers
     }
 
     private fun loadImages(){

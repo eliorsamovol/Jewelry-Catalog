@@ -15,6 +15,7 @@ import java.util.Locale
 
 class SupplierAdapter(private var itemList: List<SupplierEntities>,
                       private val onDeleteClick: (SupplierEntities) -> Unit,
+                      private val onItemClick: (SupplierEntities) -> Unit,
                       private val context: Context
 ) : RecyclerView.Adapter<SupplierAdapter.SupplierViewHolder>() {
 
@@ -27,6 +28,7 @@ class SupplierAdapter(private var itemList: List<SupplierEntities>,
             binding.itemImage.setImageBitmap(bitmap)
 
             binding.deleteButton.setOnClickListener { showDeleteConfirmationDialog(item) }
+            itemView.setOnClickListener { onItemClick(item) }
         }
 
         private fun showDeleteConfirmationDialog(item: SupplierEntities) {

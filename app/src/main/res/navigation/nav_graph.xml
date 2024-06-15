@@ -71,7 +71,20 @@
         <action
             android:id="@+id/action_supplier_to_newSupplier"
             app:destination="@+id/newSupplierFragment"/>
+        <action
+            android:id="@+id/action_suppliersFragment_to_supplierDetailsFragment"
+            app:destination="@+id/supplierDetailsFragment"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/supplierDetailsFragment"
+        android:name="com.tests.jewelry.SupplierDetails"
+        tools:layout="@layout/supplier_details">
+        <argument
+            android:name="selectedItem"
+            app:argType="com.tests.jewelry.data.db.entities.SupplierEntities"/>
+    </fragment>
+
 
     <fragment
         android:id="@+id/editItemFragment"

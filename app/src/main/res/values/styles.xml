@@ -1,0 +1,11 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/biege</item>
+        <item name="colorPrimaryDark">@color/biege</item>
+        <item name="colorAccent">@color/biege</item>
+<!--        <item name="android:statusBarColor">@color/biege</item>-->
+<!--        <item name="android:windowLightStatusBar">true</item>-->
+    </style>
+
+</resources>
