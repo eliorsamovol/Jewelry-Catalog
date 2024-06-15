@@ -9,7 +9,8 @@
         android:id="@+id/newItemFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".NewItem">
+        tools:context=".NewItem"
+        android:background="@color/biege">
 
         <TextView
             android:id="@+id/mainHeadline"

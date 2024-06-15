@@ -15,6 +15,8 @@ import com.tests.jewelry.databinding.CatalogBinding
 import android.util.Log
 import android.widget.Toast
 import androidx.navigation.NavController
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 
 class Catalog : Fragment() {
 
@@ -72,6 +74,11 @@ class Catalog : Fragment() {
             val bundle = Bundle().apply { putString("itemType", "bracelet") }
             findNavController().navigate(R.id.action_catalog_to_items, bundle)
         }
+
+        val text = getString(R.string.view_all)
+        val spannableString = SpannableString(text)
+        spannableString.setSpan(UnderlineSpan(), 0, text.length,0)
+        binding.showAllButton.text = spannableString
     }
 
     private fun loadImages(){
