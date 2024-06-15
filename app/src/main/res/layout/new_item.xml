@@ -186,7 +186,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/bracelet_radio_button"
-                android:fontFamily="@font/vogue" />
+                android:fontFamily="@font/vogue" />s
         </RadioGroup>
 
         <ImageButton
