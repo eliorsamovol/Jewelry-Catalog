@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.tests.jewelry.data.db.entities.SupplierEntities
 import com.tests.jewelry.databinding.BusinessAnalyticsBinding
 import com.tests.jewelry.ui.viewmodel.JewelryViewModel
@@ -45,6 +46,10 @@ class BusinessAnalytics : Fragment() {
         jewelryViewModel.getBestSellerByRevenue().observe(viewLifecycleOwner, Observer { bestSeller ->
             binding.bestSellerRevenueValue.text = bestSeller?.name ?: getString(R.string.no_sales)
         })
+
+        binding.backBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_businessAnalyticsFragment_to_catalog)
+        }
     }
 
 

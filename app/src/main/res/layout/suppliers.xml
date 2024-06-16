@@ -12,12 +12,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="12dp"
+        app:layout_constraintStart_toEndOf="@+id/back_btn"
         android:text="@string/suppliers"
         android:fontFamily="@font/vogue"
         android:textSize="28dp"/>
+
+    <ImageButton
+        android:id="@+id/back_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        app:layout_constraintTop_toTopOf="@id/items_headline"
+        app:layout_constraintEnd_toStartOf="@+id/items_headline"
+        android:src="@drawable/arrow_back_icon"
+        android:background="@null" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

@@ -2,6 +2,8 @@ package com.tests.jewelry
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -200,6 +202,10 @@ class EditItem : Fragment() {
             } else {
                 Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        binding.backBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_itemsFragment_to_editItemFragment)
         }
     }
 
