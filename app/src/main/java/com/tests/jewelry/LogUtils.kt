@@ -8,26 +8,41 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import android.util.Log
 
 object LogUtils {
-    private const val LOG_DIR = "logs"
-    private const val LOG_FILE = "log.txt"
-    fun writeLog(context: Context, message: String) {
-        if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
-            val logDir = File(context.getExternalFilesDir(null), LOG_DIR)
-            if (!logDir.exists()) {
-                logDir.mkdirs()
-            }
+    private const val LOG_DIRECTORY = "logs"
+    private const val TAG = "LogUtils"
 
-            val logFile = File(logDir, LOG_FILE)
-            try {
-                FileWriter(logFile, true).use { writer ->
-                    val timestamp = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
-                    writer.append("$timestamp: $message\n")
-                }
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
+    fun writeLog(context: Context, message: String) {
+        val logDir = File(context.filesDir, LOG_DIRECTORY)
+        if (!logDir.exists()) {
+            val created = logDir.mkdirs()
+            Log.d(TAG, "Log directory created: $created")
+        } else {
+            Log.d(TAG, "Log directory exists")
+        }
+
+        val logFile =
+            File(logDir, "log_${SimpleDateFormat("yyyyMMdd", Locale.US).format(Date())}.txt")
+        Log.d(TAG, "Log file path: ${logFile.absolutePath}")
+
+        try {
+            val writer = FileWriter(logFile, true)
+            writer.append(
+                "${
+                    SimpleDateFormat(
+                        "yyyy-MM-dd HH:mm:ss",
+                        Locale.US
+                    ).format(Date())
+                }: $message\n"
+            )
+            writer.flush()
+            writer.close()
+            Log.d(TAG, "Log written successfully")
+        } catch (e: IOException) {
+            e.printStackTrace()
+            Log.e(TAG, "Error writing log: ${e.message}")
         }
     }
 }

@@ -15,6 +15,14 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import java.util.concurrent.TimeUnit
+import android.content.Context
+import androidx.work.*
+import java.io.File
+import java.io.FileWriter
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
+import android.util.Log
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,19 +47,48 @@ class MainActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
-        LogUtils.writeLog(this, "THIS IS A LOG MESSAGE")
 
-        setupPeriodWork()
+        // Call LogUtils.writeLog multiple times
+        LogUtils.writeLog(this, "Sample log message 1")
+        LogUtils.writeLog(this, "Sample log message 2")
+        LogUtils.writeLog(this, "Sample log message 3")
+
+        // List log files to verify they exist
+        listLogFiles(this)
+
+        scheduleCleanupWorker(this)
 
         airplaneModeReceiver = AirplaneModeReceiver()
         val intentFilter = IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED)
         registerReceiver(airplaneModeReceiver, intentFilter)
     }
-
-    private fun setupPeriodWork() {
-        val workRequest = PeriodicWorkRequestBuilder<CleanupWorker>(1, TimeUnit.DAYS)
+    fun scheduleCleanupWorker(context: Context) {
+        val constraints = Constraints.Builder()
+            .setRequiresBatteryNotLow(true)
+            .setRequiresCharging(true)
             .build()
-        WorkManager.getInstance(this).enqueue(workRequest)
+
+        val cleanupRequest = PeriodicWorkRequestBuilder<CleanupWorker>(2, TimeUnit.MINUTES)
+            .setConstraints(constraints)
+            .build()
+
+        WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+            "CleanupWorker",
+            ExistingPeriodicWorkPolicy.REPLACE,
+            cleanupRequest
+        )
+    }
+
+    private fun listLogFiles(context: Context) {
+        val logDir = File(context.filesDir, "logs")
+        if (logDir.exists()) {
+            val logFiles = logDir.listFiles()
+            logFiles?.forEach {
+                Log.d("LogFiles", "Log file: ${it.name}")
+            }
+        } else {
+            Log.d("LogFiles", "Log directory does not exist")
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
