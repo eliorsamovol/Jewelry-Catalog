@@ -29,4 +29,7 @@ interface SupplierDao {
 
     @Query("DELETE FROM supplier_table")
     fun deleteAll()
+
+    @Query("SELECT * FROM supplier_table ORDER BY date DESC LIMIT 1")
+    fun getLastSupplier(): SupplierEntities?
 }
