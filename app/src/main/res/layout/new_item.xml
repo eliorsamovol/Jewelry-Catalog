@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/newItemFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".NewItem"
+        android:padding="20dp"
         android:background="@color/biege">
 
         <TextView
@@ -186,7 +188,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/bracelet_radio_button"
-                android:fontFamily="@font/vogue" />s
+                android:fontFamily="@font/vogue" />
         </RadioGroup>
 
         <ImageButton
@@ -194,7 +196,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/typeRdioGroup"
-            app:layout_constraintEnd_toStartOf="@id/jewelryType"
+            app:layout_constraintStart_toStartOf="@id/priceSeekBar"
             android:src="@drawable/add_photo_icon"
             android:background="@null"
             android:layout_marginTop="50dp"/>
@@ -208,15 +210,19 @@
             app:layout_constraintStart_toEndOf="@id/jewelryType"
             android:layout_marginTop="30dp"/>
 
-        <ImageButton
+        <Button
             android:id="@+id/saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/btnTakePhoto"
+            app:layout_constraintEnd_toEndOf="@id/btnTakePhoto"
             app:layout_constraintStart_toStartOf="@id/btnTakePhoto"
-            android:src="@drawable/save_icon"
-            android:background="@null"
-            android:layout_marginTop="10dp"/>
+            android:background="@color/transparent"
+            android:text="@string/save_change_btn"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/vogue"
+            android:textColor="@color/white"
+            android:textSize="20dp"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

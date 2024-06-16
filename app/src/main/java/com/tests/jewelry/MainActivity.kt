@@ -13,6 +13,9 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.tests.jewelry.databinding.ActivityMainBinding
+import androidx.core.content.ContextCompat
+import android.os.Build
+import android.view.View
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,13 +26,17 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-//        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-//        val navController = navHostFragment.navController
-//        val appBarConfiguration = AppBarConfiguration(navController.graph)
-//        setupActionBarWithNavController(navController, appBarConfiguration)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.statusBarColor = ContextCompat.getColor(this, R.color.status_bar_color)
+        } else {
+            // For API levels below 21, you can modify the color of the toolbar to create a similar effect
+            supportActionBar?.setBackgroundDrawable(ContextCompat.getDrawable(this, R.color.status_bar_color_fallback))
+        }
 
-
-
+        // Optional: Set status bar icons to light or dark for API 23+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -11,6 +11,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -111,6 +113,12 @@ class EditItem : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val button = binding.saveButton
+        val str = getString(R.string.save_change_btn)
+        val span = SpannableString(str)
+        span.setSpan(UnderlineSpan(), 0, str.length, 0)
+        button.text = span
 
         priceSeekBar = binding.priceSeekBar
         priceValueTextView = binding.jewelryPrice
