@@ -1,57 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:layout_marginTop="20dp">
 
     <ImageView
         android:id="@+id/itemImage"
         android:layout_width="160dp"
-        android:layout_height="180dp"
+        android:layout_height="210dp"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_launcher_foreground"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/itemName"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="start|center"
-        android:paddingStart="16dp">
+        android:text="Item Name"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:fontFamily="@font/vogue"
+        app:layout_constraintTop_toBottomOf="@+id/itemImage"
+        app:layout_constraintStart_toStartOf="@id/itemImage"/>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+    <TextView
+        android:id="@+id/itemDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date"
+        android:textColor="@color/black"
+        android:fontFamily="@font/toolbarfont"
+        android:textSize="15sp"
+        app:layout_constraintTop_toBottomOf="@id/itemName"
+        app:layout_constraintStart_toStartOf="@id/itemImage"/>
 
-            <TextView
-                android:id="@+id/itemName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Item Name"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/vogue" />
-
-            <TextView
-                android:id="@+id/itemDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Date"
-                android:fontFamily="@font/toolbarfont"
-                android:textSize="15sp" />
-
-        </LinearLayout>
-
-            <ImageButton
-                android:id="@+id/deleteButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/trash_icon"
-                android:contentDescription="@string/delete"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="8dp"/>
-    </LinearLayout>
-</LinearLayout>
+    <ImageButton
+        android:id="@+id/deleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/trash_icon"
+        android:contentDescription="@string/delete"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="8dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/itemImage"
+        app:layout_constraintEnd_toEndOf="@id/itemImage"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

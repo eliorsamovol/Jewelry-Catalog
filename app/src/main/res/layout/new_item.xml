@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="@color/biege">
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -11,8 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context=".NewItem"
-        android:padding="20dp"
-        android:background="@color/biege">
+        android:padding="20dp">
 
         <TextView
             android:id="@+id/mainHeadline"
@@ -22,8 +22,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/new_item"
+            android:textColor="@color/black"
             android:fontFamily="@font/vogue"
-            android:textSize="22dp"/>
+            android:textSize="24dp"/>
 
         <TextView
             android:id="@+id/jewelryName"
@@ -93,6 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
+            android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@id/descriptionEditText"
             app:layout_constraintStart_toEndOf="@+id/jewelryPrice"
             android:layout_marginTop="35dp"
@@ -158,8 +160,9 @@
             app:layout_constraintTop_toBottomOf="@id/jewelryType"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="30dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:outlineSpotShadowColor="@color/black">
 
 
             <RadioButton
@@ -196,32 +199,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/typeRdioGroup"
-            app:layout_constraintStart_toStartOf="@id/priceSeekBar"
+            app:layout_constraintStart_toStartOf="@id/jewelryType"
+            app:layout_constraintEnd_toEndOf="@+id/jewelryType"
             android:src="@drawable/add_photo_icon"
             android:background="@null"
-            android:layout_marginTop="50dp"/>
+            android:layout_marginTop="35dp"/>
 
         <ImageView
             android:id="@+id/imageSelected"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:scaleType="centerCrop"
-            app:layout_constraintTop_toBottomOf="@id/typeRdioGroup"
-            app:layout_constraintStart_toEndOf="@id/jewelryType"
+            app:layout_constraintTop_toBottomOf="@id/btnTakePhoto"
+            app:layout_constraintStart_toStartOf="@id/btnTakePhoto"
+            app:layout_constraintEnd_toEndOf="@+id/btnTakePhoto"
             android:layout_marginTop="30dp"/>
 
         <Button
             android:id="@+id/saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/btnTakePhoto"
-            app:layout_constraintEnd_toEndOf="@id/btnTakePhoto"
-            app:layout_constraintStart_toStartOf="@id/btnTakePhoto"
+            app:layout_constraintTop_toBottomOf="@+id/imageSelected"
+            app:layout_constraintEnd_toEndOf="@id/jewelryType"
+            app:layout_constraintStart_toStartOf="@id/jewelryType"
             android:background="@color/transparent"
-            android:text="@string/save_change_btn"
-            android:layout_marginTop="10dp"
+            android:text="@string/save_item"
+            android:layout_marginTop="5dp"
             android:fontFamily="@font/vogue"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="20dp"/>
 
 

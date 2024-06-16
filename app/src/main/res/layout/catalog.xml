@@ -27,46 +27,58 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:padding="16dp">
+            <Button
+                android:id="@+id/jewelries"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/items_headline"
+                android:background="@color/transparent"
+                android:fontFamily="@font/toolbarfont"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/supplier"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"/>
 
-                    <Button
-                        android:id="@+id/jewelries"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/items_headline"
-                        android:background="@color/transparent"
-                        android:fontFamily="@font/toolbarfont"/>
+            <Button
+                android:id="@+id/supplier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/suppliers"
+                android:background="@color/transparent"
+                android:fontFamily="@font/toolbarfont"
+                app:layout_constraintStart_toEndOf="@+id/jewelries"
+                app:layout_constraintEnd_toStartOf="@+id/businessAnalytics"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" />
 
-                    <Button
-                        android:id="@+id/supplier"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/suppliers"
-                        android:background="@color/transparent"
-                        android:fontFamily="@font/toolbarfont"
-                        android:layout_marginStart="4dp"/>
-
-                    <Button
-                        android:id="@+id/businessAnalytics"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/bi_info"
-                        android:background="@color/transparent"
-                        android:fontFamily="@font/toolbarfont"
-                        android:layout_marginStart="4dp"/>
-                </LinearLayout>
+            <Button
+                android:id="@+id/businessAnalytics"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/bi_info"
+                android:background="@color/transparent"
+                android:fontFamily="@font/toolbarfont"
+                app:layout_constraintStart_toEndOf="@+id/supplier"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </FrameLayout>
 
 
@@ -89,11 +101,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="60dp"
-                android:layout_marginRight="80dp"
+                android:layout_marginRight="70dp"
                 android:layout_gravity="bottom|end"
                 android:fontFamily="@font/vogue"
                 android:text="@string/headline_main"
-                android:textSize="23sp"
+                android:textSize="25sp"
                 android:textColor="@color/khaki"/>
 
         </FrameLayout>
@@ -164,7 +176,7 @@
             android:text="@string/necklaces"
             android:textColor="@color/black"
             android:fontFamily="@font/toolbarfont"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:layout_marginTop="5dp"
             android:drawableEnd="@drawable/ic_arrow_right"
             app:layout_constraintTop_toBottomOf="@id/necklaces"
@@ -178,7 +190,7 @@
             android:text="@string/rings"
             android:textColor="@color/black"
             android:fontFamily="@font/toolbarfont"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:layout_marginTop="5dp"
             android:drawableEnd="@drawable/ic_arrow_right"
             app:layout_constraintTop_toBottomOf="@id/rings"
@@ -192,7 +204,7 @@
             android:text="@string/earrings"
             android:textColor="@color/black"
             android:fontFamily="@font/toolbarfont"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:layout_marginTop="5dp"
             android:drawableEnd="@drawable/ic_arrow_right"
             app:layout_constraintTop_toBottomOf="@id/earrings"
@@ -206,7 +218,7 @@
             android:text="@string/bracelets"
             android:textColor="@color/black"
             android:fontFamily="@font/toolbarfont"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:layout_marginTop="5dp"
             android:drawableEnd="@drawable/ic_arrow_right"
             app:layout_constraintTop_toBottomOf="@id/bracelets"
@@ -240,11 +252,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/text_second_frame"
-                    android:fontFamily="@font/toolbarfont"
+                    android:fontFamily="@font/vogue"
                     android:textColor="@color/black"
                     android:layout_marginEnd="12dp"
                     android:layout_marginStart="12dp"
-                    android:textSize="15sp"
+                    android:textSize="18sp"
                     app:layout_constraintTop_toTopOf="@+id/secondImage"
                     app:layout_constraintStart_toEndOf="@+id/secondImage"
                     app:layout_constraintEnd_toEndOf="parent"

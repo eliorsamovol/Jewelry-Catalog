@@ -18,11 +18,15 @@ import androidx.navigation.NavController
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.UnderlineSpan
+import androidx.viewpager2.widget.ViewPager2
 
 class Catalog : Fragment() {
 
     private var _binding : CatalogBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var viewPager: ViewPager2
+    private val images = listOf(R.drawable.bottom_photo_main, R.drawable.bottom2, R.drawable.bottom3, R.drawable.bottom4, R.drawable.bottom5)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -86,6 +90,12 @@ class Catalog : Fragment() {
         val spanStrSuppliers = SpannableString(supplierStr)
         spanStrSuppliers.setSpan(UnderlineSpan(), 0, supplierStr.length, 0)
         suppliersBtn.text = spanStrSuppliers
+
+        val analyticsBtn = binding.businessAnalytics
+        val analyticsStr = getString(R.string.bi_info)
+        val spanStrAnalytics = SpannableString(analyticsStr)
+        spanStrAnalytics.setSpan(UnderlineSpan(), 0, analyticsStr.length, 0)
+        analyticsBtn.text = spanStrAnalytics
 
     }
 
