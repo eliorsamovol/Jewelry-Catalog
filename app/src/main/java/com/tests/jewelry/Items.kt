@@ -49,6 +49,7 @@ class Items : Fragment(), AdapterView.OnItemSelectedListener {
             onDeleteClick = { item -> deleteItem(item) },
             onEditClick = { item -> editItem(item) },
             onItemClick =  { item -> itemDetails(item) },
+            onSoldItemsChange = { item -> updateSoldItem(item) },
             context = requireContext()
         )
 
@@ -125,6 +126,10 @@ class Items : Fragment(), AdapterView.OnItemSelectedListener {
     private fun editItem(item: JewelryEntities) {
         val action = ItemsDirections.actionItemsFragmentToEditItemFragment(item)
         findNavController().navigate(action)
+    }
+
+    private fun updateSoldItem(item: JewelryEntities){
+        jewelryViewModel.updateSoldItems(item)
     }
 
     private fun itemDetails(item: JewelryEntities) {

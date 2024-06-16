@@ -32,4 +32,7 @@ interface SupplierDao {
 
     @Query("SELECT * FROM supplier_table ORDER BY date DESC LIMIT 1")
     fun getLastSupplier(): SupplierEntities?
+
+    @Query("SELECT * FROM supplier_table WHERE date BETWEEN :startTime AND :endTime")
+    fun getSupplierByDate(startTime: Long, endTime: Long): LiveData<List<SupplierEntities>>
 }

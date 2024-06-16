@@ -46,4 +46,16 @@ class JewelryRepository(context: Context) {
     fun getItemByCreationOrder(): LiveData<List<JewelryEntities>> {
         return jewelryDao.getItemsByCreationOrder()
     }
+
+    fun getJewelriesByDate(startTime: Long, endTime: Long): LiveData<List<JewelryEntities>>{
+        return jewelryDao.getJewelriesByDate(startTime, endTime)
+    }
+
+    fun getBestSeller(): LiveData<JewelryEntities?>{
+        return jewelryDao.getBestSeller()
+    }
+
+    fun getLastMonthBestSeller(lastMonthTime: Long): LiveData<JewelryEntities?> {
+        return jewelryDao.getLastMonthBestSeller(lastMonthTime)
+    }
 }

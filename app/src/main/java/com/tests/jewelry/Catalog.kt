@@ -51,6 +51,10 @@ class Catalog : Fragment() {
             findNavController().navigate(R.id.action_catalog_to_supplier)
         }
 
+        binding.businessAnalytics.setOnClickListener {
+            findNavController().navigate(R.id.action_catalog_to_business_analytics)
+        }
+
         binding.necklaces.setOnClickListener {
             val bundle = Bundle().apply { putString("itemType", "necklace") }
             findNavController().navigate(R.id.action_catalog_to_items, bundle)
@@ -82,6 +86,7 @@ class Catalog : Fragment() {
         val spanStrSuppliers = SpannableString(supplierStr)
         spanStrSuppliers.setSpan(UnderlineSpan(), 0, supplierStr.length, 0)
         suppliersBtn.text = spanStrSuppliers
+
     }
 
     private fun loadImages(){
