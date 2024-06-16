@@ -5,4 +5,6 @@
     <color name="khaki">#5c5345</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="biege">#beb190</color>
+    <color name="status_bar_color">#beb190</color>
+    <color name="status_bar_color_fallback">#beb190</color>
 </resources>
