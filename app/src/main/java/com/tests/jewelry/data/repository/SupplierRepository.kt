@@ -33,6 +33,10 @@ class SupplierRepository(context: Context) {
         supplierDao.updateSupplier(supplier)
     }
 
+    fun getSupplierByDate(startTime: Long, endTime: Long): LiveData<List<SupplierEntities>> {
+        return supplierDao.getSupplierByDate(startTime, endTime)
+    }
+
     fun deleteAll(){
         supplierDao.deleteAll()
     }

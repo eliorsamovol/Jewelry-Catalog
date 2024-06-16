@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_catalog_to_supplier"
             app:destination="@+id/supplierFragment"/>
+        <action
+            android:id="@+id/action_catalog_to_business_analytics"
+            app:destination="@+id/businessAnalyticsFragment"/>
     </fragment>
 
     <fragment
@@ -105,5 +108,13 @@
         <argument
             android:name="selectedItem"
             app:argType="com.tests.jewelry.JewelryEntities"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/businessAnalyticsFragment"
+        android:name="com.tests.jewelry.BusinessAnalytics"
+        tools:layout="@layout/business_analytics">
+        <action
+            android:id="@+id/action_businessAnalyticsFragment_to_catalog"/>
     </fragment>
 </navigation>

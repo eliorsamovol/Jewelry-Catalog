@@ -11,6 +11,8 @@ import com.tests.jewelry.data.repository.JewelryRepository
 import com.tests.jewelry.data.repository.SupplierRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.Calendar
+
 class JewelryViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: JewelryRepository = JewelryRepository(application)
@@ -90,8 +92,34 @@ class JewelryViewModel(application: Application) : AndroidViewModel(application)
         return repository.getItemsSortedByPriceDesc()
     }
 
+    fun getJewelriesByDate(startTime: Long, endTime: Long): LiveData<List<JewelryEntities>> {
+        return repository.getJewelriesByDate(startTime, endTime)
+    }
+
+    fun getSuppliersByDate(startTime: Long, endTime: Long): LiveData<List<SupplierEntities>> {
+        return supplierRepository.getSupplierByDate(startTime, endTime)
+    }
+
+    fun getBestSeller(): LiveData<JewelryEntities?> {
+        return repository.getBestSeller()
+    }
+
     fun getItemsByCreationOrder(): LiveData<List<JewelryEntities>> {
         return repository.getItemByCreationOrder()
+    }
+
+    fun getLastMonthBestSeller(): LiveData<JewelryEntities?> {
+        val lastMonthTime = Calendar.getInstance().apply {
+            add(Calendar.MONTH, -1)
+        }.time.time
+
+        return repository.getLastMonthBestSeller(lastMonthTime)
+    }
+
+    fun updateSoldItems(jewelry: JewelryEntities){
+        viewModelScope.launch(Dispatchers.IO){
+            repository.updateJewelry(jewelry)
+        }
     }
 
 }

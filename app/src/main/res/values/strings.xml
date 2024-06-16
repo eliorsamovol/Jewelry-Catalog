@@ -69,4 +69,16 @@
     <string name="upload_reception">Upload reception</string>
 
     <string name="delete">Delete</string>
+
+    <string name="bi_info">BI Info</string>
+    <string name="business_analytics_headline">Business Analytics</string>
+    <string name="supplier_expenses_headline">Supplier Expenses</string>
+    <string name="last_month">Last Month</string>
+    <string name="all_time">All Time</string>
+    <string name="jewelries_revenues_headline">Jewelries Revenues</string>
+    <string name="profit_headline">Profit</string>
+    <string name="best_seller_headline">Best Seller</string>
+    <string name="units_counter">Units</string>
+    <string name="amount_format">%1$.2f₪</string>
+    <string name="no_sales">No Sales</string>
 </resources>
