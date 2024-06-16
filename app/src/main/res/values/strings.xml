@@ -81,4 +81,6 @@
     <string name="units_counter">Units</string>
     <string name="amount_format">%1$.2f₪</string>
     <string name="no_sales">No Sales</string>
+    <string name="best_seller_quantity">By Quantity</string>
+    <string name="best_seller_revenue">By Revenue</string>
 </resources>
