@@ -70,6 +70,10 @@ class Items : Fragment(), AdapterView.OnItemSelectedListener {
 
         binding.sortSpinner.onItemSelectedListener = this
 
+        binding.backBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_itemsFragment_to_catalog)
+        }
+
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {

@@ -100,21 +100,18 @@ class JewelryViewModel(application: Application) : AndroidViewModel(application)
         return supplierRepository.getSupplierByDate(startTime, endTime)
     }
 
-    fun getBestSeller(): LiveData<JewelryEntities?> {
-        return repository.getBestSeller()
+    fun getBestSellerByQuantity(): LiveData<JewelryEntities?> {
+        return repository.getBestSellerByQuantity()
+    }
+
+    fun getBestSellerByRevenue(): LiveData<JewelryEntities?> {
+        return repository.getBestSellerByRevenue()
     }
 
     fun getItemsByCreationOrder(): LiveData<List<JewelryEntities>> {
         return repository.getItemByCreationOrder()
     }
 
-    fun getLastMonthBestSeller(): LiveData<JewelryEntities?> {
-        val lastMonthTime = Calendar.getInstance().apply {
-            add(Calendar.MONTH, -1)
-        }.time.time
-
-        return repository.getLastMonthBestSeller(lastMonthTime)
-    }
 
     fun updateSoldItems(jewelry: JewelryEntities){
         viewModelScope.launch(Dispatchers.IO){

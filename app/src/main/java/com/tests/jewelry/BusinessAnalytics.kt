@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.tests.jewelry.data.db.entities.SupplierEntities
 import com.tests.jewelry.databinding.BusinessAnalyticsBinding
 import com.tests.jewelry.ui.viewmodel.JewelryViewModel
@@ -37,53 +39,45 @@ class BusinessAnalytics : Fragment() {
             })
         })
 
-        jewelryViewModel.getBestSeller().observe(viewLifecycleOwner, Observer { bestSeller ->
-            binding.bestSellerAllTimeValue.text = bestSeller?.name ?: getString(R.string.no_sales)
+        jewelryViewModel.getBestSellerByQuantity().observe(viewLifecycleOwner, Observer { bestSeller ->
+            binding.bestSellerQuantityValue.text = bestSeller?.name ?: getString(R.string.no_sales)
         })
 
-        jewelryViewModel.getLastMonthBestSeller().observe(viewLifecycleOwner, Observer { bestSeller ->
-            binding.bestSellerLastMonthValue.text = bestSeller?.name ?: getString(R.string.no_sales)
+        jewelryViewModel.getBestSellerByRevenue().observe(viewLifecycleOwner, Observer { bestSeller ->
+            binding.bestSellerRevenueValue.text = bestSeller?.name ?: getString(R.string.no_sales)
         })
+
+        binding.backBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_businessAnalyticsFragment_to_catalog)
+        }
     }
 
 
     private fun calculateAndDisplayAnalytics(suppliers: List<SupplierEntities>, jewelries: List<JewelryEntities>) {
-        val currentDate = Date()
-        val lastMonthDate = Calendar.getInstance().apply {
-            add(Calendar.MONTH, -1)
-        }.time
 
-        var lastMonthExpenses = 0.0
-        var allTimeExpenses =  0.0
-        var lastMonthRevenue = 0.0
-        var allTimeRevenue = 0.0
-        var lastMonthBestSeller: JewelryEntities? = null
-        var allTimeBestSeller: JewelryEntities? = null
+        var totalExpenses =  0.0
+        var totalRevenue = 0.0
 
-        for (supplier in suppliers) {
-            if(supplier.date.after(lastMonthDate)) {
-                lastMonthExpenses += supplier.purchasePrice
-            }
-            allTimeExpenses += supplier.purchasePrice
+        suppliers.forEach { supplier ->
+            totalExpenses += supplier.purchasePrice
         }
 
-        for(item in jewelries) {
-            if(Date(item.creationTime).after(lastMonthDate)) {
-                lastMonthRevenue += item.price * item.soldItems
-
-            }
-            allTimeRevenue += item.price * item.soldItems
+        jewelries.forEach { jewelry ->
+            totalRevenue += jewelry.price * jewelry.soldItems
         }
 
-        val lastMonthProfit = lastMonthRevenue - lastMonthExpenses
-        val allTimeProfit = allTimeRevenue - allTimeExpenses
+        val totalProfit = totalRevenue - totalExpenses
 
-        binding.supplierExpensesLastMonthValue.text = getString(R.string.amount_format, lastMonthExpenses)
-        binding.supplierExpensesAllTimeValue.text = getString(R.string.amount_format, allTimeExpenses)
-        binding.jewelriesRevenuesLastMonthValue.text = getString(R.string.amount_format, lastMonthRevenue)
-        binding.jewelriesRevenuesAllTimeValue.text = getString(R.string.amount_format, allTimeRevenue)
-        binding.totalProfitLastMonthValue.text = getString(R.string.amount_format, lastMonthProfit)
-        binding.totalProfitAllTimeValue.text = getString(R.string.amount_format, allTimeProfit)
+        binding.supplierExpensesValue.text = getString(R.string.amount_format, totalExpenses)
+        binding.jewelriesRevenuesValue.text = getString(R.string.amount_format, totalRevenue)
+        binding.totalProfitValue.text = getString(R.string.amount_format, totalProfit)
+
+        val profitColor = if(totalProfit >= 0) {
+            ContextCompat.getColor(requireContext(), R.color.green)
+        } else {
+            ContextCompat.getColor(requireContext(), R.color.red)
+        }
+        binding.totalProfitValue.setTextColor(profitColor)
     }
 
     override fun onDestroyView() {

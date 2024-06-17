@@ -204,6 +204,10 @@ class NewItem : Fragment() {
                 Toast.makeText(context, "please fill all", Toast.LENGTH_SHORT).show()
             }
         }
+
+        binding.backBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_newItem_to_items)
+        }
     }
 
     private fun showImageSourceDialog() {

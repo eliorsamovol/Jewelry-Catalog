@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_newItem_to_catalog"
             app:destination="@+id/catalogFragment"/>
+        <action
+            android:id="@+id/action_newItem_to_items"
+            app:destination="@+id/itemsFragment"/>
     </fragment>
 
     <fragment
@@ -62,6 +65,9 @@
         <action
             android:id="@+id/action_itemsFragment_to_itemDetailsFragment"
             app:destination="@+id/itemDetailsFragment"/>
+        <action
+            android:id="@+id/action_itemsFragment_to_catalog"
+            app:destination="@+id/catalogFragment"/>
     </fragment>
 
     <fragment
@@ -121,6 +127,7 @@
         android:name="com.tests.jewelry.BusinessAnalytics"
         tools:layout="@layout/business_analytics">
         <action
-            android:id="@+id/action_businessAnalyticsFragment_to_catalog"/>
+            android:id="@+id/action_businessAnalyticsFragment_to_catalog"
+            app:destination="@+id/catalogFragment"/>
     </fragment>
 </navigation>

@@ -65,6 +65,10 @@ class Supplier : Fragment() {
             findNavController().navigate(R.id.action_supplier_to_newSupplier)
         }
 
+        binding.backBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_supplier_to_catalog)
+        }
+
         supplierViewModel.suppliers.observe(viewLifecycleOwner) { supplier ->
             supplierAdapter.setItems(supplier)
         }

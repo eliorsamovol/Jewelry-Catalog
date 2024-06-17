@@ -51,11 +51,11 @@ class JewelryRepository(context: Context) {
         return jewelryDao.getJewelriesByDate(startTime, endTime)
     }
 
-    fun getBestSeller(): LiveData<JewelryEntities?>{
-        return jewelryDao.getBestSeller()
+    fun getBestSellerByQuantity(): LiveData<JewelryEntities?>{
+        return jewelryDao.getBestSellerByQuantity()
     }
 
-    fun getLastMonthBestSeller(lastMonthTime: Long): LiveData<JewelryEntities?> {
-        return jewelryDao.getLastMonthBestSeller(lastMonthTime)
+    fun getBestSellerByRevenue(): LiveData<JewelryEntities?>{
+        return jewelryDao.getBestSellerByRevenue()
     }
 }
