@@ -91,6 +91,7 @@ dependencies {
     implementation("com.google.android.material:material:1.5.0")
     implementation("androidx.multidex:multidex:2.0.1")
     implementation("androidx.work:work-runtime-ktx:2.7.1")
+    implementation("androidx.viewpager2:viewpager2:1.1.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

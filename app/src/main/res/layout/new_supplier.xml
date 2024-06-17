@@ -150,7 +150,7 @@
             android:id="@+id/supplierPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/jewelry_price_box"
+            android:text="@string/supplier_sum_details"
             android:fontFamily="@font/toolbarfont"
             android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@+id/dateEditText"

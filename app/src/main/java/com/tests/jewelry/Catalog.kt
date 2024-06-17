@@ -19,6 +19,8 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.UnderlineSpan
 import androidx.viewpager2.widget.ViewPager2
+import android.os.Handler
+import android.os.Looper
 
 class Catalog : Fragment() {
 
@@ -26,8 +28,21 @@ class Catalog : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var viewPager: ViewPager2
-    private val images = listOf(R.drawable.bottom_photo_main, R.drawable.bottom2, R.drawable.bottom3, R.drawable.bottom4, R.drawable.bottom5)
+    private lateinit var adapter: ViewPagerAdapter
+    private val imagesList = listOf(R.drawable.bottom_photo_main, R.drawable.bottom2, R.drawable.bottom3, R.drawable.bottom4, R.drawable.bottom5)
+    private val handler = Handler(Looper.getMainLooper())
+    private var currentPage = 0
 
+    private val updateRunnable = object :Runnable {
+        override fun run() {
+            if (currentPage == imagesList.size) {
+                currentPage = 0
+            }
+
+            viewPager.setCurrentItem(currentPage++, true)
+            handler.postDelayed(this, 2000)
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,10 +56,14 @@ class Catalog : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewPager = binding.viewPager
+        viewPager.adapter = ViewPagerAdapter(imagesList)
+
         arguments?.getString("title")?.let{
             Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
         }
 
+        setUpViewPager()
         loadImages()
 
         binding.jewelries.setOnClickListener {
@@ -99,6 +118,14 @@ class Catalog : Fragment() {
 
     }
 
+    private fun setUpViewPager() {
+        viewPager = binding.viewPager
+        adapter = ViewPagerAdapter(imagesList)
+        viewPager.adapter = adapter
+
+        handler.post(updateRunnable)
+    }
+
     private fun loadImages(){
         Glide.with(this)
             .load(R.drawable.sand)
@@ -124,10 +151,6 @@ class Catalog : Fragment() {
             .load(R.drawable.bracelet_main)
             .centerCrop()
             .into(binding.bracelets)
-        Glide.with(this)
-            .load(R.drawable.bottom_photo_main)
-            .centerCrop()
-            .into(binding.secondImage)
     }
 
     override fun onDestroyView() {
