@@ -12,6 +12,16 @@
         android:layout_height="match_parent"
         tools:context=".NewSupplier">
 
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/arrow_back_icon"
+            android:background="@null"
+            android:padding="8dp"/>
+
         <TextView
             android:id="@+id/mainHeadline"
             android:layout_width="wrap_content"
@@ -21,7 +31,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/new_supplier"
             android:fontFamily="@font/vogue"
-            android:textSize="22dp"/>
+            android:textSize="24dp"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"/>
 
         <TextView
             android:id="@+id/supplierName"
@@ -47,7 +59,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:gravity="center"
-            android:padding="5dp"/>
+            android:padding="5dp"
+            android:background="@drawable/edit_text_line"/>
 
         <TextView
             android:id="@+id/supplierAddress"
@@ -93,7 +106,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:gravity="center"
-            android:padding="5dp"/>
+            android:padding="5dp"
+            android:background="@drawable/edit_text_line"/>
 
         <TextView
             android:id="@+id/supplierPhone"
@@ -118,7 +132,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:gravity="center"
-            android:padding="5dp"/>
+            android:padding="5dp"
+            android:background="@drawable/edit_text_line"/>
 
         <TextView
             android:id="@+id/supplierPurchaseDate"
@@ -180,7 +195,9 @@
             android:layout_marginTop="5dp"
             android:padding="5dp"
             android:max="1000"
-            android:min="0"/>
+            android:min="0"
+            android:thumbTint="@color/black"
+            android:progressTint="@color/black"/>
 
         <TextView
             android:id="@+id/supplierType"

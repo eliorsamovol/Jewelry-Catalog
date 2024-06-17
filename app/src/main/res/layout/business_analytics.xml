@@ -22,7 +22,8 @@
             android:text="@string/business_analytics_headline"
             android:fontFamily="@font/vogue"
             android:layout_marginTop="16dp"
-            android:textSize="22dp"/>
+            android:textSize="24dp"
+            android:textColor="@color/black"/>
 
         <ImageButton
             android:id="@+id/back_btn"
@@ -38,26 +39,28 @@
             android:id="@+id/supplier_expenses_headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/toolbarfont"
+            android:fontFamily="@font/vogue"
             app:layout_constraintTop_toBottomOf="@+id/mainHeadline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/jewelries_revenues_headline"
             app:layout_constraintHorizontal_chainStyle="spread"
             android:text="@string/supplier_expenses_headline"
-            android:layout_marginTop="16dp"
-            android:textSize="18dp"/>
+            android:layout_marginTop="24dp"
+            android:textSize="18dp"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/jewelries_revenues_headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/toolbarfont"
+            android:fontFamily="@font/vogue"
             app:layout_constraintTop_toBottomOf="@+id/mainHeadline"
             app:layout_constraintStart_toEndOf="@+id/supplier_expenses_headline"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/jewelries_revenues_headline"
-            android:layout_marginTop="16dp"
-            android:textSize="18dp"/>
+            android:layout_marginTop="24dp"
+            android:textSize="18dp"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/supplier_expenses_value"
@@ -70,7 +73,10 @@
             app:layout_constraintEnd_toStartOf="@id/jewelries_revenues_value"
             app:layout_constraintHorizontal_chainStyle="spread"
             android:text="@string/amount_format"
-            android:textSize="18dp"/>
+            android:textSize="18dp"
+            android:padding="8dp"
+            android:background="@drawable/border"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/jewelries_revenues_value"
@@ -83,19 +89,23 @@
             app:layout_constraintStart_toEndOf="@id/supplier_expenses_value"
             app:layout_constraintHorizontal_chainStyle="spread"
             android:text="@string/amount_format"
-            android:textSize="18dp"/>
+            android:textSize="18dp"
+            android:padding="8dp"
+            android:background="@drawable/border"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/total_profit_headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/toolbarfont"
+            android:layout_marginTop="38dp"
+            android:fontFamily="@font/vogue"
             app:layout_constraintTop_toBottomOf="@+id/jewelries_revenues_value"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/profit_headline"
-            android:textSize="22dp"/>
+            android:textSize="22dp"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/total_profit_value"
@@ -107,44 +117,49 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/amount_format"
-            android:textSize="18dp"/>
+            android:textSize="18dp"
+            android:padding="8dp"
+            android:background="@drawable/border"/>
 
         <TextView
             android:id="@+id/best_seller_headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/toolbarfont"
+            android:layout_marginTop="38dp"
+            android:fontFamily="@font/vogue"
             app:layout_constraintTop_toBottomOf="@+id/total_profit_value"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/best_seller_headline"
-            android:textSize="22dp"/>
+            android:textSize="22dp"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/best_seller_quantity_headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/toolbarfont"
+            android:fontFamily="@font/vogue"
             app:layout_constraintTop_toBottomOf="@+id/best_seller_headline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/best_seller_revenue_headline"
             app:layout_constraintHorizontal_chainStyle="spread"
             android:text="@string/best_seller_quantity"
             android:layout_marginTop="16dp"
-            android:textSize="18dp"/>
+            android:textSize="18dp"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/best_seller_revenue_headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/toolbarfont"
+            android:fontFamily="@font/vogue"
             app:layout_constraintTop_toBottomOf="@+id/best_seller_headline"
             app:layout_constraintStart_toEndOf="@+id/best_seller_quantity_headline"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/best_seller_revenue"
             android:layout_marginTop="16dp"
-            android:textSize="18dp"/>
+            android:textSize="18dp"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/best_seller_quantity_value"
@@ -157,7 +172,10 @@
             app:layout_constraintEnd_toStartOf="@id/best_seller_revenue_value"
             app:layout_constraintHorizontal_chainStyle="spread"
             android:text="@string/amount_format"
-            android:textSize="18dp"/>
+            android:textSize="18dp"
+            android:padding="8dp"
+            android:background="@drawable/border"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/best_seller_revenue_value"
@@ -170,7 +188,10 @@
             app:layout_constraintStart_toEndOf="@id/supplier_expenses_value"
             app:layout_constraintHorizontal_chainStyle="spread"
             android:text="@string/amount_format"
-            android:textSize="18dp"/>
+            android:textSize="18dp"
+            android:padding="8dp"
+            android:background="@drawable/border"
+            android:textColor="@color/black"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

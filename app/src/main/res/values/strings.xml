@@ -58,7 +58,7 @@
     <string name="supplier_type_details">Type</string>
 
     <string-array name="sort_options">
-        <item>Default</item>
+        <item>Date</item>
         <item>Price: Low to High</item>
         <item>Price: High to Low</item>
     </string-array>

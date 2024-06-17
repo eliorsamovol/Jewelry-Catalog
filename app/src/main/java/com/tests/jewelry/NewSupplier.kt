@@ -179,6 +179,10 @@ class NewSupplier : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.backBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_newSupplier_to_supplier)
+        }
+
         val button = binding.saveButton
         val str = getString(R.string.save_change_btn)
         val span = SpannableString(str)
@@ -266,6 +270,7 @@ class NewSupplier : Fragment(), OnMapReadyCallback {
             val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS)
             val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields).build(requireContext())
             startAutocomplete.launch(intent)
+
         }
     }
 

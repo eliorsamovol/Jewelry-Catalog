@@ -37,9 +37,10 @@ class Catalog : Fragment() {
         override fun run() {
             if (currentPage == imagesList.size) {
                 currentPage = 0
+                viewPager.setCurrentItem(currentPage++, false) // Move to the first item without animation
+            } else {
+                viewPager.setCurrentItem(currentPage++, true) // Move to the next item with animation
             }
-
-            viewPager.setCurrentItem(currentPage++, true)
             handler.postDelayed(this, 2000)
         }
     }
