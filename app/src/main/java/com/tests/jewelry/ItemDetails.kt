@@ -35,12 +35,12 @@ class ItemDetails : Fragment() {
     }
 
     private fun displayItemDetails(item: JewelryEntities) {
-        binding.jewelryName.text = "Name: ${item.name}"
-        binding.jewelryDescription.text = "Description: ${item.description}"
-        binding.jewelryPrice.text = "Price: ${item.price}"
-        binding.jewelryType.text = "Type: ${item.type}"
-        binding.weightTextView.text = "Weight: ${item.weight}"
-        binding.jewelrySales.text = "Number of units sold: ${item.soldItems}"
+        binding.jewelryName.text = getString(R.string.jewelry_name_details, item.name)
+        binding.jewelryDescription.text = getString(R.string.jewelry_description_details, item.description)
+        binding.jewelryPrice.text = getString(R.string.jewelry_price_details, item.price.toInt())
+        binding.jewelryType.text = getString(R.string.jewelry_type_details, item.type)
+        binding.weightTextView.text = getString(R.string.jewelry_weight_details, item.weight.toString())
+        binding.jewelrySales.text = getString(R.string.jewelry_sales_amount, item.soldItems)
 
         val bitmap = BitmapFactory.decodeFile(item.imageResId)
         binding.jewelryImage.setImageBitmap(bitmap)

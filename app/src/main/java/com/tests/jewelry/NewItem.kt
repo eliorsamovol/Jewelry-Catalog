@@ -147,10 +147,11 @@ class NewItem : Fragment() {
         button.text = span
 
         priceSeekBar = binding.priceSeekBar
-        priceValueTextView = binding.priceValueTextView
+        priceValueTextView = binding.jewelryPrice
+        priceValueTextView.text = getString(R.string.jewelry_price_box, 0)
         priceSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                priceValueTextView.text = "$progress"
+                priceValueTextView.text = getString(R.string.jewelry_price_box, progress)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
@@ -201,7 +202,7 @@ class NewItem : Fragment() {
                     Toast.makeText(context, "Please take a photo", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(context, "please fill all", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "please fill all fields!", Toast.LENGTH_SHORT).show()
             }
         }
 

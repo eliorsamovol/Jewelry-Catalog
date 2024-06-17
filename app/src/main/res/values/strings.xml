@@ -28,10 +28,11 @@
     <string name="jewelry_name_box">Name</string>
     <string name="jewelry_type_box">Type</string>
     <string name="jewelry_description_box">Description</string>
-    <string name="jewelry_price_box">Price</string>
+    <string name="jewelry_price_box">Price: %1$d₪</string>
+    <string name="jewelry_price_value"></string>
     <string name="Jewelry_weight_box">Weight</string>
     <string name="jewelry_photo_box">Photo</string>
-    <string name="jewelry_sales_amount">Number of units sold</string>
+    <string name="jewelry_sales_amount">Number of units sold: %1$s</string>
 
     <string name="necklace_radio_button">Necklace</string>
     <string name="ring_radio_button">Ring</string>
@@ -84,4 +85,11 @@
     <string name="no_sales">No Sales</string>
     <string name="best_seller_quantity">By Quantity</string>
     <string name="best_seller_revenue">By Revenue</string>
+
+    <string name="photo_permission">In order to use the app, you must upload photos!</string>
+    <string name="jewelry_name_details">Name: %1$s</string>
+    <string name="jewelry_description_details">Description: %1$s</string>
+    <string name="jewelry_price_details">Name: %1$d₪</string>
+    <string name="jewelry_weight_details">Weight: %1$s</string>
+    <string name="jewelry_type_details">Type: %1$s</string>
 </resources>
