@@ -57,7 +57,7 @@ class Catalog : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewPager = binding.viewPager
-        viewPager.adapter = ViewPagerAdapter(imagesList)
+        viewPager.adapter = ViewPagerAdapter(imagesList, requireContext())
 
         arguments?.getString("title")?.let{
             Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
@@ -120,7 +120,7 @@ class Catalog : Fragment() {
 
     private fun setUpViewPager() {
         viewPager = binding.viewPager
-        adapter = ViewPagerAdapter(imagesList)
+        adapter = ViewPagerAdapter(imagesList, requireContext())
         viewPager.adapter = adapter
 
         handler.post(updateRunnable)
