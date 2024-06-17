@@ -9,7 +9,7 @@
     <string name="headline_main">voyage studio</string>
     <string name="save_item">Save</string>
     <string name="items_headline">Jewelries</string>
-    <string name="show_by">Show by</string>
+    <string name="show_by">Show by Category</string>
     <string name="necklaces">necklaces</string>
     <string name="rings">rings</string>
     <string name="earrings">earrings</string>
@@ -32,6 +32,7 @@
     <string name="jewelry_price_value"></string>
     <string name="Jewelry_weight_box">Weight</string>
     <string name="jewelry_photo_box">Photo</string>
+    <string name="jewelry_sales_amount">Number of units sold: %1$s</string>
 
     <string name="necklace_radio_button">Necklace</string>
     <string name="ring_radio_button">Ring</string>

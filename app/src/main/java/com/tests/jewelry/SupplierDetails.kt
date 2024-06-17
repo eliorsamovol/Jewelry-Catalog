@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.tests.jewelry.data.db.entities.SupplierEntities
 import com.tests.jewelry.databinding.SupplierDetailsBinding
 import java.text.SimpleDateFormat
@@ -26,6 +27,10 @@ class SupplierDetails : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.closeBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_supplierDetailsFragment_to_suppliersFragment)
+        }
 
         val supplier = arguments?.getParcelable<SupplierEntities>("selectedItem")
         supplier?.let { displaySupplierDetails(it) }

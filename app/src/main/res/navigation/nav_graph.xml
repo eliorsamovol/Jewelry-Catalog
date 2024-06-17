@@ -92,6 +92,9 @@
         <argument
             android:name="selectedItem"
             app:argType="com.tests.jewelry.data.db.entities.SupplierEntities"/>
+        <action
+            android:id="@+id/action_supplierDetailsFragment_to_suppliersFragment"
+            app:destination="@+id/supplierFragment"/>
     </fragment>
 
 
@@ -114,6 +117,9 @@
         <argument
             android:name="selectedItem"
             app:argType="com.tests.jewelry.JewelryEntities"/>
+        <action
+            android:id="@+id/action_itemDetailsFragment_to_itemsFragment"
+            app:destination="@+id/itemsFragment"/>
     </fragment>
 
     <fragment
