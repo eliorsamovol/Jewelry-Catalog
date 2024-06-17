@@ -18,7 +18,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.EditText
 import android.widget.RadioButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import android.widget.Toast
@@ -209,6 +212,9 @@ class NewItem : Fragment() {
         binding.backBtn.setOnClickListener {
             findNavController().navigate(R.id.action_newItem_to_items)
         }
+
+        setupDoneAction(binding.nameEditText)
+        setupDoneAction(binding.descriptionEditText)
     }
 
     private fun showImageSourceDialog() {
@@ -275,6 +281,19 @@ class NewItem : Fragment() {
         } catch (e: IOException) {
             e.printStackTrace()
             null
+        }
+    }
+
+    private fun setupDoneAction(editText: EditText){
+        editText.setOnEditorActionListener { v, actionId, event ->
+            if(actionId == EditorInfo.IME_ACTION_DONE) {
+                // Hide keyboard
+                val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(editText.windowToken, 0)
+                true
+            } else {
+                false
+            }
         }
     }
 

@@ -47,7 +47,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:gravity="center"
-            android:padding="5dp"/>
+            android:padding="5dp"
+            android:imeOptions="actionDone"/>
 
         <TextView
             android:id="@+id/supplierAddress"
@@ -93,7 +94,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:gravity="center"
-            android:padding="5dp"/>
+            android:padding="5dp"
+            android:imeOptions="actionDone"/>
 
         <TextView
             android:id="@+id/supplierPhone"
