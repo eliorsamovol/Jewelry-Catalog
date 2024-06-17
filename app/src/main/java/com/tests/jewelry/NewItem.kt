@@ -75,7 +75,7 @@ class NewItem : Fragment() {
                 capturedImage = resizedBitmap
             } catch (e: IOException) {
                 e.printStackTrace()
-                Toast.makeText(requireContext(), "Failed to load image", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), R.string.failed_load_image_message, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -116,7 +116,7 @@ class NewItem : Fragment() {
         if(isGranted) {
             openCamera()
         } else {
-            Toast.makeText(requireContext(), "Camera permission is required", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), R.string.photo_permission, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -126,7 +126,7 @@ class NewItem : Fragment() {
         if(isGranted) {
             openGallery()
         } else {
-            Toast.makeText(requireContext(), "Storage permission is required", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), R.string.photo_permission, Toast.LENGTH_SHORT).show()
         }
     }
     override fun onCreateView(
@@ -196,13 +196,13 @@ class NewItem : Fragment() {
                         imageResId = imagePath
                     )
                     jewelryViewModel.addJewelry(newItem)
-                    Toast.makeText(context, "jewelry item added", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, R.string.jewelry_added_message, Toast.LENGTH_LONG).show()
                     findNavController().navigate(R.id.action_newItem_to_catalog)
                 } else {
-                    Toast.makeText(context, "Please take a photo", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.upload_an_image_message, Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(context, "please fill all fields!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.fill_all_fields_message, Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -212,9 +212,12 @@ class NewItem : Fragment() {
     }
 
     private fun showImageSourceDialog() {
-        val options = arrayOf("Take a picture", "Choose from library")
+        val options = arrayOf<CharSequence>(
+            getString(R.string.take_photo),
+            getString(R.string.choose_photo_from_gallery)
+        )
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Select Image Source")
+            .setTitle(getString(R.string.select_image_source))
             .setItems(options) { _, which ->
                 when (which) {
                     0 -> checkCameraPermission()
