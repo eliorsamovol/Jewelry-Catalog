@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.tests.jewelry.databinding.ItemDetailsBinding
 
 class ItemDetails : Fragment() {
@@ -42,8 +43,10 @@ class ItemDetails : Fragment() {
         binding.weightTextView.text = getString(R.string.jewelry_weight_details, item.weight.toString())
         binding.jewelrySales.text = getString(R.string.jewelry_sales_amount, item.soldItems)
 
-        val bitmap = BitmapFactory.decodeFile(item.imageResId)
-        binding.jewelryImage.setImageBitmap(bitmap)
+        Glide.with(this)
+            .load(item.imageResId)
+            .centerCrop()
+            .into(binding.jewelryImage)
     }
 
     override fun onDestroyView() {

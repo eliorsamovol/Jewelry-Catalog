@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.tests.jewelry.data.db.entities.SupplierEntities
 import com.tests.jewelry.databinding.SupplierDetailsBinding
 import java.text.SimpleDateFormat
@@ -45,8 +46,10 @@ class SupplierDetails : Fragment() {
         binding.supplierPrice.text = getString(R.string.supplier_purchase_price_details_page, item.purchasePrice.toInt())
         binding.supplierType.text = getString(R.string.supplier_type_details_page, item.type)
 
-        val bitmap = BitmapFactory.decodeFile(item.reception)
-        binding.supplierImage.setImageBitmap(bitmap)
+        Glide.with(this)
+            .load(item.reception)
+            .centerCrop()
+            .into(binding.supplierImage)
     }
 
     override fun onDestroyView() {

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.content.Context
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tests.jewelry.*
 import com.tests.jewelry.data.db.entities.SupplierEntities
@@ -24,8 +25,10 @@ class SupplierAdapter(private var itemList: List<SupplierEntities>,
             binding.itemName.text = item.name
             binding.itemDate.text = parseDate(item.date)
 
-            val bitmap = BitmapFactory.decodeFile(item.reception)
-            binding.itemImage.setImageBitmap(bitmap)
+            Glide.with(context)
+                .load(item.reception)
+                .centerCrop()
+                .into(binding.itemImage)
 
             binding.deleteButton.setOnClickListener { showDeleteConfirmationDialog(item) }
             itemView.setOnClickListener { onItemClick(item) }

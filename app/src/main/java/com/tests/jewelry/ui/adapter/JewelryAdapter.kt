@@ -6,8 +6,10 @@ import android.content.Context
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tests.jewelry.JewelryEntities
+import com.tests.jewelry.R
 import com.tests.jewelry.databinding.ItemJewelryBinding
 
 class JewelryAdapter(private var itemList: List<JewelryEntities>,
@@ -24,8 +26,10 @@ class JewelryAdapter(private var itemList: List<JewelryEntities>,
             binding.itemPrice.text = "${item.price}₪"
             binding.soldItemsTextView.text = item.soldItems.toString()
 
-            val bitmap = BitmapFactory.decodeFile(item.imageResId)
-            binding.itemImage.setImageBitmap(bitmap)
+            Glide.with(context)
+                .load(item.imageResId)
+                .centerCrop()
+                .into(binding.itemImage)
 
             binding.deleteButton.setOnClickListener { showDeleteConfirmationDialog(item) }
             binding.editButton.setOnClickListener { onEditClick(item) }
