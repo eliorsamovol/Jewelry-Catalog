@@ -32,7 +32,7 @@
     <string name="jewelry_price_value"></string>
     <string name="Jewelry_weight_box">Weight</string>
     <string name="jewelry_photo_box">Photo</string>
-    <string name="jewelry_sales_amount">Number of units sold: %1$s</string>
+    <string name="jewelry_sales_amount">Number of units sold: %1$d</string>
 
     <string name="necklace_radio_button">Necklace</string>
     <string name="ring_radio_button">Ring</string>
@@ -67,7 +67,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="take_photo">Upload photo</string>
+    <string name="take_photo">Take a photo</string>
     <string name="upload_reception">Upload reception</string>
 
     <string name="delete">Delete</string>
@@ -79,7 +79,7 @@
     <string name="all_time">All Time</string>
     <string name="jewelries_revenues_headline">Jewelries Revenues</string>
     <string name="profit_headline">Profit</string>
-    <string name="best_seller_headline">Best Seller</string>
+    <string name="best_seller_headline">Best Seller Item</string>
     <string name="units_counter">Units</string>
     <string name="amount_format">%1$.2f₪</string>
     <string name="no_sales">No Sales</string>
@@ -92,4 +92,20 @@
     <string name="jewelry_price_details">Name: %1$d₪</string>
     <string name="jewelry_weight_details">Weight: %1$s</string>
     <string name="jewelry_type_details">Type: %1$s</string>
+
+    <string name="supplier_name_details_page">Name: %1$s</string>
+    <string name="supplier_address_details_page">Description: %1$s</string>
+    <string name="supplier_phone_details_page">Phone: %1$s</string>
+    <string name="supplier_date_of_purchase_details_page">Date of purchase: %1$s</string>
+    <string name="supplier_purchase_price_details_page">Price: %1$d</string>
+    <string name="supplier_type_details_page">Type: %1$s</string>
+
+    <string name="item_updated_message">Item updated</string>
+    <string name="upload_an_image_message">Please upload an image</string>
+    <string name="fill_all_fields_message">Please fill all the fields</string>
+    <string name="select_image_source">Select Image Source</string>
+    <string name="failed_load_image_message">Failed to load image</string>
+    <string name="invalid_input_message">Invalid input</string>
+    <string name="jewelry_added_message">Jewelry added to catalog</string>
+    <string name="supplier_added_message">Supplier purchase added</string>
 </resources>

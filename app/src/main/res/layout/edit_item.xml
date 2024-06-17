@@ -16,8 +16,17 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="16dp"
             tools:context=".EditItem">
+
+            <ImageButton
+                android:id="@+id/back_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:src="@drawable/arrow_back_icon"
+                android:background="@null"
+                android:padding="8dp"/>
 
             <TextView
                 android:id="@+id/mainHeadline"
@@ -28,17 +37,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:text="@string/edit_item_headline"
                 android:fontFamily="@font/vogue"
-                android:textSize="22dp"/>
-
-            <ImageButton
-                android:id="@+id/back_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                app:layout_constraintTop_toTopOf="@id/mainHeadline"
-                app:layout_constraintStart_toStartOf="parent"
-                android:src="@drawable/arrow_back_icon"
-                android:background="@null" />
+                android:textSize="24dp"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/jewelryName"
@@ -63,13 +64,15 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:gravity="center"
-                android:padding="5dp"/>
+                android:padding="5dp"
+                android:background="@drawable/edit_text_line"/>
 
             <TextView
                 android:id="@+id/jewelryDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/jewelry_description_box"
+                android:textColor="@color/black"
                 android:fontFamily="@font/toolbarfont"
                 app:layout_constraintTop_toBottomOf="@+id/nameEditText"
                 app:layout_constraintStart_toStartOf="@+id/nameEditText"
@@ -87,7 +90,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:gravity="center"
-                android:padding="5dp"/>
+                android:padding="5dp"
+                android:background="@drawable/edit_text_line"/>
 
             <TextView
                 android:id="@+id/jewelryPrice"
@@ -95,6 +99,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/jewelry_price_box"
                 android:fontFamily="@font/toolbarfont"
+                android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@+id/descriptionEditText"
                 app:layout_constraintStart_toStartOf="@+id/descriptionEditText"
                 app:layout_constraintEnd_toEndOf="@id/descriptionEditText"
@@ -112,7 +117,9 @@
                 android:layout_marginTop="5dp"
                 android:padding="5dp"
                 android:max="1000"
-                android:min="0"/>
+                android:min="0"
+                android:thumbTint="@color/black"
+                android:progressTint="@color/black"/>
 
             <TextView
                 android:id="@+id/weightTextView"
@@ -138,7 +145,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:gravity="center"
-                android:padding="5dp"/>
+                android:padding="5dp"
+                android:background="@drawable/edit_text_line"/>
 
             <TextView
                 android:id="@+id/jewelryType"
@@ -198,18 +206,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/typeRdioGroup"
-                app:layout_constraintStart_toStartOf="@id/priceSeekBar"
+                app:layout_constraintStart_toStartOf="@id/jewelryType"
+                app:layout_constraintEnd_toEndOf="@+id/jewelryType"
                 android:src="@drawable/add_photo_icon"
                 android:background="@null"
-                android:layout_marginTop="50dp"/>
+                android:layout_marginTop="35dp"/>
 
             <ImageView
                 android:id="@+id/imageSelected"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
-                app:layout_constraintTop_toBottomOf="@id/typeRdioGroup"
-                app:layout_constraintStart_toEndOf="@id/jewelryType"
+                app:layout_constraintTop_toBottomOf="@id/btnTakePhoto"
+                app:layout_constraintStart_toStartOf="@id/btnTakePhoto"
+                app:layout_constraintEnd_toEndOf="@+id/btnTakePhoto"
                 android:layout_marginTop="30dp"/>
 
             <Button
@@ -219,13 +229,13 @@
                 android:text="@string/save_change_btn"
                 android:fontFamily="@font/vogue"
                 android:textSize="20dp"
-                app:layout_constraintTop_toBottomOf="@id/btnTakePhoto"
-                app:layout_constraintEnd_toEndOf="@id/btnTakePhoto"
-                app:layout_constraintStart_toStartOf="@id/btnTakePhoto"
+                app:layout_constraintTop_toBottomOf="@+id/imageSelected"
+                app:layout_constraintEnd_toEndOf="@id/jewelryType"
+                app:layout_constraintStart_toStartOf="@id/jewelryType"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:textColor="@color/white"
-                android:background="@color/transparent"/>
+                android:textColor="@color/black"
+                android:background="@color/transparent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

@@ -37,13 +37,13 @@ class SupplierDetails : Fragment() {
     }
 
     private fun displaySupplierDetails(item: SupplierEntities) {
-        binding.supplierName.text = "Name: ${item.name}"
-        binding.supplierDescription.text = "Address: ${item.address}"
-        binding.supplierPhone.text = "Phone: ${item.phone}"
-        val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        binding.supplierPurchaseDate.text = "Date Of Purchase: ${format.format(item.date)}"
-        binding.supplierPrice.text = "Price: ${item.purchasePrice}"
-        binding.supplierType.text = "Type: ${item.type}"
+        binding.supplierName.text = getString(R.string.supplier_name_details_page, item.name)
+        binding.supplierDescription.text = getString(R.string.supplier_address_details_page, item.address)
+        binding.supplierPhone.text = getString(R.string.supplier_phone_details_page, item.phone)
+        val format = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        binding.supplierPurchaseDate.text = getString(R.string.supplier_date_of_purchase_details_page, format.format(item.date))
+        binding.supplierPrice.text = getString(R.string.supplier_purchase_price_details_page, item.purchasePrice.toInt())
+        binding.supplierType.text = getString(R.string.supplier_type_details_page, item.type)
 
         val bitmap = BitmapFactory.decodeFile(item.reception)
         binding.supplierImage.setImageBitmap(bitmap)
