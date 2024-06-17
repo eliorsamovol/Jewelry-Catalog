@@ -1,0 +1,111 @@
+<resources>
+    <string name="app_name">קטלוג תכשיטים</string>
+
+    <string name="data_analysis">ניתוח מידע</string>
+    <string name="new_item">מוצר חדש</string>
+    <string name="new_supplier">ספק חדש</string>
+    <string name="suppliers">ספקים</string>
+
+    <string name="headline_main">voyage studio</string>
+    <string name="save_item">שמור</string>
+    <string name="items_headline">תכשיטים</string>
+    <string name="show_by">הצג לפי קטגוריה</string>
+    <string name="necklaces">שרשראות</string>
+    <string name="rings">טבעות</string>
+    <string name="earrings">עגילים</string>
+    <string name="bracelets">צמידים</string>
+    <string name="view_all">הצג הכל</string>
+
+    <string name="supplier_address_box">כתובת</string>
+    <string name="supplier_phone_box">טלפון</string>
+    <string name="supplier_purchase_date_box">תאריך רכישה</string>
+
+    <string name="tool_shop_radio_button">חנות כלים</string>
+    <string name="jewelry_foundry_radio_button">בית יציקה</string>
+    <string name="raw_material_radio_button">חומרי גלם</string>
+    <string name="misc_radio_button">שונות</string>
+
+    <string name="jewelry_name_box">שם</string>
+    <string name="jewelry_type_box">סוג</string>
+    <string name="jewelry_description_box">תיאור</string>
+    <string name="jewelry_price_box">מחיר: %1$d₪</string>
+    <string name="jewelry_price_value"></string>
+    <string name="Jewelry_weight_box">משקל</string>
+    <string name="jewelry_photo_box">תמונה</string>
+    <string name="jewelry_sales_amount">מספק יחידות שנמכרו: %1$d</string>
+
+    <string name="necklace_radio_button">שרשרת</string>
+    <string name="ring_radio_button">טבעת</string>
+    <string name="earring_radio_button">עגיל</string>
+    <string name="bracelet_radio_button">צמיד</string>
+    <string name="choose_photo_from_gallery">בחר מהגלריה</string>
+
+    <string name="items_sort_by">מיין לפי:</string>
+
+    <string name="text_second_frame">Jewelery has\n the power to\n be the one\n little thing\n that makes you\n feel unique</string>
+
+    <string name="edit_item_headline">עריכת מוצר</string>
+    <string name="save_change_btn">שמור שינויים</string>
+
+    <string name="jewelry_details">פרטי תכשיט</string>
+    <string name="jewelry_img">תמונת תכשיט</string>
+
+    <string name="suppliers_details_headline">פרטי ספק</string>
+    <string name="suppliers_address_details">כתובת</string>
+    <string name="supplier_phone_details">טלפון</string>
+    <string name="supplier_date_details">תאריך רכישה</string>
+    <string name="supplier_sum_details">סכום רכישה</string>
+    <string name="supplier_type_details">סוג</string>
+
+    <string-array name="sort_options">
+        <item>ברירת מחדל</item>
+        <item>מחיר: מהנמוך לגבוה</item>
+        <item>מחיר: מהגבוה לנמוך</item>
+    </string-array>
+
+    <string name="catalog">קטלוג</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="take_photo">צלם תמונה</string>
+    <string name="upload_reception">העלה קבלה</string>
+
+    <string name="delete">מחק</string>
+
+    <string name="bi_info">מידע עסקי</string>
+    <string name="business_analytics_headline">ניתוח עסקי</string>
+    <string name="supplier_expenses_headline">הוצאות ספקים</string>
+    <string name="last_month">חודש שעבר</string>
+    <string name="all_time">בכל הזמנים</string>
+    <string name="jewelries_revenues_headline">הכנסות תכשיטים</string>
+    <string name="profit_headline">רווח</string>
+    <string name="best_seller_headline">נמכר ביותר</string>
+    <string name="units_counter">יחידות</string>
+    <string name="amount_format">%1$.2f₪</string>
+    <string name="no_sales">אין מכירות</string>
+    <string name="best_seller_quantity">לפי יחידות</string>
+    <string name="best_seller_revenue">לפי הכנסה</string>
+
+    <string name="photo_permission">על מנת להשתמש ביישום, אתה מוכרח להעלות תמונות!</string>
+    <string name="jewelry_name_details">שם: %1$s</string>
+    <string name="jewelry_description_details">תיאור: %1$s</string>
+    <string name="jewelry_price_details">מחיר: %1$d₪</string>
+    <string name="jewelry_weight_details">משקל: %1$s</string>
+    <string name="jewelry_type_details">סוג: %1$s</string>
+
+    <string name="supplier_name_details_page">שם: %1$s</string>
+    <string name="supplier_address_details_page">תיאור: %1$s</string>
+    <string name="supplier_phone_details_page">טלפון: %1$s</string>
+    <string name="supplier_date_of_purchase_details_page">תאריך רכישה: %1$s</string>
+    <string name="supplier_purchase_price_details_page">סכום: %1$d</string>
+    <string name="supplier_type_details_page">סוג: %1$s</string>
+
+    <string name="item_updated_message">תכשיט עודכן</string>
+    <string name="upload_an_image_message">אנא העלה תמונה</string>
+    <string name="fill_all_fields_message">אנא מלא את כל הפרטים</string>
+    <string name="select_image_source">בחר מקור תמונה</string>
+    <string name="failed_load_image_message">נכשל בטעינת תמונה</string>
+    <string name="invalid_input_message">קלט לא תקין</string>
+    <string name="jewelry_added_message">תכשיט נוסף לקטלוג</string>
+    <string name="supplier_added_message">ספק נוסף</string>
+</resources>
