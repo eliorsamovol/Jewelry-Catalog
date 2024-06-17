@@ -43,7 +43,9 @@ import android.location.Geocoder
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.MotionEvent
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.ImageButton
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.MarkerOptions
@@ -272,6 +274,9 @@ class NewSupplier : Fragment(), OnMapReadyCallback {
             startAutocomplete.launch(intent)
 
         }
+
+        setupDoneAction(binding.nameEditText)
+        setupDoneAction(binding.addressEditText)
     }
 
     private fun showDatePickerDialog() {
@@ -422,6 +427,20 @@ class NewSupplier : Fragment(), OnMapReadyCallback {
     private fun hideKeyboard(){
         val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(binding.addressEditText.windowToken, 0)
+    }
+
+    private fun setupDoneAction(editText: EditText){
+        // For cases that press done
+        editText.setOnEditorActionListener { v, actionId, event ->
+            if(actionId == EditorInfo.IME_ACTION_DONE) {
+                // Hide keyboard
+                val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(editText.windowToken, 0)
+                true
+            } else {
+                false
+            }
+        }
     }
 
     override fun onResume() {

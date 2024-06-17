@@ -61,6 +61,7 @@
         <item>Date</item>
         <item>Price: Low to High</item>
         <item>Price: High to Low</item>
+        <item>Best Sellers</item>
     </string-array>
 
     <string name="catalog">Catalog</string>

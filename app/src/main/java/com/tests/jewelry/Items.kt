@@ -81,6 +81,13 @@ class Items : Fragment(), AdapterView.OnItemSelectedListener {
             0 -> observeItems(itemType) // Default order
             1 -> observeItemsSortedByPrice(true) // Sort by price ascending
             2 -> observeItemsSortedByPrice(false) // Sort by price descending
+            3 -> observeItemsSortedByBestSellers()
+        }
+    }
+
+    private fun observeItemsSortedByBestSellers() {
+        jewelryViewModel.getItemsSortedByBestSellers().observe(viewLifecycleOwner) { items ->
+            jewelryAdapter.setItems(items)
         }
     }
 

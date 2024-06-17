@@ -58,4 +58,8 @@ class JewelryRepository(context: Context) {
     fun getBestSellerByRevenue(): LiveData<JewelryEntities?>{
         return jewelryDao.getBestSellerByRevenue()
     }
+
+    fun getItemsSortedByBestSellers(): LiveData<List<JewelryEntities>> {
+        return jewelryDao.getItemsSortedByBestSellers()
+    }
 }

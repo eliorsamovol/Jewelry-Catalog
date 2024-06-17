@@ -115,11 +115,13 @@ class JewelryViewModel(application: Application) : AndroidViewModel(application)
         return repository.getItemByCreationOrder()
     }
 
-
     fun updateSoldItems(jewelry: JewelryEntities){
         viewModelScope.launch(Dispatchers.IO){
             repository.updateJewelry(jewelry)
         }
+    }
+    fun getItemsSortedByBestSellers(): LiveData<List<JewelryEntities>> {
+        return repository.getItemsSortedByBestSellers()
     }
 }
 

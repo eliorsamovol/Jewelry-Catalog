@@ -46,4 +46,7 @@ interface JewelryDao {
 
     @Query("SELECT * FROM jewelry_table WHERE sold_items > 0 ORDER BY (price * sold_items) DESC LIMIT 1")
     fun getBestSellerByRevenue(): LiveData<JewelryEntities?>
+
+    @Query("SELECT * FROM jewelry_table ORDER BY sold_items DESC")
+    fun getItemsSortedByBestSellers(): LiveData<List<JewelryEntities>>
 }

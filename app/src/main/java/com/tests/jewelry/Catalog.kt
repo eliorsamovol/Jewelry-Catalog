@@ -30,20 +30,6 @@ class Catalog : Fragment() {
     private lateinit var viewPager: ViewPager2
     private lateinit var adapter: ViewPagerAdapter
     private val imagesList = listOf(R.drawable.bottom_photo_main, R.drawable.bottom2, R.drawable.bottom3, R.drawable.bottom4, R.drawable.bottom5)
-    private val handler = Handler(Looper.getMainLooper())
-    private var currentPage = 0
-
-    private val updateRunnable = object :Runnable {
-        override fun run() {
-            if (currentPage == imagesList.size) {
-                currentPage = 0
-                viewPager.setCurrentItem(currentPage++, false) // Move to the first item without animation
-            } else {
-                viewPager.setCurrentItem(currentPage++, true) // Move to the next item with animation
-            }
-            handler.postDelayed(this, 2000)
-        }
-    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -64,7 +50,6 @@ class Catalog : Fragment() {
             Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
         }
 
-        setUpViewPager()
         loadImages()
 
         binding.jewelries.setOnClickListener {
@@ -121,14 +106,6 @@ class Catalog : Fragment() {
         spanStrAnalytics.setSpan(UnderlineSpan(), 0, analyticsStr.length, 0)
         analyticsBtn.text = spanStrAnalytics
 
-    }
-
-    private fun setUpViewPager() {
-        viewPager = binding.viewPager
-        adapter = ViewPagerAdapter(imagesList, requireContext())
-        viewPager.adapter = adapter
-
-        handler.post(updateRunnable)
     }
 
     private fun loadImages(){
