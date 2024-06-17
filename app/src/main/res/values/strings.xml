@@ -90,7 +90,7 @@
     <string name="photo_permission">In order to use the app, you must upload photos!</string>
     <string name="jewelry_name_details">Name: %1$s</string>
     <string name="jewelry_description_details">Description: %1$s</string>
-    <string name="jewelry_price_details">Name: %1$d₪</string>
+    <string name="jewelry_price_details">Price: %1$d₪</string>
     <string name="jewelry_weight_details">Weight: %1$s</string>
     <string name="jewelry_type_details">Type: %1$s</string>
 

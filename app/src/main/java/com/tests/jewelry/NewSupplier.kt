@@ -192,12 +192,12 @@ class NewSupplier : Fragment(), OnMapReadyCallback {
         button.text = span
 
         priceSeekBar = binding.priceSeekBar
-        priceValueTextView = binding.priceValueTextView
+        priceValueTextView = binding.supplierPrice
         mapView = binding.mapView
 
         priceSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                priceValueTextView.text = "$progress"
+                priceValueTextView.text = getString(R.string.supplier_purchase_price_details_page, progress)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
