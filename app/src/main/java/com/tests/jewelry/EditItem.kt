@@ -100,7 +100,7 @@ class EditItem : Fragment() {
         if(isGranted) {
             openCamera()
         } else {
-            Toast.makeText(requireContext(), "Camera permission is required", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), R.string.photo_permission, Toast.LENGTH_LONG).show()
         }
     }
 
@@ -110,7 +110,7 @@ class EditItem : Fragment() {
         if(isGranted) {
             openGallery()
         } else {
-            Toast.makeText(requireContext(), "Storage permission is required", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), R.string.photo_permission, Toast.LENGTH_LONG).show()
         }
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -126,7 +126,7 @@ class EditItem : Fragment() {
         priceValueTextView = binding.jewelryPrice
         priceSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                priceValueTextView.text = "Price $progress"
+                priceValueTextView.text = getString(R.string.jewelry_price_box, progress)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}

@@ -94,7 +94,14 @@ class Items : Fragment(), AdapterView.OnItemSelectedListener {
                 jewelryAdapter.setItems(items)
             })
         } else {
-            jewelryViewModel.getJewelryByType(itemType).observe(viewLifecycleOwner, Observer { items ->
+            val localizedType = when(itemType) {
+                getString(R.string.necklaces) -> "necklace"
+                getString(R.string.rings) -> "ring"
+                getString(R.string.earrings) -> "earring"
+                getString(R.string.bracelets) -> "bracelet"
+                else -> itemType
+            }
+            jewelryViewModel.getJewelryByType(localizedType).observe(viewLifecycleOwner, Observer { items ->
                 jewelryAdapter.setItems(items)
             })
         }

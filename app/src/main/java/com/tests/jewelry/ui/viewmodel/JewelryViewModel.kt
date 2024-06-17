@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.tests.jewelry.JewelryEntities
 import com.tests.jewelry.data.db.entities.SupplierEntities
@@ -11,6 +13,7 @@ import com.tests.jewelry.data.repository.JewelryRepository
 import com.tests.jewelry.data.repository.SupplierRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.IllegalArgumentException
 import java.util.Calendar
 
 class JewelryViewModel(application: Application) : AndroidViewModel(application) {
@@ -118,5 +121,14 @@ class JewelryViewModel(application: Application) : AndroidViewModel(application)
             repository.updateJewelry(jewelry)
         }
     }
+}
 
+class JewelryViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelsClass: Class<T>): T {
+        if(modelsClass.isAssignableFrom(JewelryViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return JewelryViewModel(application) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
 }
