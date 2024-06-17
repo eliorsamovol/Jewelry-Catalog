@@ -108,4 +108,10 @@
     <string name="invalid_input_message">קלט לא תקין</string>
     <string name="jewelry_added_message">תכשיט נוסף לקטלוג</string>
     <string name="supplier_added_message">ספק נוסף</string>
+    <string name="item_sold_message">פריט נמכר</string>
+    <string name="item_unsold_message">פריט הוחזר</string>
+    <string name="delete_item_message">מחק פריט</string>
+    <string name="are_you_sure_delete_message">אתה בטוח שאתה רוצה למחוק את הפריט?</string>
+    <string name="cancel_btn">בטל</string>
+
 </resources>

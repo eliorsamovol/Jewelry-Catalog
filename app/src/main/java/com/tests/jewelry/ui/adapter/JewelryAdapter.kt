@@ -37,24 +37,24 @@ class JewelryAdapter(private var itemList: List<JewelryEntities>,
                 item.soldItems++
                 binding.soldItemsTextView.text = item.soldItems.toString()
                 onSoldItemsChange(item)
-                Toast.makeText(context, "Item Sold!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.item_sold_message, Toast.LENGTH_SHORT).show()
             }
             binding.minusButton.setOnClickListener {
                 if(item.soldItems > 0) {
                     item.soldItems--
                     binding.soldItemsTextView.text = item.soldItems.toString()
                     onSoldItemsChange(item)
-                    Toast.makeText(context, "Item unsold", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.item_unsold_message, Toast.LENGTH_SHORT).show()
                 }
             }
         }
 
         private fun showDeleteConfirmationDialog(item: JewelryEntities) {
             MaterialAlertDialogBuilder(context)
-                .setTitle("Delete Item")
-                .setMessage("Are you sure you want to delete this item?")
-                .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
-                .setPositiveButton("Delete") { dialog, _ ->
+                .setTitle(R.string.delete_item_message)
+                .setMessage(R.string.are_you_sure_delete_message)
+                .setNegativeButton(R.string.cancel_btn) { dialog, _ -> dialog.dismiss() }
+                .setPositiveButton(R.string.delete) { dialog, _ ->
                     onDeleteClick(item)
                     dialog.dismiss()
                 }

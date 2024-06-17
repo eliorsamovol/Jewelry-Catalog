@@ -36,10 +36,10 @@ class SupplierAdapter(private var itemList: List<SupplierEntities>,
 
         private fun showDeleteConfirmationDialog(item: SupplierEntities) {
             MaterialAlertDialogBuilder(context)
-                .setTitle("Delete Item")
-                .setMessage("Are you sure you want to delete this item?")
-                .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
-                .setPositiveButton("Delete") { dialog, _ ->
+                .setTitle(R.string.delete_item_message)
+                .setMessage(R.string.are_you_sure_delete_message)
+                .setNegativeButton(R.string.cancel_btn) { dialog, _ -> dialog.dismiss() }
+                .setPositiveButton(R.string.delete) { dialog, _ ->
                     onDeleteClick(item)
                     dialog.dismiss()
                 }

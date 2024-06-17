@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:id="@+id/catalogScrollView"
     tools:context=".Catalog"
-    android:background="@color/biege">
+    android:background="@color/biege"
+    android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/catalogFragment"

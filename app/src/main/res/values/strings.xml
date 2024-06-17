@@ -109,4 +109,10 @@
     <string name="invalid_input_message">Invalid input</string>
     <string name="jewelry_added_message">Jewelry added to catalog</string>
     <string name="supplier_added_message">Supplier purchase added</string>
+    <string name="item_sold_message">Item sold</string>
+    <string name="item_unsold_message">Item unsold</string>
+    <string name="delete_item_message">Delete Item</string>
+    <string name="are_you_sure_delete_message">Are you sure you want to delete this item?</string>
+    <string name="cancel_btn">Cancel</string>
+
 </resources>
