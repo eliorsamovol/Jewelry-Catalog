@@ -86,6 +86,7 @@ class EditItem : Fragment() {
         }
     }
 
+    // Resizing image for increasing performance
     private fun resizeBitmap(image: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
         val width = image.width
         val height = image.height
@@ -97,6 +98,7 @@ class EditItem : Fragment() {
         return Bitmap.createScaledBitmap(image, newWidth, newHeight, true)
     }
 
+    // Handle camera permission request
     private val requestCameraPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
@@ -107,6 +109,7 @@ class EditItem : Fragment() {
         }
     }
 
+    // Handle storage permission request
     private val requestStoragePermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
@@ -158,6 +161,7 @@ class EditItem : Fragment() {
             showImageSourceDialog()
         }
 
+        // Save Button
         binding.saveButton.setOnClickListener {
             val editName = binding.nameEditText.text.toString()
             val editDescription = binding.descriptionEditText.text.toString()
@@ -172,7 +176,7 @@ class EditItem : Fragment() {
                     val imagePath = capturedImage?.let { bitmap ->
                         saveBitmapToFile(requireContext(), bitmap)
                     }
-                    if(imagePath != null) {
+                    if(imagePath != null) { // Check if photo uploaded
                         val editedItem=JewelryEntities(
                             id = jewelryItem.id,
                             name = editName,
@@ -182,10 +186,10 @@ class EditItem : Fragment() {
                             weight = editWeight,
                             imageResId = imagePath
                         )
-                        jewelryViewModel.updateJewelry(editedItem)
+                        jewelryViewModel.updateJewelry(editedItem) // Update jewelry
                         Toast.makeText(requireContext(), R.string.item_updated_message, Toast.LENGTH_LONG).show()
                         findNavController().navigate(R.id.action_itemsFragment_to_editItemFragment)
-                    } else {
+                    } else { // No photo uploaded
                         Toast.makeText(context, R.string.upload_an_image_message, Toast.LENGTH_SHORT).show()
                     }
                 } else { // Photo is not changed
@@ -202,7 +206,7 @@ class EditItem : Fragment() {
                     Toast.makeText(requireContext(), R.string.item_updated_message, Toast.LENGTH_LONG).show()
                     findNavController().navigate(R.id.action_itemsFragment_to_editItemFragment)
                 }
-            } else {
+            } else { // not all of the details has been filled
                 Toast.makeText(context, R.string.fill_all_fields_message, Toast.LENGTH_SHORT).show()
             }
         }
@@ -215,6 +219,7 @@ class EditItem : Fragment() {
         setupDoneAction(binding.descriptionEditText)
     }
 
+    // Options for capturing and for upload from gallery
     private fun showImageSourceDialog() {
         val options = arrayOf<CharSequence>(
             getString(R.string.take_photo),
@@ -231,7 +236,7 @@ class EditItem : Fragment() {
             .show()
     }
 
-    private fun checkCameraPermission(){
+    private fun checkCameraPermission(){ // Handle camera permission
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
             requestCameraPermission()
         } else {
@@ -239,18 +244,18 @@ class EditItem : Fragment() {
         }
     }
 
-    private fun requestCameraPermission(){
+    private fun requestCameraPermission(){ // Request camera permission
         requestCameraPermissionLauncher.launch(Manifest.permission.CAMERA)
     }
 
-    private fun openCamera(){
+    private fun openCamera(){ // Camera launcher
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if(intent.resolveActivity(requireActivity().packageManager) != null){
             takePictureLauncher.launch(intent)
         }
     }
 
-    private fun checkStoragePermission() {
+    private fun checkStoragePermission() { // Handle storage permission
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             requestStoragePermission()
         } else {
@@ -258,16 +263,16 @@ class EditItem : Fragment() {
         }
     }
 
-    private fun requestStoragePermission() {
+    private fun requestStoragePermission() { // Request storage permission
         requestStoragePermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
     }
 
-    private fun openGallery() {
+    private fun openGallery() { // Gallery launcher
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         pickImageLauncher.launch(intent)
     }
 
-    fun saveBitmapToFile(context: Context, bitmap: Bitmap): String? {
+    fun saveBitmapToFile(context: Context, bitmap: Bitmap): String? { // Storing photo in local storage
         val storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         val file = File.createTempFile("JPEG_", ".jpg", storageDir)
         return try {
@@ -282,7 +287,7 @@ class EditItem : Fragment() {
         }
     }
 
-    private fun setupDoneAction(editText: EditText){
+    private fun setupDoneAction(editText: EditText){ // Handle the case when keyboard is active and the user press the done button
         editText.setOnEditorActionListener { v, actionId, event ->
             if(actionId == EditorInfo.IME_ACTION_DONE) {
                 // Hide keyboard

@@ -58,10 +58,12 @@ class BusinessAnalytics : Fragment() {
         var totalExpenses =  0.0
         var totalRevenue = 0.0
 
+        // Calculate total expenses
         suppliers.forEach { supplier ->
             totalExpenses += supplier.purchasePrice
         }
 
+        // Calculate total revenues
         jewelries.forEach { jewelry ->
             totalRevenue += jewelry.price * jewelry.soldItems
         }
@@ -72,6 +74,7 @@ class BusinessAnalytics : Fragment() {
         binding.jewelriesRevenuesValue.text = getString(R.string.amount_format, totalRevenue)
         binding.totalProfitValue.text = getString(R.string.amount_format, totalProfit)
 
+        // In case of positive profit, will displayed in green, and in case of negative in red.
         val profitColor = if(totalProfit >= 0) {
             ContextCompat.getColor(requireContext(), R.color.green)
         } else {
