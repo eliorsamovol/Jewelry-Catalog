@@ -17,32 +17,32 @@ object LogUtils {
     fun writeLog(context: Context, message: String) {
         val logDir = File(context.filesDir, LOG_DIRECTORY)
         if (!logDir.exists()) {
-            val created = logDir.mkdirs()
-            Log.d(TAG, "Log directory created: $created")
+            val createdLogDir = logDir.mkdirs()
+            Log.d(TAG, "Log directory created: $createdLogDir")
         } else {
             Log.d(TAG, "Log directory exists")
         }
 
-        val logFile =
-            File(logDir, "log_${SimpleDateFormat("yyyyMMdd", Locale.US).format(Date())}.txt")
-        Log.d(TAG, "Log file path: ${logFile.absolutePath}")
-
+        val logFile = File(logDir, "log_${SimpleDateFormat("yyyyMMdd", Locale.US).format(Date())}.txt")
+        if (logFile.exists()) {
+            Log.d(TAG, "Log file path: $logFile")
+        } else {
+            val createdLogFile = logFile.createNewFile()
+            Log.d(TAG, "Log file created: $createdLogFile")
+        }
         try {
-            val writer = FileWriter(logFile, true)
-            writer.append(
+            val fileWriter = FileWriter(logFile, true)
+            fileWriter.appendLine(
                 "${
-                    SimpleDateFormat(
-                        "yyyy-MM-dd HH:mm:ss",
-                        Locale.US
-                    ).format(Date())
-                }: $message\n"
+                    SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(Date())
+                }: $message"
             )
-            writer.flush()
-            writer.close()
+            fileWriter.flush()
+            fileWriter.close()
             Log.d(TAG, "Log written successfully")
         } catch (e: IOException) {
             e.printStackTrace()
-            Log.e(TAG, "Error writing log: ${e.message}")
+            Log.e(TAG, "Error writing log file", e)
         }
     }
 }

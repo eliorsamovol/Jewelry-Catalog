@@ -194,7 +194,7 @@ class NewSupplier : Fragment(), OnMapReadyCallback {
         priceSeekBar = binding.priceSeekBar
         priceValueTextView = binding.supplierPrice
         mapView = binding.mapView
-
+        priceValueTextView.text = getString(R.string.jewelry_price_box, 0)
         priceSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 priceValueTextView.text = getString(R.string.supplier_purchase_price_details_page, progress)

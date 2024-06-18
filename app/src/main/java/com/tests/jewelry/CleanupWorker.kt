@@ -8,31 +8,35 @@ import java.util.concurrent.TimeUnit
 import android.util.Log
 class CleanupWorker(appContext: Context, workerParams: WorkerParameters) : Worker(appContext, workerParams) {
 
+    companion object {
+        private const val TAG = "CleanupWorker"
+        private const val CLEANUP_INTERVAL = 24L
+    }
     override fun doWork(): Result {
-        Log.d("CleanupWorker", "Cleanup work is being executed")
+        Log.d(TAG, "Cleanup work is being executed")
 
-        val directory = File(applicationContext.filesDir, "logs")
+        // Clean up log files older than 24 hours
+        val logDirectory = File(applicationContext.filesDir, "logs")
+        val logFiles = logDirectory.listFiles { _, name -> name.endsWith(".txt") }
         val currentTime = System.currentTimeMillis()
 
-        if (directory.exists()) {
-            directory.listFiles()?.forEach { file ->
-                // Define the condition for old files, e.g., files older than 7 days
-                val fileAge = currentTime - file.lastModified()
-                val maxAgeMillis = TimeUnit.MINUTES.toMillis(2)
+        try {
+            for (file in logFiles) {
+                val fileCreationTime = file.lastModified()
 
-                if (fileAge > maxAgeMillis) {
-                    val deleted = file.delete()
-                    if (deleted) {
-                        Log.d("CleanupWorker", "Deleted old log file: ${file.name}")
-                    } else {
-                        Log.d("CleanupWorker", "Failed to delete old log file: ${file.name}")
-                    }
+                if (currentTime - fileCreationTime > TimeUnit.HOURS.toMillis(24)) {
+                    file.delete()
+                    Log.d(TAG, "Deleted log file: ${file.name}")
+                } else {
+                    Log.d(TAG, "Keeping log file: ${file.name}")
                 }
             }
-        } else {
-            Log.d("CleanupWorker", "Log directory does not exist")
-        }
+            Log.d(TAG, "Cleanup work is completed")
 
-        return Result.success()
+            return Result.success()
+        } catch (e: Exception) {
+            Log.e(TAG, "Error cleaning up logs", e)
+            return Result.failure()
+        }
     }
 }

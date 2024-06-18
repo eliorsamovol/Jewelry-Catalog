@@ -77,15 +77,33 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
+    private fun scheduleCleanupWorker() {
+        val dailyWorkRequest = PeriodicWorkRequestBuilder<CleanupWorker>(24, TimeUnit.HOURS)
+            .build()
+        LogUtils.writeLog(this, "Scheduling cleanup worker")
+
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+            "CleanupWorker",
+            ExistingPeriodicWorkPolicy.REPLACE,
+            dailyWorkRequest
+        )
+    }
+
     private fun listLogFiles(context: Context) {
         val logDir = File(context.filesDir, "logs")
-        if (logDir.exists()) {
-            val logFiles = logDir.listFiles()
-            logFiles?.forEach {
-                Log.d("LogFiles", "Log file: ${it.name}")
-            }
-        } else {
+        if (!logDir.exists()) {
             Log.d("LogFiles", "Log directory does not exist")
+            return
+        }
+
+        val logFiles = logDir.listFiles()
+        if (logFiles.isNullOrEmpty()) {
+            Log.d("LogFiles", "No log files found")
+            return
+        }
+
+        for (file in logFiles) {
+            Log.d( "LogFiles", "Log file: ${file.name}")
         }
     }
 
