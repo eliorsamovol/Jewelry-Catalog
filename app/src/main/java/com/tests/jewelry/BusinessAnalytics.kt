@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -32,6 +33,9 @@ class BusinessAnalytics : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val scaleAnim = AnimationUtils.loadAnimation(requireContext(), R.anim.text_scale_anim)
+        binding.totalProfitValue.startAnimation(scaleAnim)
 
         jewelryViewModel.suppliers.observe(viewLifecycleOwner, Observer { supplier ->
             jewelryViewModel.items.observe(viewLifecycleOwner, Observer { jewelry ->

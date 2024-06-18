@@ -21,14 +21,13 @@ import android.text.style.UnderlineSpan
 import androidx.viewpager2.widget.ViewPager2
 import android.os.Handler
 import android.os.Looper
+import android.view.animation.AnimationUtils
 
 class Catalog : Fragment() {
 
     private var _binding : CatalogBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewPager: ViewPager2
-    private val imagesList = listOf(R.drawable.bottom_photo_main, R.drawable.bottom2, R.drawable.bottom3, R.drawable.bottom4, R.drawable.bottom5)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,8 +41,8 @@ class Catalog : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewPager = binding.viewPager
-        viewPager.adapter = ViewPagerAdapter(imagesList, requireContext())
+        val fadeInAnim = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in)
+        binding.mainHeadline.startAnimation(fadeInAnim)
 
         arguments?.getString("title")?.let{
             Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
@@ -136,6 +135,10 @@ class Catalog : Fragment() {
             .load(R.drawable.bracelet_main)
             .centerCrop()
             .into(binding.bracelets)
+        Glide.with(this)
+            .load(R.drawable.bottom_photo_main)
+            .centerCrop()
+            .into(binding.bottomImage)
     }
 
     override fun onDestroyView() {
