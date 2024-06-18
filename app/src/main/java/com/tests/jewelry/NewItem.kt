@@ -83,7 +83,7 @@ class NewItem : Fragment() {
         }
     }
 
-    private fun handleImageOrientation(bitmap: Bitmap, uri: Uri): Bitmap {
+    private fun handleImageOrientation(bitmap: Bitmap, uri: Uri): Bitmap { // Checking the image orientation
         val inputStream = requireContext().contentResolver.openInputStream(uri)
         val exif = inputStream?.let { ExifInterface(it) }
         val orientation = exif?.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL) ?: ExifInterface.ORIENTATION_NORMAL
@@ -96,7 +96,7 @@ class NewItem : Fragment() {
         }
     }
 
-    private fun rotateBitmap(bitmap: Bitmap, degrees: Float): Bitmap {
+    private fun rotateBitmap(bitmap: Bitmap, degrees: Float): Bitmap { // Rotating the image as a function of the orientation needed
         val matrix = Matrix().apply { postRotate(degrees) }
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
     }

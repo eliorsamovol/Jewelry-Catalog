@@ -52,18 +52,22 @@ class Catalog : Fragment() {
 
         loadImages()
 
+        // Jewelries listener
         binding.jewelries.setOnClickListener {
             findNavController().navigate(R.id.action_catalog_to_items)
         }
 
+        // Suppliers listener
         binding.supplier.setOnClickListener {
             findNavController().navigate(R.id.action_catalog_to_supplier)
         }
 
+        // BI listener
         binding.businessAnalytics.setOnClickListener {
             findNavController().navigate(R.id.action_catalog_to_business_analytics)
         }
 
+        // Show jewelries by type
         binding.necklaces.setOnClickListener {
             val itemType = getString(R.string.necklaces)
             val bundle = Bundle().apply { putString("itemType", itemType) }
