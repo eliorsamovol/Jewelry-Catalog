@@ -52,6 +52,8 @@ class BusinessAnalytics : Fragment() {
         })
 
         binding.backBtn.setOnClickListener {
+            val buttonAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.clicked_button)
+            binding.backBtn.startAnimation(buttonAnimation)
             findNavController().navigate(R.id.action_businessAnalyticsFragment_to_catalog)
         }
     }

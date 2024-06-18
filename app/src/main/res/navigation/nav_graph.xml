@@ -11,16 +11,32 @@
         tools:layout="@layout/catalog">
         <action
             android:id="@+id/action_catalog_to_newItem"
-            app:destination="@+id/newItemFragment"/>
+            app:destination="@+id/newItemFragment"
+            app:enterAnim="@anim/fade_in_page"
+            app:exitAnim="@anim/fade_out_page"
+            app:popEnterAnim="@anim/fade_in_page"
+            app:popExitAnim="@anim/fade_out_page"/>
         <action
             android:id="@+id/action_catalog_to_items"
-            app:destination="@+id/itemsFragment"/>
+            app:destination="@+id/itemsFragment"
+            app:enterAnim="@anim/fade_in_page"
+            app:exitAnim="@anim/fade_out_page"
+            app:popEnterAnim="@anim/fade_in_page"
+            app:popExitAnim="@anim/fade_out_page"/>
         <action
             android:id="@+id/action_catalog_to_supplier"
-            app:destination="@+id/supplierFragment"/>
+            app:destination="@+id/supplierFragment"
+            app:enterAnim="@anim/fade_in_page"
+            app:exitAnim="@anim/fade_out_page"
+            app:popEnterAnim="@anim/fade_in_page"
+            app:popExitAnim="@anim/fade_out_page"/>
         <action
             android:id="@+id/action_catalog_to_business_analytics"
-            app:destination="@+id/businessAnalyticsFragment"/>
+            app:destination="@+id/businessAnalyticsFragment"
+            app:enterAnim="@anim/fade_in_page"
+            app:exitAnim="@anim/fade_out_page"
+            app:popEnterAnim="@anim/fade_in_page"
+            app:popExitAnim="@anim/fade_out_page"/>
     </fragment>
 
     <fragment
@@ -29,10 +45,18 @@
         tools:layout="@layout/new_item">
         <action
             android:id="@+id/action_newItem_to_catalog"
-            app:destination="@+id/catalogFragment"/>
+            app:destination="@+id/catalogFragment"
+            app:enterAnim="@anim/fade_in_page"
+            app:exitAnim="@anim/fade_out_page"
+            app:popEnterAnim="@anim/fade_in_page"
+            app:popExitAnim="@anim/fade_out_page"/>
         <action
             android:id="@+id/action_newItem_to_items"
-            app:destination="@+id/itemsFragment"/>
+            app:destination="@+id/itemsFragment"
+            app:enterAnim="@anim/fade_in_page"
+            app:exitAnim="@anim/fade_out_page"
+            app:popEnterAnim="@anim/fade_in_page"
+            app:popExitAnim="@anim/fade_out_page"/>
     </fragment>
 
     <fragment
@@ -41,7 +65,11 @@
         tools:layout="@layout/new_supplier">
         <action
             android:id="@+id/action_newSupplier_to_supplier"
-            app:destination="@id/supplierFragment"/>
+            app:destination="@id/supplierFragment"
+            app:enterAnim="@anim/fade_in_page"
+            app:exitAnim="@anim/fade_out_page"
+            app:popEnterAnim="@anim/fade_in_page"
+            app:popExitAnim="@anim/fade_out_page"/>
     </fragment>
 
     <fragment
@@ -54,20 +82,36 @@
             android:defaultValue="all"/>
         <action
             android:id="@+id/action_itemsFragment_to_editItemFragment"
-            app:destination="@id/editItemFragment" />
+            app:destination="@id/editItemFragment"
+            app:enterAnim="@anim/fade_in_page"
+            app:exitAnim="@anim/fade_out_page"
+            app:popEnterAnim="@anim/fade_in_page"
+            app:popExitAnim="@anim/fade_out_page"/>
         <argument
             android:name="jewelryItem"
             app:argType="com.tests.jewelry.JewelryEntities"
             app:nullable="true"/>
         <action
             android:id="@+id/action_itemsFragment_to_newItemFragment"
-            app:destination="@+id/newItemFragment"/>
+            app:destination="@+id/newItemFragment"
+            app:enterAnim="@anim/fade_in_page"
+            app:exitAnim="@anim/fade_out_page"
+            app:popEnterAnim="@anim/fade_in_page"
+            app:popExitAnim="@anim/fade_out_page"/>
         <action
             android:id="@+id/action_itemsFragment_to_itemDetailsFragment"
-            app:destination="@+id/itemDetailsFragment"/>
+            app:destination="@+id/itemDetailsFragment"
+            app:enterAnim="@anim/fade_in_page"
+            app:exitAnim="@anim/fade_out_page"
+            app:popEnterAnim="@anim/fade_in_page"
+            app:popExitAnim="@anim/fade_out_page"/>
         <action
             android:id="@+id/action_itemsFragment_to_catalog"
-            app:destination="@+id/catalogFragment"/>
+            app:destination="@+id/catalogFragment"
+            app:enterAnim="@anim/fade_in_page"
+            app:exitAnim="@anim/fade_out_page"
+            app:popEnterAnim="@anim/fade_in_page"
+            app:popExitAnim="@anim/fade_out_page"/>
     </fragment>
 
     <fragment
@@ -76,13 +120,25 @@
         tools:layout="@layout/suppliers">
         <action
             android:id="@+id/action_supplier_to_catalog"
-            app:destination="@+id/catalogFragment"/>
+            app:destination="@+id/catalogFragment"
+            app:enterAnim="@anim/fade_in_page"
+            app:exitAnim="@anim/fade_out_page"
+            app:popEnterAnim="@anim/fade_in_page"
+            app:popExitAnim="@anim/fade_out_page"/>
         <action
             android:id="@+id/action_supplier_to_newSupplier"
-            app:destination="@+id/newSupplierFragment"/>
+            app:destination="@+id/newSupplierFragment"
+            app:enterAnim="@anim/fade_in_page"
+            app:exitAnim="@anim/fade_out_page"
+            app:popEnterAnim="@anim/fade_in_page"
+            app:popExitAnim="@anim/fade_out_page"/>
         <action
             android:id="@+id/action_suppliersFragment_to_supplierDetailsFragment"
-            app:destination="@+id/supplierDetailsFragment"/>
+            app:destination="@+id/supplierDetailsFragment"
+            app:enterAnim="@anim/fade_in_page"
+            app:exitAnim="@anim/fade_out_page"
+            app:popEnterAnim="@anim/fade_in_page"
+            app:popExitAnim="@anim/fade_out_page"/>
     </fragment>
 
     <fragment
@@ -94,7 +150,11 @@
             app:argType="com.tests.jewelry.data.db.entities.SupplierEntities"/>
         <action
             android:id="@+id/action_supplierDetailsFragment_to_suppliersFragment"
-            app:destination="@+id/supplierFragment"/>
+            app:destination="@+id/supplierFragment"
+            app:enterAnim="@anim/fade_in_page"
+            app:exitAnim="@anim/fade_out_page"
+            app:popEnterAnim="@anim/fade_in_page"
+            app:popExitAnim="@anim/fade_out_page"/>
     </fragment>
 
 
@@ -107,7 +167,11 @@
             app:argType="com.tests.jewelry.JewelryEntities" />
         <action
             android:id="@+id/action_itemsFragment_to_editItemFragment"
-            app:destination="@+id/itemsFragment"/>
+            app:destination="@+id/itemsFragment"
+            app:enterAnim="@anim/fade_in_page"
+            app:exitAnim="@anim/fade_out_page"
+            app:popEnterAnim="@anim/fade_in_page"
+            app:popExitAnim="@anim/fade_out_page"/>
     </fragment>
 
     <fragment
@@ -119,7 +183,11 @@
             app:argType="com.tests.jewelry.JewelryEntities"/>
         <action
             android:id="@+id/action_itemDetailsFragment_to_itemsFragment"
-            app:destination="@+id/itemsFragment"/>
+            app:destination="@+id/itemsFragment"
+            app:enterAnim="@anim/fade_in_page"
+            app:exitAnim="@anim/fade_out_page"
+            app:popEnterAnim="@anim/fade_in_page"
+            app:popExitAnim="@anim/fade_out_page"/>
     </fragment>
 
     <fragment
@@ -128,6 +196,10 @@
         tools:layout="@layout/business_analytics">
         <action
             android:id="@+id/action_businessAnalyticsFragment_to_catalog"
-            app:destination="@+id/catalogFragment"/>
+            app:destination="@+id/catalogFragment"
+            app:enterAnim="@anim/fade_in_page"
+            app:exitAnim="@anim/fade_out_page"
+            app:popEnterAnim="@anim/fade_in_page"
+            app:popExitAnim="@anim/fade_out_page"/>
     </fragment>
 </navigation>

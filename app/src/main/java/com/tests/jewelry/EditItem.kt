@@ -63,7 +63,6 @@ class EditItem : Fragment() {
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val imageBitmap = result.data?.extras?.get("data") as Bitmap
-            val resizedBitmap = resizeBitmap(imageBitmap, 800, 800)
             binding.imageSelected.setImageBitmap(imageBitmap)
             capturedImage = imageBitmap
             isPhotoChanged = true
