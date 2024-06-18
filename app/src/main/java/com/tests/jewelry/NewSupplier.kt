@@ -186,7 +186,7 @@ class NewSupplier : Fragment(), OnMapReadyCallback {
         }
 
         val button = binding.saveButton
-        val str = getString(R.string.save_change_btn)
+        val str = getString(R.string.save_item)
         val span = SpannableString(str)
         span.setSpan(UnderlineSpan(), 0, str.length, 0)
         button.text = span

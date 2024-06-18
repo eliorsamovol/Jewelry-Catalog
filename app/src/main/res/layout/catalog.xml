@@ -101,12 +101,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="60dp"
-                android:layout_marginRight="70dp"
-                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="70dp"
                 android:fontFamily="@font/vogue"
                 android:text="@string/headline_main"
                 android:textSize="25sp"
-                android:textColor="@color/khaki"/>
+                android:textColor="@color/khaki"
+                android:layout_gravity="bottom|end" />
 
         </FrameLayout>
 

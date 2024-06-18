@@ -67,7 +67,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/toolbarfont"
             app:layout_constraintTop_toBottomOf="@+id/supplier_expenses_headline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/jewelries_revenues_value"
@@ -83,7 +82,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/toolbarfont"
             app:layout_constraintTop_toBottomOf="@+id/jewelries_revenues_headline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/supplier_expenses_value"
@@ -112,14 +110,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/toolbarfont"
             app:layout_constraintTop_toBottomOf="@+id/total_profit_headline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/amount_format"
             android:textSize="18dp"
             android:padding="8dp"
-            android:background="@drawable/border"/>
+            android:background="@drawable/border"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/best_seller_headline"
@@ -166,7 +164,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/toolbarfont"
             app:layout_constraintTop_toBottomOf="@+id/best_seller_quantity_headline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/best_seller_revenue_value"
@@ -174,6 +171,7 @@
             android:text="@string/amount_format"
             android:textSize="18dp"
             android:padding="8dp"
+            android:fontFamily="@font/vogue"
             android:background="@drawable/border"
             android:textColor="@color/black"/>
 
@@ -182,7 +180,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/toolbarfont"
             app:layout_constraintTop_toBottomOf="@+id/best_seller_revenue_headline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/supplier_expenses_value"
@@ -190,6 +187,7 @@
             android:text="@string/amount_format"
             android:textSize="18dp"
             android:padding="8dp"
+            android:fontFamily="@font/vogue"
             android:background="@drawable/border"
             android:textColor="@color/black"/>
 
