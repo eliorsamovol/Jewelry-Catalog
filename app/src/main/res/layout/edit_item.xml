@@ -65,7 +65,8 @@
                 android:layout_marginEnd="16dp"
                 android:gravity="center"
                 android:padding="5dp"
-                android:background="@drawable/edit_text_line"/>
+                android:background="@drawable/edit_text_line"
+                android:imeOptions="actionDone"/>
 
 
             <TextView
@@ -92,7 +93,8 @@
                 android:layout_marginEnd="16dp"
                 android:gravity="center"
                 android:padding="5dp"
-                android:background="@drawable/edit_text_line"/>
+                android:background="@drawable/edit_text_line"
+                android:imeOptions="actionDone"/>
 
             <TextView
                 android:id="@+id/jewelryPrice"
