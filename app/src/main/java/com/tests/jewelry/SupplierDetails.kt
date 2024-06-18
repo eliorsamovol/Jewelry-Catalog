@@ -29,14 +29,17 @@ class SupplierDetails : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Close button
         binding.closeBtn.setOnClickListener {
             findNavController().navigate(R.id.action_supplierDetailsFragment_to_suppliersFragment)
         }
 
+        // Getting argument from Parcel
         val supplier = arguments?.getParcelable<SupplierEntities>("selectedItem")
         supplier?.let { displaySupplierDetails(it) }
     }
 
+    // Display supplier details
     private fun displaySupplierDetails(item: SupplierEntities) {
         binding.supplierName.text = getString(R.string.supplier_name_details_page, item.name)
         binding.supplierDescription.text = getString(R.string.supplier_address_details_page, item.address)

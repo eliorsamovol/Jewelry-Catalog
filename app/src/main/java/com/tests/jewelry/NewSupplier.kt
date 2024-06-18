@@ -75,17 +75,18 @@ class NewSupplier : Fragment(), OnMapReadyCallback {
     private lateinit var mapView: MapView
     private var googleMap: GoogleMap? = null
 
+    // Demonstrate how to use the device's camera and handle the result
     private val takePictureLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val imageBitmap = result.data?.extras?.get("data") as Bitmap
-            val resizedBitmap = resizeBitmap(imageBitmap, 800, 800)
             binding.imageSelected.setImageBitmap(imageBitmap)
             capturedImage = imageBitmap
         }
     }
 
+    // Demonstrate how to upload image from the device's gallery
     private val pickImageLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri ->
@@ -104,6 +105,7 @@ class NewSupplier : Fragment(), OnMapReadyCallback {
         }
     }
 
+    // Detect the orientation of the uploaded image
     private fun handleImageOrientation(bitmap: Bitmap, uri: Uri): Bitmap {
         val inputStream = requireContext().contentResolver.openInputStream(uri)
         val exif = inputStream?.let { ExifInterface(it) }
@@ -117,11 +119,13 @@ class NewSupplier : Fragment(), OnMapReadyCallback {
         }
     }
 
+    // Rotate the image in case it's not in the right orientation
     private fun rotateBitmap(bitmap: Bitmap, degrees: Float): Bitmap {
         val matrix = Matrix().apply { postRotate(degrees) }
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
     }
 
+    // Resizing image for increasing performance
     private fun resizeBitmap(image: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
         val width = image.width
         val height = image.height
@@ -133,6 +137,7 @@ class NewSupplier : Fragment(), OnMapReadyCallback {
         return Bitmap.createScaledBitmap(image, newWidth, newHeight, true)
     }
 
+    // Handle camera permission request
     private val requestCameraPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
@@ -143,6 +148,7 @@ class NewSupplier : Fragment(), OnMapReadyCallback {
         }
     }
 
+    // Handle storage permission request
     private val requestStoragePermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
@@ -153,6 +159,7 @@ class NewSupplier : Fragment(), OnMapReadyCallback {
         }
     }
 
+    // Handle location permission request
     private val requestLocationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permission ->
@@ -205,6 +212,7 @@ class NewSupplier : Fragment(), OnMapReadyCallback {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
+        // Open calender
         binding.dateEditText.setOnClickListener {
             showDatePickerDialog()
         }
@@ -219,6 +227,7 @@ class NewSupplier : Fragment(), OnMapReadyCallback {
             showImageSourceDialog()
         }
 
+        // Save Button and add the supplier to the database
         binding.saveButton.setOnClickListener {
             val name = binding.nameEditText.text.toString()
             val address = binding.addressEditText.text.toString()
@@ -229,12 +238,13 @@ class NewSupplier : Fragment(), OnMapReadyCallback {
             val selectedRadioButton = binding.typeRadioGroup.findViewById<RadioButton>(selectedRadioButtonId)
             val type = selectedRadioButton?.text.toString()
 
+            // Check if all fields were filled by the user and check their validity
             if (name.isNotEmpty() && address.isNotEmpty() && phone.isNotEmpty() && date.isNotEmpty() && price!=null && type.isNotEmpty()){
                 val parsedDate = parseDate(date)
                 val imagePath = capturedImage?.let { bitmap ->
                     saveBitmapToFile(requireContext(), bitmap)
                 }
-                if(imagePath != null) {
+                if(imagePath != null) { // Check if photo uploaded
                     val newItem=SupplierEntities(
                         name = name,
                         address = address,
@@ -268,17 +278,19 @@ class NewSupplier : Fragment(), OnMapReadyCallback {
 
         checkLocationPermission()
 
+        // Google places search addresses
         binding.addressEditText.setOnClickListener {
             val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS)
             val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields).build(requireContext())
             startAutocomplete.launch(intent)
-
         }
 
+        // Done and not next button in keyboard
         setupDoneAction(binding.nameEditText)
         setupDoneAction(binding.addressEditText)
     }
 
+    // Calender date handler
     private fun showDatePickerDialog() {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
@@ -297,6 +309,8 @@ class NewSupplier : Fragment(), OnMapReadyCallback {
         )
         datePickerDialog.show()
     }
+
+    // Options for capturing and for upload from gallery
     private fun showImageSourceDialog() {
         val options = arrayOf<CharSequence>(
             getString(R.string.take_photo),
@@ -313,7 +327,7 @@ class NewSupplier : Fragment(), OnMapReadyCallback {
             .show()
     }
 
-    private fun checkCameraPermission(){
+    private fun checkCameraPermission(){ // Handle camera permission
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
             requestCameraPermission()
         } else {
@@ -321,18 +335,18 @@ class NewSupplier : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun requestCameraPermission(){
+    private fun requestCameraPermission(){ // Request camera permission
         requestCameraPermissionLauncher.launch(Manifest.permission.CAMERA)
     }
 
-    private fun openCamera(){
+    private fun openCamera(){ // Camera launcher
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if(intent.resolveActivity(requireActivity().packageManager) != null){
             takePictureLauncher.launch(intent)
         }
     }
 
-    private fun checkStoragePermission() {
+    private fun checkStoragePermission() { // Handle storage permission
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             requestStoragePermission()
         } else {
@@ -340,16 +354,16 @@ class NewSupplier : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun requestStoragePermission() {
+    private fun requestStoragePermission() { // Request storage permission
         requestStoragePermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
     }
 
-    private fun openGallery() {
+    private fun openGallery() { // Gallery launcher
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         pickImageLauncher.launch("image/*")
     }
 
-    private fun saveBitmapToFile(context: Context, bitmap: Bitmap): String? {
+    private fun saveBitmapToFile(context: Context, bitmap: Bitmap): String? { // Storing photo in local storage
         val storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         val file = File.createTempFile("JPEG_", ".jpg", storageDir)
         return try {
@@ -364,12 +378,13 @@ class NewSupplier : Fragment(), OnMapReadyCallback {
         }
     }
 
+    // Converting Date format
     private fun parseDate(dateStr: String): Date {
         val date = SimpleDateFormat("dd-MM-yyyy")
         return date.parse(dateStr) ?: Date()
     }
 
-    private fun checkLocationPermission() {
+    private fun checkLocationPermission() { // Handle location permission
         if(ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
             ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestLocationPermissionLauncher.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION))
@@ -378,7 +393,7 @@ class NewSupplier : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun enableMyLocation() {
+    private fun enableMyLocation() { // Enabling location
         if(ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
             ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             googleMap?.isMyLocationEnabled = true
@@ -388,13 +403,16 @@ class NewSupplier : Fragment(), OnMapReadyCallback {
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
 
+        // Set initial location to Reichman University
         val initialLocation = LatLng(32.17605083308438, 34.83765488676843)
         googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(initialLocation, 15f))
 
+        // Set up maps gestures (zoom, scroll)
         googleMap?.uiSettings?.isZoomControlsEnabled = true
         googleMap?.uiSettings?.isZoomGesturesEnabled = true
         googleMap?.uiSettings?.isScrollGesturesEnabled = true
 
+        // Handle googleMap click, converting map to address string
         googleMap?.setOnMapClickListener { latLng ->
             googleMap?.clear()
             googleMap?.addMarker(MarkerOptions().position(latLng).title("Selected Location"))
@@ -407,6 +425,7 @@ class NewSupplier : Fragment(), OnMapReadyCallback {
         }
     }
 
+    // Handling addresses search box
     private val startAutocomplete = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -424,12 +443,13 @@ class NewSupplier : Fragment(), OnMapReadyCallback {
         }
     }
 
+    // Keyboard hide for enable google search box
     private fun hideKeyboard(){
         val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(binding.addressEditText.windowToken, 0)
     }
 
-    private fun setupDoneAction(editText: EditText){
+    private fun setupDoneAction(editText: EditText){ // Handle the case when keyboard is active and the user press the done button
         // For cases that press done
         editText.setOnEditorActionListener { v, actionId, event ->
             if(actionId == EditorInfo.IME_ACTION_DONE) {

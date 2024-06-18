@@ -54,29 +54,16 @@ class MainActivity : AppCompatActivity() {
         // List log files to verify they exist
         listLogFiles(this)
 
-        scheduleCleanupWorker(this)
+        // Work Manager scheduler
+        scheduleCleanupWorker()
 
+        // Broadcast Receiver
         airplaneModeReceiver = AirplaneModeReceiver()
         val intentFilter = IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED)
         registerReceiver(airplaneModeReceiver, intentFilter)
     }
-    fun scheduleCleanupWorker(context: Context) {
-        val constraints = Constraints.Builder()
-            .setRequiresBatteryNotLow(true)
-            .setRequiresCharging(true)
-            .build()
 
-        val cleanupRequest = PeriodicWorkRequestBuilder<CleanupWorker>(2, TimeUnit.MINUTES)
-            .setConstraints(constraints)
-            .build()
-
-        WorkManager.getInstance(context).enqueueUniquePeriodicWork(
-            "CleanupWorker",
-            ExistingPeriodicWorkPolicy.REPLACE,
-            cleanupRequest
-        )
-    }
-
+    // Set up worker
     private fun scheduleCleanupWorker() {
         val dailyWorkRequest = PeriodicWorkRequestBuilder<CleanupWorker>(24, TimeUnit.HOURS)
             .build()

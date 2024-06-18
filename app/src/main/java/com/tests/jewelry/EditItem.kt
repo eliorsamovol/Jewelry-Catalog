@@ -58,18 +58,19 @@ class EditItem : Fragment() {
         return binding.root
     }
 
+    // Demonstrate how to use the device's camera and handle the result
     private val takePictureLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val imageBitmap = result.data?.extras?.get("data") as Bitmap
-            val resizedBitmap = resizeBitmap(imageBitmap, 800, 800)
             binding.imageSelected.setImageBitmap(imageBitmap)
             capturedImage = imageBitmap
             isPhotoChanged = true
         }
     }
 
+    // Demonstrate how to upload image from the device's gallery
     private val pickImageLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -122,12 +123,14 @@ class EditItem : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Underline button
         val button = binding.saveButton
         val str = getString(R.string.save_change_btn)
         val span = SpannableString(str)
         span.setSpan(UnderlineSpan(), 0, str.length, 0)
         button.text = span
 
+        // Price Seekbar listener
         priceSeekBar = binding.priceSeekBar
         priceValueTextView = binding.jewelryPrice
         priceSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -140,6 +143,7 @@ class EditItem : Fragment() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
+        // Getting the item's details and displaying them in the layout
         val jewelryItem = args.jewelryItem
 
         binding.nameEditText.setText(jewelryItem.name)
@@ -161,7 +165,7 @@ class EditItem : Fragment() {
             showImageSourceDialog()
         }
 
-        // Save Button
+        // Save Button and update the item in the database
         binding.saveButton.setOnClickListener {
             val editName = binding.nameEditText.text.toString()
             val editDescription = binding.descriptionEditText.text.toString()
@@ -171,6 +175,7 @@ class EditItem : Fragment() {
             val selectedRadioButton = binding.typeRdioGroup.findViewById<RadioButton>(selectedRadioButtonId)
             val editType = selectedRadioButton?.text.toString()
 
+            //Check if all fields were filled by the user and check their validity
             if (editName.isNotEmpty() && editDescription.isNotEmpty() && editPrice!=null && editWeight!=null && editType.isNotEmpty()){
                 if(isPhotoChanged) { // Check if photo is changed
                     val imagePath = capturedImage?.let { bitmap ->

@@ -30,7 +30,7 @@ class Items : Fragment(), AdapterView.OnItemSelectedListener {
 
     private lateinit var jewelryAdapter: JewelryAdapter
 
-    private var itemType: String = "all"
+    private var itemType: String = "all" // Default value
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,6 +44,7 @@ class Items : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Define all actions regarding adapter
         jewelryAdapter = JewelryAdapter(
             emptyList(),
             onDeleteClick = { item -> deleteItem(item) },
@@ -53,16 +54,19 @@ class Items : Fragment(), AdapterView.OnItemSelectedListener {
             context = requireContext()
         )
 
+        // Initialize RecyclerView
         binding.recyclerView.apply {
             layoutManager = GridLayoutManager(context, calculateSpanCount())
             adapter = jewelryAdapter
         }
 
+        // Set item type in case of filter from Catalog fragment
         arguments?.getString("itemType")?.let { type ->
             itemType = type
             observeItems(itemType)
         }
 
+        // Sort options
         val sortOptions = resources.getStringArray(R.array.sort_options)
         val adapter =
             ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, sortOptions)
@@ -77,7 +81,7 @@ class Items : Fragment(), AdapterView.OnItemSelectedListener {
 
     }
 
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) { // Sort options
         when (position) {
             0 -> observeItems(itemType) // Default order
             1 -> observeItemsSortedByPrice(true) // Sort by price ascending
@@ -96,7 +100,7 @@ class Items : Fragment(), AdapterView.OnItemSelectedListener {
         }
     }
 
-    private fun observeItems(itemType: String){
+    private fun observeItems(itemType: String){ // Displaying items by filter
         if(itemType == "all"){
             jewelryViewModel.items.observe(viewLifecycleOwner, Observer { items ->
                 jewelryAdapter.setItems(items)
@@ -120,7 +124,7 @@ class Items : Fragment(), AdapterView.OnItemSelectedListener {
         }
     }
 
-    private fun observeItemsSortedByPrice(ascending: Boolean) {
+    private fun observeItemsSortedByPrice(ascending: Boolean) { // Sort by price
         if (ascending) {
             jewelryViewModel.getItemsSortedByPriceAsc().observe(viewLifecycleOwner) { items ->
                 jewelryAdapter.setItems(items)
@@ -132,26 +136,26 @@ class Items : Fragment(), AdapterView.OnItemSelectedListener {
         }
     }
 
-    private fun calculateSpanCount(): Int{
+    private fun calculateSpanCount(): Int{ // Calculating how many items are fit in the screen
         val displayMetrics = Resources.getSystem().displayMetrics
         val dpWidth = displayMetrics.widthPixels / displayMetrics.density
         val itemWidth = 160
         return (dpWidth / itemWidth).toInt().coerceAtLeast(1)
     }
-    private fun deleteItem(item: JewelryEntities){
+    private fun deleteItem(item: JewelryEntities){ // Delete item from items
         jewelryViewModel.deleteJewelry(item)
     }
 
-    private fun editItem(item: JewelryEntities) {
+    private fun editItem(item: JewelryEntities) { // Edit item details
         val action = ItemsDirections.actionItemsFragmentToEditItemFragment(item)
         findNavController().navigate(action)
     }
 
-    private fun updateSoldItem(item: JewelryEntities){
+    private fun updateSoldItem(item: JewelryEntities){ // Updating sold_items field in case of a sale
         jewelryViewModel.updateSoldItems(item)
     }
 
-    private fun itemDetails(item: JewelryEntities) {
+    private fun itemDetails(item: JewelryEntities) { // Moving to itemsDetails fragment
         val action = ItemsDirections.actionItemsFragmentToItemDetailsFragment(item)
         findNavController().navigate(action)
     }

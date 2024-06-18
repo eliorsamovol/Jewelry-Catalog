@@ -35,7 +35,7 @@ class ItemDetails : Fragment() {
         item?.let {displayItemDetails(it)}
     }
 
-    private fun displayItemDetails(item: JewelryEntities) {
+    private fun displayItemDetails(item: JewelryEntities) { // Displaying item's details
         binding.jewelryName.text = getString(R.string.jewelry_name_details, item.name)
         binding.jewelryDescription.text = getString(R.string.jewelry_description_details, item.description)
         binding.jewelryPrice.text = getString(R.string.jewelry_price_details, item.price.toInt())

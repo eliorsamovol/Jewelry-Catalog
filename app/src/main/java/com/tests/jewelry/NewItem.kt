@@ -54,17 +54,18 @@ class NewItem : Fragment() {
     private lateinit var priceSeekBar: SeekBar
     private lateinit var priceValueTextView: TextView
 
+    // Demonstrate how to use the device's camera and handle the result
     private val takePictureLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val imageBitmap = result.data?.extras?.get("data") as Bitmap
-            val resizedBitmap = resizeBitmap(imageBitmap, 800, 800)
             binding.imageSelected.setImageBitmap(imageBitmap)
             capturedImage = imageBitmap
         }
     }
 
+    // Demonstrate how to upload image from the device's gallery
     private val pickImageLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri ->
@@ -83,7 +84,8 @@ class NewItem : Fragment() {
         }
     }
 
-    private fun handleImageOrientation(bitmap: Bitmap, uri: Uri): Bitmap { // Checking the image orientation
+    // Detect the orientation of the uploaded image
+    private fun handleImageOrientation(bitmap: Bitmap, uri: Uri): Bitmap {
         val inputStream = requireContext().contentResolver.openInputStream(uri)
         val exif = inputStream?.let { ExifInterface(it) }
         val orientation = exif?.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL) ?: ExifInterface.ORIENTATION_NORMAL
@@ -96,11 +98,13 @@ class NewItem : Fragment() {
         }
     }
 
+    // Rotate the image in case it's not in the right orientation
     private fun rotateBitmap(bitmap: Bitmap, degrees: Float): Bitmap { // Rotating the image as a function of the orientation needed
         val matrix = Matrix().apply { postRotate(degrees) }
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
     }
 
+    // Resizing image for increasing performance
     private fun resizeBitmap(image: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
         val width = image.width
         val height = image.height
@@ -112,7 +116,7 @@ class NewItem : Fragment() {
         return Bitmap.createScaledBitmap(image, newWidth, newHeight, true)
     }
 
-
+    // Handle camera permission request
     private val requestCameraPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
@@ -123,6 +127,7 @@ class NewItem : Fragment() {
         }
     }
 
+    // Handle storage permission request
     private val requestStoragePermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
@@ -162,6 +167,7 @@ class NewItem : Fragment() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
+        // Check weight validity
         binding.weightEditText.doAfterTextChanged {
             val input = it.toString()
             val isValidInput = input.isNotEmpty() && input.toDoubleOrNull() != null
@@ -176,6 +182,7 @@ class NewItem : Fragment() {
             showImageSourceDialog()
         }
 
+        // Save Button and add the item to the database
         binding.saveButton.setOnClickListener {
             val name = binding.nameEditText.text.toString()
             val description = binding.descriptionEditText.text.toString()
@@ -185,11 +192,12 @@ class NewItem : Fragment() {
             val selectedRadioButton = binding.typeRdioGroup.findViewById<RadioButton>(selectedRadioButtonId)
             val type = selectedRadioButton?.text.toString()
 
+            // Check if all fields were filled by the user and check their validity
             if (name.isNotEmpty() && description.isNotEmpty() && price!=null && weight != null && type.isNotEmpty()){
                 val imagePath = capturedImage?.let { bitmap ->
                     saveBitmapToFile(requireContext(), bitmap)
                 }
-                if(imagePath != null) {
+                if(imagePath != null) { // Check if photo uploaded
                     val newItem=JewelryEntities(
                         name = name,
                         type = type,
@@ -204,7 +212,7 @@ class NewItem : Fragment() {
                 } else {
                     Toast.makeText(context, R.string.upload_an_image_message, Toast.LENGTH_SHORT).show()
                 }
-            } else {
+            } else { // not all of the details has been filled
                 Toast.makeText(context, R.string.fill_all_fields_message, Toast.LENGTH_SHORT).show()
             }
         }
@@ -217,6 +225,7 @@ class NewItem : Fragment() {
         setupDoneAction(binding.descriptionEditText)
     }
 
+    // Options for capturing and for upload from gallery
     private fun showImageSourceDialog() {
         val options = arrayOf<CharSequence>(
             getString(R.string.take_photo),
@@ -233,7 +242,7 @@ class NewItem : Fragment() {
             .show()
     }
 
-    private fun checkCameraPermission(){
+    private fun checkCameraPermission(){ // Handle camera permission
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
             requestCameraPermission()
         } else {
@@ -241,18 +250,18 @@ class NewItem : Fragment() {
         }
     }
 
-    private fun requestCameraPermission(){
+    private fun requestCameraPermission(){ // Request camera permission
         requestCameraPermissionLauncher.launch(Manifest.permission.CAMERA)
     }
 
-    private fun openCamera(){
+    private fun openCamera(){ // Camera launcher
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if(intent.resolveActivity(requireActivity().packageManager) != null){
             takePictureLauncher.launch(intent)
         }
     }
 
-    private fun checkStoragePermission() {
+    private fun checkStoragePermission() { // Handle storage permission
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             requestStoragePermission()
         } else {
@@ -260,16 +269,16 @@ class NewItem : Fragment() {
         }
     }
 
-    private fun requestStoragePermission() {
+    private fun requestStoragePermission() { // Request storage permission
         requestStoragePermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
     }
 
-    private fun openGallery() {
+    private fun openGallery() { // Gallery launcher
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         pickImageLauncher.launch("image/*")
     }
 
-    fun saveBitmapToFile(context: Context, bitmap: Bitmap): String? {
+    fun saveBitmapToFile(context: Context, bitmap: Bitmap): String? { // Storing photo in local storage
         val storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         val file = File.createTempFile("JPEG_", ".jpg", storageDir)
         return try {
@@ -284,7 +293,7 @@ class NewItem : Fragment() {
         }
     }
 
-    private fun setupDoneAction(editText: EditText){
+    private fun setupDoneAction(editText: EditText){ // Handle the case when keyboard is active and the user press the done button
         editText.setOnEditorActionListener { v, actionId, event ->
             if(actionId == EditorInfo.IME_ACTION_DONE) {
                 // Hide keyboard

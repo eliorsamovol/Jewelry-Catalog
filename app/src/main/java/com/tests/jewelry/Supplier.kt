@@ -51,11 +51,13 @@ class Supplier : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Define all actions regarding adapter
         supplierAdapter = SupplierAdapter(emptyList(),
             onDeleteClick = { item -> deleteItem(item) },
             onItemClick =  { item -> itemDetails(item) },
             context = requireContext())
 
+        // Initialize RecyclerView
         binding.recyclerView.apply {
             layoutManager = GridLayoutManager(context, calculateSpanCount())
             adapter = supplierAdapter
@@ -75,18 +77,18 @@ class Supplier : Fragment() {
 
     }
 
-    private fun calculateSpanCount(): Int{
+    private fun calculateSpanCount(): Int{ // Calculating how many items are fit in the screen
         val displayMetrics = Resources.getSystem().displayMetrics
         val dpWidth = displayMetrics.widthPixels / displayMetrics.density
         val itemWidth = 160
         return (dpWidth / itemWidth).toInt().coerceAtLeast(1)
     }
 
-    private fun deleteItem(item: SupplierEntities){
+    private fun deleteItem(item: SupplierEntities){ // Delete supplier from suppliers
         supplierViewModel.deleteSupplier(item)
     }
 
-    private fun itemDetails(item: SupplierEntities) {
+    private fun itemDetails(item: SupplierEntities) { // Moving to supplierDetails fragment
         val action = SupplierDirections.actionSuppliersFragmentToSupplierDetailsFragment(item)
         findNavController().navigate(action)
     }
