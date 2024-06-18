@@ -1,5 +1,6 @@
 package com.tests.jewelry
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,7 +18,9 @@ import androidx.recyclerview.widget.RecyclerView
 import android.content.res.Resources
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Spinner
 import com.tests.jewelry.ItemsDirections
+import android.content.Context
 
 class Items : Fragment(), AdapterView.OnItemSelectedListener {
 
@@ -30,6 +33,10 @@ class Items : Fragment(), AdapterView.OnItemSelectedListener {
 
     private var itemType: String = "all"
 
+    private lateinit var sharedPreferences: SharedPreferences
+    private val PREFS_NAME = "JewelryPrefs"
+    private val KEY_JEWELRY_TYPE = "jewelryType"
+    private val KEY_SORT_OPTIONS = "sortOption"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,12 +44,12 @@ class Items : Fragment(), AdapterView.OnItemSelectedListener {
         savedInstanceState: Bundle?
     ): View? {
         _binding = ItemsBinding.inflate(inflater, container, false)
+        sharedPreferences = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         jewelryAdapter = JewelryAdapter(
             emptyList(),
@@ -58,26 +65,84 @@ class Items : Fragment(), AdapterView.OnItemSelectedListener {
             adapter = jewelryAdapter
         }
 
-        arguments?.getString("itemType")?.let { type ->
-            itemType = type
-            observeItems(itemType)
-        }
+        val typeAdapter = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.jewelry_types,
+            android.R.layout.simple_spinner_item
+        )
+        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.jewelryTypeSpinner.adapter = typeAdapter
+        binding.jewelryTypeSpinner.onItemSelectedListener = this
 
-        val sortOptions = resources.getStringArray(R.array.sort_options)
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, sortOptions)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.sortSpinner.adapter = adapter
+//        arguments?.getString("itemType")?.let { type ->
+//            itemType = type
+//            observeItems(itemType)
+//        }
 
+//        val sortOptions = resources.getStringArray(R.array.sort_options)
+//        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, sortOptions)
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//        binding.sortSpinner.adapter = adapter
+
+        val sortAdapter = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.sort_options,
+            android.R.layout.simple_spinner_item
+        )
+        sortAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.sortSpinner.adapter = sortAdapter
         binding.sortSpinner.onItemSelectedListener = this
+
+//        binding.sortSpinner.onItemSelectedListener = this
 
         binding.backBtn.setOnClickListener {
             findNavController().navigate(R.id.action_itemsFragment_to_catalog)
+            resetSpinnerSelection()
         }
+
+        binding.addJewelryButton.setOnClickListener {
+            findNavController().navigate(R.id.action_itemsFragment_to_newItemFragment)
+            resetSpinnerSelection()
+        }
+
+        restoreSpinnerSelection()
+        observeItems(itemType)
 
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        when (position) {
+        when (parent?.id) {
+            R.id.jewelryTypeSpinner -> {
+                itemType = when (position) {
+                    0 -> "all" // Adjust based on your spinner items
+                    1 -> getString(R.string.necklaces)
+                    2 -> getString(R.string.rings)
+                    3 -> getString(R.string.earrings)
+                    4 -> getString(R.string.bracelets)
+                    else -> "all"
+                }
+                observeItems(itemType)
+                saveSpinnerSelections()
+            }
+
+            R.id.sortSpinner -> {
+                when (position) {
+                    0 -> observeItems(itemType) // Default order
+                    1 -> observeItemsSortedByPrice(true) // Sort by price ascending
+                    2 -> observeItemsSortedByPrice(false) // Sort by price descending
+                    3 -> observeItemsSortedByBestSellers()
+                }
+                saveSpinnerSelections()
+            }
+        }
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        // Do nothing here if nothing is selected
+    }
+
+    private fun applyFilter() {
+        when (binding.sortSpinner.selectedItemPosition) {
             0 -> observeItems(itemType) // Default order
             1 -> observeItemsSortedByPrice(true) // Sort by price ascending
             2 -> observeItemsSortedByPrice(false) // Sort by price descending
@@ -89,10 +154,6 @@ class Items : Fragment(), AdapterView.OnItemSelectedListener {
         jewelryViewModel.getItemsSortedByBestSellers().observe(viewLifecycleOwner) { items ->
             jewelryAdapter.setItems(items)
         }
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-        // Do nothing here if nothing is selected
     }
 
     private fun observeItems(itemType: String){
@@ -113,10 +174,10 @@ class Items : Fragment(), AdapterView.OnItemSelectedListener {
             })
         }
 
-        val addJewelryBtn = binding.addJewelryButton
-        addJewelryBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_itemsFragment_to_newItemFragment)
-        }
+//        val addJewelryBtn = binding.addJewelryButton
+//        addJewelryBtn.setOnClickListener {
+//            findNavController().navigate(R.id.action_itemsFragment_to_newItemFragment)
+//        }
     }
 
     private fun observeItemsSortedByPrice(ascending: Boolean) {
@@ -153,6 +214,27 @@ class Items : Fragment(), AdapterView.OnItemSelectedListener {
     private fun itemDetails(item: JewelryEntities) {
         val action = ItemsDirections.actionItemsFragmentToItemDetailsFragment(item)
         findNavController().navigate(action)
+    }
+
+    private fun saveSpinnerSelections() {
+        val editor = sharedPreferences.edit()
+        editor.putInt(KEY_JEWELRY_TYPE, binding.jewelryTypeSpinner.selectedItemPosition)
+        editor.putInt(KEY_SORT_OPTIONS, binding.sortSpinner.selectedItemPosition)
+        editor.apply()
+    }
+
+    private fun restoreSpinnerSelection() {
+        val savedJewelryType = sharedPreferences.getInt(KEY_JEWELRY_TYPE, 0)
+        val savedSortOption = sharedPreferences.getInt(KEY_SORT_OPTIONS, 0)
+        binding.jewelryTypeSpinner.setSelection(savedJewelryType)
+        binding.sortSpinner.setSelection(savedSortOption)
+    }
+
+    private fun resetSpinnerSelection() {
+        val editor = sharedPreferences.edit()
+        editor.putInt(KEY_JEWELRY_TYPE, 0)
+        editor.putInt(KEY_SORT_OPTIONS, 0)
+        editor.apply()
     }
 
     override fun onDestroy() {

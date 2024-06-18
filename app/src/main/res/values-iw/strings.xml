@@ -41,6 +41,14 @@
     <string name="choose_photo_from_gallery">בחר מהגלריה</string>
 
     <string name="items_sort_by">מיין לפי:</string>
+    <string name="filter_jewelry_items">סנן לפי:</string>
+    <string-array name="jewelry_types">
+        <item>כל התכשיטים</item>
+        <item>שרשראות</item>
+        <item>טבעות</item>
+        <item>עגילים</item>
+        <item>צמידים</item>
+    </string-array>
 
     <string name="text_second_frame">Jewelery has\n the power to\n be the one\n little thing\n that makes you\n feel unique</string>
 

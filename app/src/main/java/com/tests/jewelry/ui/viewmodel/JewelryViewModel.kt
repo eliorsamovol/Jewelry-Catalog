@@ -123,6 +123,7 @@ class JewelryViewModel(application: Application) : AndroidViewModel(application)
     fun getItemsSortedByBestSellers(): LiveData<List<JewelryEntities>> {
         return repository.getItemsSortedByBestSellers()
     }
+
 }
 
 class JewelryViewModelFactory(private val application: Application) : ViewModelProvider.Factory {

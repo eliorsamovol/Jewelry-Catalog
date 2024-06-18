@@ -28,7 +28,6 @@ class Catalog : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var viewPager: ViewPager2
-    private lateinit var adapter: ViewPagerAdapter
     private val imagesList = listOf(R.drawable.bottom_photo_main, R.drawable.bottom2, R.drawable.bottom3, R.drawable.bottom4, R.drawable.bottom5)
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -49,4 +49,5 @@ interface JewelryDao {
 
     @Query("SELECT * FROM jewelry_table ORDER BY sold_items DESC")
     fun getItemsSortedByBestSellers(): LiveData<List<JewelryEntities>>
+
 }

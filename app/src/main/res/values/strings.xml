@@ -41,6 +41,15 @@
     <string name="choose_photo_from_gallery">Choose from gallery</string>
 
     <string name="items_sort_by">Sort by:</string>
+    <string name="filter_jewelry_items">Filter By:</string>
+    <string-array name="jewelry_types">
+        <item>All</item>
+        <item>Necklaces</item>
+        <item>Rings</item>
+        <item>Earrings</item>
+        <item>Bracelets</item>
+    </string-array>
+
 
     <string name="text_second_frame">Jewelery has\n the power to\n be the one\n little thing\n that makes you\n feel unique</string>
 
