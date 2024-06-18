@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -28,6 +29,8 @@ class ItemDetails : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.closeBtn.setOnClickListener {
+            val animation = AnimationUtils.loadAnimation(requireContext(), R.anim.clicked_button)
+            binding.closeBtn.startAnimation(animation)
             findNavController().navigate(R.id.action_itemDetailsFragment_to_itemsFragment)
         }
 
@@ -35,7 +38,7 @@ class ItemDetails : Fragment() {
         item?.let {displayItemDetails(it)}
     }
 
-    private fun displayItemDetails(item: JewelryEntities) {
+    private fun displayItemDetails(item: JewelryEntities) { // Displaying item's details
         binding.jewelryName.text = getString(R.string.jewelry_name_details, item.name)
         binding.jewelryDescription.text = getString(R.string.jewelry_description_details, item.description)
         binding.jewelryPrice.text = getString(R.string.jewelry_price_details, item.price.toInt())

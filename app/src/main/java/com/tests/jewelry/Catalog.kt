@@ -18,7 +18,6 @@ import androidx.navigation.NavController
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.UnderlineSpan
-import androidx.viewpager2.widget.ViewPager2
 import android.os.Handler
 import android.os.Looper
 import android.view.animation.AnimationUtils
@@ -41,6 +40,7 @@ class Catalog : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Animation
         val fadeInAnim = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in)
         binding.mainHeadline.startAnimation(fadeInAnim)
 
@@ -49,47 +49,59 @@ class Catalog : Fragment() {
         }
 
         loadImages()
+        underline()
+
+        val animation = AnimationUtils.loadAnimation(requireContext(), R.anim.clicked_button)
 
         // Jewelries listener
         binding.jewelries.setOnClickListener {
+            binding.jewelries.startAnimation(animation)
             findNavController().navigate(R.id.action_catalog_to_items)
         }
 
         // Suppliers listener
         binding.supplier.setOnClickListener {
+            binding.supplier.startAnimation(animation)
             findNavController().navigate(R.id.action_catalog_to_supplier)
         }
 
         // BI listener
         binding.businessAnalytics.setOnClickListener {
+            binding.businessAnalytics.startAnimation(animation)
             findNavController().navigate(R.id.action_catalog_to_business_analytics)
         }
 
-        // Show jewelries by type
+        // Show jewelries by type listeners
         binding.necklaces.setOnClickListener {
             val itemType = getString(R.string.necklaces)
             val bundle = Bundle().apply { putString("itemType", itemType) }
+            binding.necklaces.startAnimation(animation)
             findNavController().navigate(R.id.action_catalog_to_items, bundle)
         }
 
         binding.rings.setOnClickListener {
             val itemType = getString(R.string.rings)
             val bundle = Bundle().apply { putString("itemType", itemType) }
+            binding.rings.startAnimation(animation)
             findNavController().navigate(R.id.action_catalog_to_items, bundle)
         }
 
         binding.earrings.setOnClickListener {
             val itemType = getString(R.string.earrings)
             val bundle = Bundle().apply { putString("itemType", itemType) }
+            binding.earrings.startAnimation(animation)
             findNavController().navigate(R.id.action_catalog_to_items, bundle)
         }
 
         binding.bracelets.setOnClickListener {
             val itemType = getString(R.string.bracelets)
             val bundle = Bundle().apply { putString("itemType", itemType) }
+            binding.bracelets.startAnimation(animation)
             findNavController().navigate(R.id.action_catalog_to_items, bundle)
         }
+    }
 
+    private fun underline() {
         val button = binding.jewelries
         val str = getString(R.string.items_headline)
         val spanstr = SpannableString(str)
@@ -107,10 +119,9 @@ class Catalog : Fragment() {
         val spanStrAnalytics = SpannableString(analyticsStr)
         spanStrAnalytics.setSpan(UnderlineSpan(), 0, analyticsStr.length, 0)
         analyticsBtn.text = spanStrAnalytics
-
     }
 
-    private fun loadImages(){
+    private fun loadImages(){ // Show images using Glide
         Glide.with(this)
             .load(R.drawable.sand)
             .centerCrop()
@@ -145,5 +156,4 @@ class Catalog : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }

@@ -35,7 +35,7 @@ data class JewelryEntities(
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
-) : Parcelable {
+) : Parcelable { // This constructor reads data from the Parcel to recreate a JewelryEntities object
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: "",
         parcel.readString() ?: "",
@@ -48,7 +48,7 @@ data class JewelryEntities(
         parcel.readInt()
     )
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
+    override fun writeToParcel(parcel: Parcel, flags: Int) { // Passing the data for multi-fragments view
         parcel.writeString(name)
         parcel.writeString(type)
         parcel.writeString(description)
@@ -64,7 +64,7 @@ data class JewelryEntities(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<JewelryEntities> {
+    companion object CREATOR : Parcelable.Creator<JewelryEntities> { // Generating instances of the JewelryEntities class from parcel
         override fun createFromParcel(parcel: Parcel): JewelryEntities {
             return JewelryEntities(parcel)
         }

@@ -34,6 +34,7 @@ class BusinessAnalytics : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Animation
         val scaleAnim = AnimationUtils.loadAnimation(requireContext(), R.anim.text_scale_anim)
         binding.totalProfitValue.startAnimation(scaleAnim)
 

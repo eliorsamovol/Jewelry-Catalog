@@ -7,6 +7,7 @@ import java.io.ByteArrayOutputStream
 import java.util.Date
 
 class Converters {
+    // Convert custom data type to and from data type that ROOM can persist
     @TypeConverter
     fun fromTimesstamp(value: Long?): Date? {
         return value?.let { Date(it) }

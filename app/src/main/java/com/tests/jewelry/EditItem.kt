@@ -18,6 +18,7 @@ import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -58,6 +59,7 @@ class EditItem : Fragment() {
         return binding.root
     }
 
+    // Demonstrate how to use the device's camera and handle the result
     private val takePictureLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -69,6 +71,7 @@ class EditItem : Fragment() {
         }
     }
 
+    // Demonstrate how to upload image from the device's gallery
     private val pickImageLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -121,12 +124,14 @@ class EditItem : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Underline button
         val button = binding.saveButton
         val str = getString(R.string.save_change_btn)
         val span = SpannableString(str)
         span.setSpan(UnderlineSpan(), 0, str.length, 0)
         button.text = span
 
+        // Price Seekbar listener
         priceSeekBar = binding.priceSeekBar
         priceValueTextView = binding.jewelryPrice
         priceSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -139,6 +144,7 @@ class EditItem : Fragment() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
+        // Getting the item's details and displaying them in the layout
         val jewelryItem = args.jewelryItem
 
         binding.nameEditText.setText(jewelryItem.name)
@@ -156,12 +162,16 @@ class EditItem : Fragment() {
         val bitmap = BitmapFactory.decodeFile(jewelryItem.imageResId)
         binding.imageSelected.setImageBitmap(bitmap)
 
+        val animation = AnimationUtils.loadAnimation(requireContext(), R.anim.clicked_button)
         binding.btnTakePhoto.setOnClickListener {
+            binding.btnTakePhoto.startAnimation(animation)
             showImageSourceDialog()
         }
 
-        // Save Button
+        // Save Button and update the item in the database
         binding.saveButton.setOnClickListener {
+            binding.saveButton.startAnimation(animation)
+
             val editName = binding.nameEditText.text.toString()
             val editDescription = binding.descriptionEditText.text.toString()
             val editPrice = binding.priceSeekBar.progress.toString().toDoubleOrNull()
@@ -170,6 +180,7 @@ class EditItem : Fragment() {
             val selectedRadioButton = binding.typeRdioGroup.findViewById<RadioButton>(selectedRadioButtonId)
             val editType = selectedRadioButton?.text.toString()
 
+            //Check if all fields were filled by the user and check their validity
             if (editName.isNotEmpty() && editDescription.isNotEmpty() && editPrice!=null && editWeight!=null && editType.isNotEmpty()){
                 if(isPhotoChanged) { // Check if photo is changed
                     val imagePath = capturedImage?.let { bitmap ->
@@ -211,6 +222,7 @@ class EditItem : Fragment() {
         }
 
         binding.backBtn.setOnClickListener {
+            binding.backBtn.startAnimation(animation)
             findNavController().navigate(R.id.action_itemsFragment_to_editItemFragment)
         }
 

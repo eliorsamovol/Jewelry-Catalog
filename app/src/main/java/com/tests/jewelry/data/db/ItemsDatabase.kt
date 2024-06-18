@@ -11,7 +11,7 @@ import com.tests.jewelry.data.db.entities.SupplierEntities
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [JewelryEntities::class, SupplierEntities::class], version = 7, exportSchema = false)
+@Database(entities = [JewelryEntities::class, SupplierEntities::class], version = 7, exportSchema = false) // Defining the tables in the database
 @TypeConverters(Converters::class)
 abstract class ItemsDatabase : RoomDatabase() {
     abstract fun jewelryItemDao(): JewelryDao
@@ -34,7 +34,7 @@ abstract class ItemsDatabase : RoomDatabase() {
             }
         }
 
-        private val MIGRATION_4_5 = object : Migration(4, 5) {
+        private val MIGRATION_4_5 = object : Migration(4, 5) { // ensures that existing data is preserved and correctly migrated to fit the new schema
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("ALTER TABLE jewelry_table ADD COLUMN creation_time INTEGER NOT NULL DEFAULT 0")
             }

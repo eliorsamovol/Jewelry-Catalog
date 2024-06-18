@@ -32,7 +32,7 @@ data class SupplierEntities(
     @ColumnInfo(name = "purchase_price")
     val purchasePrice: Double,
 
-): Parcelable {
+): Parcelable { // This constructor reads data from the Parcel to recreate a JewelryEntities object
     constructor(parcel: Parcel) : this(
         id = parcel.readInt(),
         name = parcel.readString()!!,
@@ -44,7 +44,7 @@ data class SupplierEntities(
         purchasePrice = parcel.readDouble()
     )
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
+    override fun writeToParcel(parcel: Parcel, flags: Int) { // Passing the data for multi-fragments view
         parcel.writeInt(id)
         parcel.writeString(name)
         parcel.writeString(type)
@@ -55,11 +55,11 @@ data class SupplierEntities(
         parcel.writeDouble(purchasePrice)
     }
 
-    override fun describeContents(): Int {
+    override fun describeContents(): Int { // Describes the contents of the Parcelable object
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<SupplierEntities> {
+    companion object CREATOR : Parcelable.Creator<SupplierEntities> { // Generating instances of the JewelryEntities class from parcel
         override fun createFromParcel(parcel: Parcel): SupplierEntities {
             return SupplierEntities(parcel)
         }

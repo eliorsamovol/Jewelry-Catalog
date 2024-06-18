@@ -22,19 +22,22 @@ class SupplierAdapter(private var itemList: List<SupplierEntities>,
 
     inner class SupplierViewHolder(private val binding: ItemSupplierBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: SupplierEntities) {
+            // Displaying selected fields
             binding.itemName.text = item.name
             binding.itemDate.text = parseDate(item.date)
 
+            // Display image
             Glide.with(context)
                 .load(item.reception)
                 .centerCrop()
                 .into(binding.itemImage)
 
+            // Listeners for delete and view details
             binding.deleteButton.setOnClickListener { showDeleteConfirmationDialog(item) }
             itemView.setOnClickListener { onItemClick(item) }
         }
 
-        private fun showDeleteConfirmationDialog(item: SupplierEntities) {
+        private fun showDeleteConfirmationDialog(item: SupplierEntities) { // Dialog before deleting
             MaterialAlertDialogBuilder(context)
                 .setTitle(R.string.delete_item_message)
                 .setMessage(R.string.are_you_sure_delete_message)
@@ -64,7 +67,7 @@ class SupplierAdapter(private var itemList: List<SupplierEntities>,
     }
 
     private fun parseDate(date: Date): String {
-        val dateStr = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val dateStr = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         return dateStr.format(date)
     }
 }

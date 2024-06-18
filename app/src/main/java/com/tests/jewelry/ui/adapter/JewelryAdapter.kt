@@ -22,15 +22,18 @@ class JewelryAdapter(private var itemList: List<JewelryEntities>,
 
     inner class JewelryViewHolder(private val binding: ItemJewelryBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: JewelryEntities) {
+            // Displaying selected fields
             binding.itemName.text = item.name
             binding.itemPrice.text = "${item.price}₪"
             binding.soldItemsTextView.text = item.soldItems.toString()
 
+            // Display image
             Glide.with(context)
                 .load(item.imageResId)
                 .centerCrop()
                 .into(binding.itemImage)
 
+            // Listener for several actives (see details, delete, edit, sell item)
             binding.deleteButton.setOnClickListener { showDeleteConfirmationDialog(item) }
             binding.editButton.setOnClickListener { onEditClick(item) }
             binding.plusButton.setOnClickListener {
@@ -49,7 +52,7 @@ class JewelryAdapter(private var itemList: List<JewelryEntities>,
             }
         }
 
-        private fun showDeleteConfirmationDialog(item: JewelryEntities) {
+        private fun showDeleteConfirmationDialog(item: JewelryEntities) { // Dialog before deleting
             MaterialAlertDialogBuilder(context)
                 .setTitle(R.string.delete_item_message)
                 .setMessage(R.string.are_you_sure_delete_message)
